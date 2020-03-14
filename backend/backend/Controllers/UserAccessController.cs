@@ -11,36 +11,36 @@ namespace backend.Controllers
     [ApiController]
     public class UserAccessController : ControllerBase
     {
+        
         // GET: api/UserAccess
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult Login([FromQuery] string username, [FromQuery] string  password)
         {
-            return new string[] { "value1", "value2" };
+
+            return Ok();
         }
 
         // GET: api/UserAccess/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{username}")]
+        public ActionResult Logout()
         {
-            return "value";
+            
+            return Ok();
+
         }
 
         // POST: api/UserAccess
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void RegisterEmployee([FromBody] string value)
         {
         }
 
         // PUT: api/UserAccess/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void RegisterCustomer(int id, [FromBody] string value)
         {
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
     }
 }
