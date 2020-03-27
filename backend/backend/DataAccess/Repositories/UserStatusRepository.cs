@@ -4,96 +4,83 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace backend.DataAccess.Repositories
 {
-    public class UsersRepository : IUsersRepository 
+    public class UserStatusRepository : IUserStatusRepository
     {
         private ApplicationDbContext _context;
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public UsersRepository(ApplicationDbContext context)
+        public UserStatusRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public bool DeleteUser(UsersEntity user)
+        public bool CreateUserStatus(UserStatusEntity user)
         {
             try
             {
-                _context.users.Remove(user);
+                 _context.userStatus.Add(user);
                 return true;
-            } 
+            }
             catch (Exception ex)
             {
                 logger.Info(ex);
                 return false;
             }
-            
         }
 
-        public UsersEntity GetUser(string username)
+        public bool DeleteUserStatus(UserStatusEntity user)
         {
             try
             {
-               return _context.users.Find(username);
+                 _context.userStatus.Remove(user);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex);
+                return false;
+            }
+        }
+
+        public UserStatusEntity GetUserStatus(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<UserStatusEntity> GetUserStatuses()
+        {
+            try
+            {
+                return _context.userStatus.ToList();
             }
             catch (Exception ex)
             {
                 logger.Info(ex);
                 throw ex;
             }
-
-        }
-
-        public List<UsersEntity> GetUsers()
-        {
-            try
-            {
-                return _context.users.ToList();
-                
-            }
-            catch (Exception ex)
-            {
-                logger.Info(ex);
-                throw ex;
-            }
-
-        }
-
-        public bool SaveUser(UsersEntity user)
-        {
-            try
-            {
-                _context.users.Add(user);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                logger.Info(ex);
-                return false;
-            }
-
-        }
-
-        public bool UpdateUser(UsersEntity user)
-        {
-            try
-            {
-                _context.Entry(user).State = EntityState.Modified;
-                return true;
-            }
-            catch (Exception ex)
-            {
-                logger.Info(ex);
-                return false;
-            }
-
         }
 
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public bool UpdateUserStatus(UserStatusEntity user)
+        {
+            try
+            {
+                 _context.Entry(user).State = EntityState.Modified;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex);
+                return false;
+            }
         }
     }
 }

@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace backend.DataAccess.Entities
 {
-    [Table("user_status_entity")]
-    public class UserStatusEntity
+    [Table("company")]
+    public class CompanyEntity
     {
         [Key]
         public int id { get; set; }
-        public string status { get; set; }
-     
+        public string name { get; set; }
+        public string company_profile { get; set; }
+        public bool isCompanyPresent { get; set; }
     }
 }

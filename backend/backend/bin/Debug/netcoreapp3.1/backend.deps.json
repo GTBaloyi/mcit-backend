@@ -30,6 +30,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.1",
           "MySql.Data": "8.0.19",
           "NEST": "7.6.1",
+          "NLog": "4.7.0-rc1",
           "Pomelo.EntityFrameworkCore.MySql": "3.1.1",
           "Swashbuckle.AspNetCore": "5.0.0-rc4",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
@@ -1429,6 +1430,17 @@
         },
         "compile": {
           "lib/netcoreapp2.0/NHibernate.dll": {}
+        }
+      },
+      "NLog/4.7.0-rc1": {
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.7.0.11195"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/NLog.dll": {}
         }
       },
       "NuGet.Frameworks/4.7.0": {
@@ -4898,6 +4910,13 @@
       "sha512": "sha512-x8zFdjzEfSAzt1uB7Mq9X1hsrGEM1f23HqtUwt2FwF4731L5LV06MwDW5qneSAA95YDhnA44TzarlhiiWLAvEw==",
       "path": "nhibernate/5.1.1",
       "hashPath": "nhibernate.5.1.1.nupkg.sha512"
+    },
+    "NLog/4.7.0-rc1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-X4Dc6rxw0jpTWgEqZYSE/EudVxoCQ7o14TE8A2SME2VXUukvgd9lmh61Dnf4VwP+Ta4Cgclas6xAJQh//iOoFA==",
+      "path": "nlog/4.7.0-rc1",
+      "hashPath": "nlog.4.7.0-rc1.nupkg.sha512"
     },
     "NuGet.Frameworks/4.7.0": {
       "type": "package",

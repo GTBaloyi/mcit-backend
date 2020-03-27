@@ -1255,6 +1255,15 @@
           "lib/netcoreapp2.0/NHibernate.dll": {}
         }
       },
+      "NLog/4.7.0-rc1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/NLog.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {}
+        }
+      },
       "NuGet.Frameworks/4.7.0": {
         "type": "package",
         "dependencies": {
@@ -5043,6 +5052,39 @@
         "nhibernate-mapping.xsd",
         "nhibernate.5.1.1.nupkg.sha512",
         "nhibernate.nuspec"
+      ]
+    },
+    "NLog/4.7.0-rc1": {
+      "sha512": "X4Dc6rxw0jpTWgEqZYSE/EudVxoCQ7o14TE8A2SME2VXUukvgd9lmh61Dnf4VwP+Ta4Cgclas6xAJQh//iOoFA==",
+      "type": "package",
+      "path": "nlog/4.7.0-rc1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/monoandroid44/NLog.dll",
+        "lib/monoandroid44/NLog.xml",
+        "lib/net35/NLog.dll",
+        "lib/net35/NLog.xml",
+        "lib/net40-client/NLog.dll",
+        "lib/net40-client/NLog.xml",
+        "lib/net45/NLog.dll",
+        "lib/net45/NLog.xml",
+        "lib/netstandard1.3/NLog.dll",
+        "lib/netstandard1.3/NLog.xml",
+        "lib/netstandard1.5/NLog.dll",
+        "lib/netstandard1.5/NLog.xml",
+        "lib/netstandard2.0/NLog.dll",
+        "lib/netstandard2.0/NLog.xml",
+        "lib/sl4/NLog.dll",
+        "lib/sl4/NLog.xml",
+        "lib/sl5/NLog.dll",
+        "lib/sl5/NLog.xml",
+        "lib/wp8/NLog.dll",
+        "lib/wp8/NLog.xml",
+        "lib/xamarinios10/NLog.dll",
+        "lib/xamarinios10/NLog.xml",
+        "nlog.4.7.0-rc1.nupkg.sha512",
+        "nlog.nuspec"
       ]
     },
     "NuGet.Frameworks/4.7.0": {
@@ -9802,6 +9844,7 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.1",
       "MySql.Data >= 8.0.19",
       "NEST >= 7.6.1",
+      "NLog >= 4.7.0-rc1",
       "Pomelo.EntityFrameworkCore.MySql >= 3.1.1",
       "Swashbuckle.AspNetCore >= 5.0.0-rc4"
     ]
@@ -9873,6 +9916,10 @@
           "NEST": {
             "target": "Package",
             "version": "[7.6.1, )"
+          },
+          "NLog": {
+            "target": "Package",
+            "version": "[4.7.0-rc1, )"
           },
           "Pomelo.EntityFrameworkCore.MySql": {
             "target": "Package",

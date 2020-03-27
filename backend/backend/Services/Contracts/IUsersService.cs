@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace backend.Services
 {
-    interface IUsersService
+    public interface IUsersService
     {
         UsersModel loginService(String username, string password);
-        UsersModel RegisterClient(ClientModel client);
     }
 }

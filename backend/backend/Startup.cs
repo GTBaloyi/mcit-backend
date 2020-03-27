@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.DataAccess.Contracts;
 using backend.DataAccess.Repositories;
+using backend.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,10 +33,9 @@ namespace backend
         public void ConfigureServices(IServiceCollection services)
         {
 
-            var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            services.AddDbContext<RepositoryContext>(o =>
+            services.AddDbContext<ApplicationDbContext>(o =>
             {
-                o.UseMySql(connectionString);
+                o.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddSwaggerGen(c =>
@@ -47,6 +48,11 @@ namespace backend
                 });
             });
             services.AddControllers();
+            services.AddScoped<IUsersService, UserService>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IUserStatusRepository, UserStatusRepository>();
+            services.AddScoped<ICompanyRepRepository, CompanyRepRepository>();
+            services.AddScoped<IAccessLevelRepository, AccessLevelRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

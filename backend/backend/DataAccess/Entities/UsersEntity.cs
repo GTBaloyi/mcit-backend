@@ -10,16 +10,12 @@ namespace backend.DataAccess.Entities
     [Table("users")]
     public class UsersEntity
     {
+        [Key]
         public string username { get; set; }
         public string password { get; set; }
         public int retry { get; set; }
-
-        [ForeignKey(nameof(UserStatusEntity))]
         public int user_status_fk { get; set; }
-        public UserStatusEntity userStatusEntity { get; set; }
-
-        [ForeignKey(nameof(AccessLevelEntity))]
         public int access_fk { get; set; }
-        public AccessLevelEntity accessLevelEntity { get; set; }
+        public int company_rep_fk { get; set; }
     }
 }

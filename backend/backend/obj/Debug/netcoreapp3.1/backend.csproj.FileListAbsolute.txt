@@ -150,9 +150,10 @@ C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\bin\D
 C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
 C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
-C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\bin\Debug\netcoreapp3.1\MySqlConnector.dll
 C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\bin\Debug\netcoreapp3.1\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\bin\Debug\netcoreapp3.1\Pomelo.JsonObject.dll
+C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\bin\Debug\netcoreapp3.1\NLog.dll
+C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cache
