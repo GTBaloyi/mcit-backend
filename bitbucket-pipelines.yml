@@ -23,4 +23,4 @@ pipelines:
              AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
              APPLICATION_NAME: $APPLICATION_NAME
              ENVIRONMENT_NAME: $ENVIRONMENT_NAME
-             #ZIP_FILE: $ZIP_FILE
+             ZIP_FILE: $ZIP_FILE
