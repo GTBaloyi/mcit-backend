@@ -14,7 +14,5 @@ pipelines:
         script: # Modify the commands below to build your repository.
           - cd backend/backend/
           - export PROJECT_NAME=backend.csproj
-          - export TEST_NAME=mcp-test
           - dotnet restore 
           - dotnet build $PROJECT_NAME
-          - dotnet test $TEST_NAME
