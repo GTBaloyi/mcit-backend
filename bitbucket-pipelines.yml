@@ -23,5 +23,7 @@ pipelines:
              AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
              APPLICATION_NAME: $APPLICATION_NAME
              ENVIRONMENT_NAME: $ENVIRONMENT_NAME
-             ZIP_FILE: 'https://mcp-backend-prod.s3.us-east-2.amazonaws.com/backend.zip'
+             ZIP_FILE: 's3://mcp-backend-prod/backend.zip'
+             S3_BUCKET: 'mcp-backend-prod'
              DEBUG: 'True'
+             COMMAND: 'upload-only'
