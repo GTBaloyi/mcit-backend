@@ -19,7 +19,8 @@ namespace backend.DataAccess.Entities
         public string email { get; set; }
         public string phone { get; set; }
         public string quarter { get; set; }
-        public int business_fk { get; set; }
+        public int company_fk { get; set; }
         public DateTime date_captured { get; set; }
+        public string avatar_path { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.Exceptions;
 using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Http;
@@ -11,40 +12,52 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserAccessController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IUsersService _userService;
-        public UserAccessController(IUsersService userService)
+        public UsersController(IUsersService userService)
         {
             _userService = userService;
         }
        
         
         // GET: api/UserAccess
-        [HttpGet]
-        public ActionResult Login([FromQuery] string username, [FromQuery] string  password)
+        [HttpGet("login")]
+        public ActionResult<LoginResponseModel> Login([FromQuery] string username, [FromQuery] string  password)
         {
 
             try
             {
-               UsersModel user = _userService.loginService(username, password);
-               if(user != null)
+               LoginResponseModel serviceResponse = _userService.loginService(username, password);
+               
+                
+                if(serviceResponse != null)
                 {
-                    if(user.retry >= 3)
-                    {
-                        return StatusCode(401, new ErrorMessage(401, "User exceeded number of login tries"));
-                    }
-                    if (user.userStatus != 1)
-                    {
-                        return StatusCode(401, new ErrorMessage(401, "User is not authorized to use this application, Contact the administrator to resolve issue."));
-                    }
-                    return Ok(user);
+                    return Ok(serviceResponse);
                 }
                else
                 {
                     return NotFound(new ErrorMessage(404, "Incorrect username / password"));
                 }
 
+            }
+            catch(LoginException e)
+            {
+                if (e.Message == "Incorrect password")
+                {
+                    return StatusCode(401, new ErrorMessage(401, "Incorrect username / password"));
+                } else
+                {
+                    if (e.Message.Contains("User's account is"))
+                    {
+                        return StatusCode(401, new ErrorMessage(401, e.Message));
+                    } else
+                    {
+                        return StatusCode(401, new ErrorMessage(401, "Something went wrong"));
+                    }
+                }
+
+                
             }
             catch(Exception)
             {

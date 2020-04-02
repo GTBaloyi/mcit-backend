@@ -157,3 +157,4 @@ C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\bin\D
 C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\bin\Debug\netcoreapp3.1\NLog.dll
 C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\themba.baloy\Documents\School\Project\mcp-backend\backend\backend\bin\Debug\netcoreapp3.1\aws-beanstalk-tools-defaults.json
