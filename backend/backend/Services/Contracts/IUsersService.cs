@@ -8,6 +8,7 @@ namespace backend.Services
 {
     public interface IUsersService
     {
-        UsersModel loginService(String username, string password);
+        LoginResponseModel loginService(String username, string password);
+      
     }
 }

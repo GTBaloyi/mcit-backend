@@ -31,7 +31,7 @@ namespace backend.DataAccess.Repositories
             }
         }
 
-        public CompanyRepresentativeEntity GetBusinessRepresentativeEntity(int id)
+        public CompanyRepresentativeEntity GetBusinessRepresentative(int id)
         {
             try
             {

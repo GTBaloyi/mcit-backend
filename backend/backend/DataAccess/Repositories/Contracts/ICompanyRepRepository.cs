@@ -9,7 +9,7 @@ namespace backend.DataAccess.Contracts
     public interface ICompanyRepRepository
     {
         List<CompanyRepresentativeEntity> GetBusinessRepresentatives();
-        CompanyRepresentativeEntity GetBusinessRepresentativeEntity(int id);
+        CompanyRepresentativeEntity GetBusinessRepresentative(int id);
         bool UpdateBusinessRepresentative(CompanyRepresentativeEntity businessRepresentative);
         bool DeleteBusinessRepresentative(CompanyRepresentativeEntity businessRepresentative);
         bool CreateBusinessRepresentative(CompanyRepresentativeEntity businessRepresentative);
