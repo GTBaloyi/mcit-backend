@@ -5,14 +5,14 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: mcr.microsoft.com/dotnet/core/sdk:3.1
 
+
 pipelines:
   default:
     - step:
         caches:
           - dotnetcore
         script: # Modify the commands below to build your repository.
-          - export PROJECT_NAME=mcp-frontend
-          - export TEST_NAME=mcp-test
-          - dotnet restore
+          - cd backend/backend/
+          - export PROJECT_NAME=backend.csproj
+          - dotnet restore 
           - dotnet build $PROJECT_NAME
-          - dotnet test $TEST_NAME
