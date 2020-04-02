@@ -65,26 +65,7 @@ namespace backend.Controllers
             }
         }
 
-        // GET: api/UserAccess/5
-        [HttpGet("{username}")]
-        public ActionResult Logout()
-        {
-            
-            return Ok();
-
-        }
-
-        // POST: api/UserAccess
-        [HttpPost]
-        public void RegisterEmployee([FromBody] string value)
-        {
-        }
-
-        // PUT: api/UserAccess/5
-        [HttpPut("{id}")]
-        public void RegisterCustomer(int id, [FromBody] string value)
-        {
-        }
+        
 
        
     }
