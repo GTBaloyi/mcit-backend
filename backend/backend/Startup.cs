@@ -47,6 +47,12 @@ namespace backend
                     Description = "This API serves the frontend with data from databases and other external services."
                 });
             });
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
             services.AddControllers();
             services.AddScoped<IUsersService, UserService>();
             services.AddScoped<IUsersRepository, UsersRepository>();
@@ -71,6 +77,8 @@ namespace backend
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("MyPolicy");
 
             app.UseAuthorization();
 
