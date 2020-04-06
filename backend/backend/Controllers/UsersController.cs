@@ -41,7 +41,7 @@ namespace backend.Controllers
                 }
 
             }
-            catch(LoginException e)
+            catch(McpCustomException e)
             {
                 if (e.Message == "Incorrect password")
                 {
@@ -66,7 +66,9 @@ namespace backend.Controllers
         }
 
         
-        
-       
+        public ActionResult ClientRegistration()
+        {
+            return null;
+        }       
     }
 }

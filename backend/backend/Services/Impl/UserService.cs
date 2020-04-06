@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.Services.Commons;
+using backend.Services.Builder;
 
 namespace backend.Services
 {
@@ -16,11 +18,15 @@ namespace backend.Services
         private readonly IUsersRepository _userRepo;
         private readonly ICompanyRepRepository _companyRepRepo;
         private readonly IUserStatusRepository _userStatusRepo;
-        public UserService(IUsersRepository userRepo, ICompanyRepRepository companyRepRepository, IUserStatusRepository userStatusRepository)
+        private readonly CommonServices commonServices;
+        private readonly IEntityBuilder _entityBuilder;
+        public UserService(IUsersRepository userRepo, ICompanyRepRepository companyRepRepository, IUserStatusRepository userStatusRepository, IEntityBuilder entityBuilder)
         {
             _userRepo = userRepo;
             _companyRepRepo = companyRepRepository;
             _userStatusRepo = userStatusRepository;
+            commonServices = new CommonServices();
+            _entityBuilder = entityBuilder;
 
         }
 
@@ -42,14 +48,14 @@ namespace backend.Services
                         {
                             Dictionary<string, string> error = new Dictionary<string, string>();
                             error.Add("user_access", ""+result.user_status_fk);
-                            throw new LoginException("User's account is" + findUserStatus(result.user_status_fk));
+                            throw new McpCustomException("User's account is" + findUserStatus(result.user_status_fk));
                         }
                     }
                     else
                     {
                         UsersModel user = new UsersModel(result.username, result.password, result.retry, result.user_status_fk, result.access_fk);
                         saveRetry(user);
-                        throw new LoginException("Incorrect password");
+                        throw new McpCustomException("Incorrect password");
                     }
                 } else
                 {
@@ -62,6 +68,30 @@ namespace backend.Services
                 throw ex;
             }
         }
+
+        public ClientRegistrationResponseModel registerService(ClientRegistrationRequestModel data)
+        {
+            try
+            {
+                if(commonServices.companyExist(data.companyRegistrationNumber))
+                {
+
+                    CompanyEntity companyEntity = _entityBuilder.buildCompanyEntity(0, data.companyName, data.companyProfile,data.companyRegistrationNumber,"")
+                } else
+                {
+                    throw new McpCustomException("Company not registered");
+                }
+            } catch(McpCustomException e)
+            {
+                throw e;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            throw null;
+        }
+
 
         private string findUserStatus(int user_status_fk)
         {

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace backend.Exceptions
 {
-    public class LoginException : Exception
+    public class McpCustomException : Exception
     {
-        public LoginException(string message) : base(message)
+        public McpCustomException(string message) : base(message)
         {
              
         }
