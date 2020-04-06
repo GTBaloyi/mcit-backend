@@ -10,24 +10,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Services.Commons;
 using backend.Services.Builder;
+using backend.DataAccess.Database.Repositories.Contracts;
 
 namespace backend.Services
 {
     public class UserService : IUsersService
     {
         private readonly IUsersRepository _userRepo;
+        private readonly ICompanyRepository _companyRepository;
         private readonly ICompanyRepRepository _companyRepRepo;
         private readonly IUserStatusRepository _userStatusRepo;
         private readonly CommonServices commonServices;
         private readonly IEntityBuilder _entityBuilder;
-        public UserService(IUsersRepository userRepo, ICompanyRepRepository companyRepRepository, IUserStatusRepository userStatusRepository, IEntityBuilder entityBuilder)
+        public UserService(IUsersRepository userRepo, ICompanyRepRepository companyRepRepository, IUserStatusRepository userStatusRepository, IEntityBuilder entityBuilder, ICompanyRepository companyRepository)
         {
             _userRepo = userRepo;
             _companyRepRepo = companyRepRepository;
             _userStatusRepo = userStatusRepository;
             commonServices = new CommonServices();
             _entityBuilder = entityBuilder;
-
+            
         }
 
         public LoginResponseModel loginService(string username, string password)
@@ -76,7 +78,8 @@ namespace backend.Services
                 if(commonServices.companyExist(data.companyRegistrationNumber))
                 {
 
-                    CompanyEntity companyEntity = _entityBuilder.buildCompanyEntity(0, data.companyName, data.companyProfile,data.companyRegistrationNumber,"")
+                    CompanyEntity companyEntity = _entityBuilder.buildCompanyEntity(0, data.companyName, data.companyRegistrationNumber, data.companyProfile, data.isCompanyPresent, "");
+                    
                 } else
                 {
                     throw new McpCustomException("Company not registered");
