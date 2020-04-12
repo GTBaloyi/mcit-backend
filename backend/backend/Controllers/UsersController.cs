@@ -65,10 +65,39 @@ namespace backend.Controllers
             }
         }
 
-        
-        public ActionResult ClientRegistration()
+        [HttpPost("client-registration")]
+        public ActionResult<ClientRegistrationResponseModel> ClientRegistration([FromBody] ClientRegistrationRequestModel request)
         {
-            return null;
+           try
+            {
+                return Ok(_userService.registerService(request));
+            }
+            catch (McpCustomException ex)
+            {
+                if(ex.Message == "Could not save new user")
+                {
+                    return Unauthorized("Registration process failed. Could not create a new client user");
+                } else
+                {
+                    if(ex.Message == "Could not save company representative")
+                    {
+                        return Unauthorized( "Registration process failed. Could not create a company representative");
+                    } else
+                    {
+                        if (ex.Message == "Company not saved")
+                        {
+                            return Unauthorized( "Registration process failed. Could not create a company");
+                        } else
+                        {
+                            return Unauthorized("Registration process failed. Company Submitted is not registered.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }       
     }
 }

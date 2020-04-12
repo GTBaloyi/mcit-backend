@@ -17,18 +17,22 @@ namespace backend.Services
     public class UserService : IUsersService
     {
         private readonly IUsersRepository _userRepo;
-        private readonly ICompanyRepository _companyRepository;
+        private readonly ICompanyRepository _companyRepo;
         private readonly ICompanyRepRepository _companyRepRepo;
         private readonly IUserStatusRepository _userStatusRepo;
         private readonly CommonServices commonServices;
+        private readonly CommonMethods commonMethods;
         private readonly IEntityBuilder _entityBuilder;
+
         public UserService(IUsersRepository userRepo, ICompanyRepRepository companyRepRepository, IUserStatusRepository userStatusRepository, IEntityBuilder entityBuilder, ICompanyRepository companyRepository)
         {
             _userRepo = userRepo;
             _companyRepRepo = companyRepRepository;
             _userStatusRepo = userStatusRepository;
             commonServices = new CommonServices();
+            commonMethods = new CommonMethods();
             _entityBuilder = entityBuilder;
+            _companyRepo = companyRepository;
             
         }
 
@@ -43,14 +47,13 @@ namespace backend.Services
                     {
                         if(result.user_status_fk == 1)
                         {
-                            CompanyRepresentativeEntity userInfo = _companyRepRepo.GetBusinessRepresentative(result.company_rep_fk);
+                            CompanyRepresentativeEntity userInfo = _companyRepRepo.GetById(result.company_rep_fk);
                             LoginResponseModel loginResponse = new LoginResponseModel(userInfo.name, userInfo.surname, userInfo.avatar_path, result.access_fk, true);
                             return loginResponse;
                         } else
                         {
-                            Dictionary<string, string> error = new Dictionary<string, string>();
-                            error.Add("user_access", ""+result.user_status_fk);
-                            throw new McpCustomException("User's account is" + findUserStatus(result.user_status_fk));
+                            string status = _userStatusRepo.GetUserStatus(result.user_status_fk).status;
+                            throw new McpCustomException("User's account is" + status);
                         }
                     }
                     else
@@ -75,31 +78,68 @@ namespace backend.Services
         {
             try
             {
-                if(commonServices.companyExist(data.companyRegistrationNumber))
+                if (commonServices.companyExist(data.companyRegistrationNumber))
                 {
-
                     CompanyEntity companyEntity = _entityBuilder.buildCompanyEntity(0, data.companyName, data.companyRegistrationNumber, data.companyProfile, data.isCompanyPresent, "");
-                    
-                } else
-                {
-                    throw new McpCustomException("Company not registered");
+                    if (_companyRepo.Insert(companyEntity))
+                    {
+                        int companyId = _companyRepo.GetByRegistrationNumber(data.companyRegistrationNumber).id;
+                        CompanyRepresentativeEntity companyRepEntity = _entityBuilder.buildCompanyRepEntity(0, data.title, data.contactName, data.contactSurname, data.gender, data.contactEmail, data.contactNumber, companyId, DateTime.Now, data.avatar);
+
+                        if (_companyRepRepo.Insert(companyRepEntity))
+                        {
+                            int companyRepId = _companyRepRepo.GetByEmail(data.contactEmail).id;
+                            string otp = commonMethods.generateCode(4);
+                            string defaultPassword = commonMethods.generateCode(8);
+                            UsersEntity user = _entityBuilder.buildUserEntity(data.contactEmail, defaultPassword, 0, 2, 3, companyRepId, DateTime.Now, otp, null);
+                            if (_userRepo.SaveUser(user))
+                            {
+                                //TODO: Send email
+                                return new ClientRegistrationResponseModel(200, "Company, Company Representative and user details registered successfully");
+                            }
+                            else
+                            {
+                                CompanyEntity deleteCompany = _companyRepo.GetById(companyId);
+                                _companyRepo.Delete(deleteCompany);
+
+                                CompanyRepresentativeEntity deleteCompanyRep = _companyRepRepo.GetById(companyId);
+                                _companyRepRepo.Delete(deleteCompanyRep);
+
+                                throw new McpCustomException("Could not save new user");
+                            }
+                        }
+                        else
+                        {
+                            CompanyEntity deleteCompany = _companyRepo.GetById(companyId);
+                            _companyRepo.Delete(deleteCompany);
+
+                            throw new McpCustomException("Could not save company representative");
+                        }
+                        // _companyRepo.GetCompany()
+                    }
+                    else
+                    {
+                        throw new McpCustomException("Company not saved");
+                    }
+
+
                 }
-            } catch(McpCustomException e)
+                else
+                {
+                    throw new McpCustomException("Company does not exist");
+                }
+            }
+            catch(McpCustomException e)
             {
                 throw e;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw e;
             }
-            throw null;
+
         }
 
-
-        private string findUserStatus(int user_status_fk)
-        {
-            return _userStatusRepo.GetUserStatus(user_status_fk).status;
-        }
 
         private void saveRetry(UsersModel user)
         {

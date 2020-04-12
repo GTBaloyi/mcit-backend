@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace backend.DataAccess.Entities
 {
-    [Table("company")]
+    [Table("Company")]
     public class CompanyEntity
     {
         [Key]

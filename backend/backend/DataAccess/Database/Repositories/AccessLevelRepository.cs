@@ -49,6 +49,8 @@ namespace backend.DataAccess.Repositories
             try
             {
                 _context.Entry(accessLevel).State = EntityState.Modified;
+                _context.SaveChanges();
+
                 return true;
             }
             catch (Exception ex)
@@ -63,6 +65,8 @@ namespace backend.DataAccess.Repositories
             try
             {
                 _context.accessLevel.Add(accessLevel);
+                _context.SaveChanges();
+
                 return true;
             }
             catch (Exception ex)
@@ -77,6 +81,8 @@ namespace backend.DataAccess.Repositories
             try
             {
                 _context.accessLevel.Remove(accessLevel);
+                _context.SaveChanges();
+
                 return true;
             }
             catch (Exception ex)

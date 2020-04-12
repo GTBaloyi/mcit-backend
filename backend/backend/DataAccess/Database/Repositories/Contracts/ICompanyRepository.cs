@@ -8,10 +8,11 @@ namespace backend.DataAccess.Database.Repositories.Contracts
 {
     public interface ICompanyRepository
     {
-        List<CompanyEntity> GetCompanies();
-        CompanyEntity GetCompany(int id);
-        bool UpdateCompany(CompanyEntity company);
-        bool DeleteCompany(CompanyEntity company);
-        bool CreateCompany(CompanyEntity company);
+        List<CompanyEntity> GetList();
+        CompanyEntity GetByRegistrationNumber(string registration);
+        CompanyEntity GetById(int id);
+        bool Update(CompanyEntity company);
+        bool Delete(CompanyEntity company);
+        bool Insert(CompanyEntity company);
     }
 }

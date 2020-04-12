@@ -14,7 +14,7 @@ namespace backend.Models
         public string gender { get; set; }
         public string contactEmail { get; set; }
         public string contactNumber { get; set; }
-
+        public string avatar { get; set; }
         //company info
         public string companyName { get; set; }
         public string companyRegistrationNumber { get; set; }

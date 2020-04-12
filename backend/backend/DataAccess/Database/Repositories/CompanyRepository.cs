@@ -1,5 +1,7 @@
 ﻿using backend.DataAccess.Database.Repositories.Contracts;
 using backend.DataAccess.Entities;
+using backend.DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +11,90 @@ namespace backend.DataAccess.Database.Repositories
 {
     public class CompanyRepository : ICompanyRepository
     {
-        public bool CreateCompany(CompanyEntity company)
+        private ApplicationDbContext _context;
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        public CompanyRepository(ApplicationDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public bool DeleteCompany(CompanyEntity company)
+        public bool Insert(CompanyEntity company)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.company.Add(company);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex);
+                return false;
+            }
         }
 
-        public List<CompanyEntity> GetCompanies()
+        public bool Delete(CompanyEntity company)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.company.Remove(company);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex);
+                return false;
+            }
         }
 
-        public CompanyEntity GetCompany(int id)
+        public List<CompanyEntity> GetList()
         {
-            throw new NotImplementedException();
+            return _context.company.ToList();
         }
 
-        public bool UpdateCompany(CompanyEntity company)
+        public CompanyEntity GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.company.Find(id);
+        }
+
+        public bool Update(CompanyEntity company)
+        {
+            try
+            {
+                _context.Entry(company).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex);
+                return false;
+            }
+        }
+
+        public CompanyEntity GetByRegistrationNumber(string registration)
+        {
+            try
+            {
+                 List<CompanyEntity> queryResponse = _context.company.Where(x => x.registration_number == registration).ToList();
+
+                for (int i = 0; i < queryResponse.Count; i++)
+                {
+                    return queryResponse[i];
+                }
+
+                return null;
+
+            } 
+            catch(Exception ex)
+            {
+                logger.Error(ex);
+                throw ex;
+            }
         }
     }
 }

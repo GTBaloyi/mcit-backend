@@ -1,4 +1,5 @@
-﻿using backend.DataAccess.Entities;
+﻿using backend.DataAccess.Database.Entities;
+using backend.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace backend.Services.Builder
         private CompanyEntity companyEntity;
         private CompanyRepresentativeEntity companyRepEntity;
         private UsersEntity userEntity;
+        private EnquiryEntity enquiryEntity;
        
         public CompanyEntity buildCompanyEntity(int id,string name, string companyRegistration, string companyProfile, bool isCompanyPresent, string quarter)
         {
@@ -47,7 +49,26 @@ namespace backend.Services.Builder
             return companyRepEntity;
         }
 
-        public UsersEntity buildUserEntity(string username, string password, int retry, int userStatusId, int accessId, int companyId, DateTime lastLogin, string otp, string location)
+        public EnquiryEntity buildEnquiryEntity(int id, int focusAreaId, DateTime enquiryDate, string quarter, string company, string companyRegistrationNumber, string description, int serviceTechId, int socioEconomicImpactId, int productExpectationid, double projectBudget, DateTime expectedCompletion)
+        {
+            enquiryEntity = new EnquiryEntity();
+            enquiryEntity.id = id;
+            enquiryEntity.focus_area_fk = focusAreaId;
+            enquiryEntity.enquiry_date = enquiryDate;
+            enquiryEntity.quarter = quarter;
+            enquiryEntity.company = company;
+            enquiryEntity.company_registration_number = companyRegistrationNumber;
+            enquiryEntity.description = description;
+            enquiryEntity.service_tech_fk = serviceTechId;
+            enquiryEntity.socio_economic_impact_fk = socioEconomicImpactId;
+            enquiryEntity.product_expectation_fk = productExpectationid;
+            enquiryEntity.project_budget = projectBudget;
+            enquiryEntity.expected_completion = expectedCompletion;
+
+            return enquiryEntity;
+        }
+
+        public UsersEntity buildUserEntity(string username, string password, int retry, int userStatusId, int accessId, int companyRepId, DateTime lastLogin, string otp, string location)
         {
             userEntity = new UsersEntity();
             userEntity.username = username;
@@ -55,7 +76,7 @@ namespace backend.Services.Builder
             userEntity.retry = retry;
             userEntity.user_status_fk = userStatusId;
             userEntity.access_fk = accessId;
-            userEntity.company_rep_fk = companyId;
+            userEntity.company_rep_fk = companyRepId;
             userEntity.last_login = lastLogin;
             userEntity.otp = otp;
             userEntity.location = location;

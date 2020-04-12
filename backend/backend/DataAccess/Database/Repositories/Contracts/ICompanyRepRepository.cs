@@ -8,10 +8,11 @@ namespace backend.DataAccess.Contracts
 {
     public interface ICompanyRepRepository
     {
-        List<CompanyRepresentativeEntity> GetBusinessRepresentatives();
-        CompanyRepresentativeEntity GetBusinessRepresentative(int id);
-        bool UpdateBusinessRepresentative(CompanyRepresentativeEntity businessRepresentative);
-        bool DeleteBusinessRepresentative(CompanyRepresentativeEntity businessRepresentative);
-        bool CreateBusinessRepresentative(CompanyRepresentativeEntity businessRepresentative);
+        List<CompanyRepresentativeEntity> GetList();
+        CompanyRepresentativeEntity GetById(int id);
+        CompanyRepresentativeEntity GetByEmail(string email);
+        bool Update(CompanyRepresentativeEntity businessRepresentative);
+        bool Delete(CompanyRepresentativeEntity businessRepresentative);
+        bool Insert(CompanyRepresentativeEntity businessRepresentative);
     }
 }

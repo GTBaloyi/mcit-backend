@@ -8,6 +8,7 @@ using backend.DataAccess.Database.Repositories;
 using backend.DataAccess.Database.Repositories.Contracts;
 using backend.DataAccess.Repositories;
 using backend.Services;
+using backend.Services.Builder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -62,6 +63,7 @@ namespace backend
             services.AddScoped<ICompanyRepRepository, CompanyRepRepository>();
             services.AddScoped<IAccessLevelRepository, AccessLevelRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IEntityBuilder, EntityBuilder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

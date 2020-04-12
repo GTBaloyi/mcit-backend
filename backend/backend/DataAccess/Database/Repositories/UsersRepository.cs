@@ -22,6 +22,8 @@ namespace backend.DataAccess.Repositories
             try
             {
                 _context.users.Remove(user);
+                _context.SaveChanges();
+
                 return true;
             } 
             catch (Exception ex)
@@ -66,6 +68,8 @@ namespace backend.DataAccess.Repositories
             try
             {
                 _context.users.Add(user);
+                _context.SaveChanges();
+
                 return true;
             }
             catch (Exception ex)
@@ -81,6 +85,8 @@ namespace backend.DataAccess.Repositories
             try
             {
                 _context.Entry(user).State = EntityState.Modified;
+                _context.SaveChanges();
+
                 return true;
             }
             catch (Exception ex)

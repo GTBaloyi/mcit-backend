@@ -1,4 +1,5 @@
-﻿using backend.DataAccess.Entities;
+﻿using backend.DataAccess.Database.Entities;
+using backend.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,9 @@ namespace backend.DataAccess.Repositories
         public DbSet<UserStatusEntity> userStatus { get; set; }
         public DbSet<AccessLevelEntity> accessLevel { get; set; }
         public DbSet<CompanyRepresentativeEntity> businessRepresentatives { get; set; }
+        public DbSet<CompanyEntity> company { get; set; }
+        public DbSet<EnquiryEntity> enquiry { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
