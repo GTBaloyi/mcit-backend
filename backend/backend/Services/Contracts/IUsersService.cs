@@ -9,6 +9,6 @@ namespace backend.Services
     public interface IUsersService
     {
         LoginResponseModel loginService(String username, string password);
-      
+        ClientRegistrationResponseModel registerService(ClientRegistrationRequestModel registrationData);
     }
 }

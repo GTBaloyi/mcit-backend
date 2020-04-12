@@ -18,7 +18,7 @@ namespace backend.DataAccess.Repositories
             _context = context;
         }
 
-        public List<CompanyRepresentativeEntity> GetBusinessRepresentatives()
+        public List<CompanyRepresentativeEntity> GetList()
         {
             try
             {
@@ -26,12 +26,12 @@ namespace backend.DataAccess.Repositories
             }
             catch (Exception ex)
             {
-                logger.Info(ex);
+                logger.Error(ex);
                 throw ex;
             }
         }
 
-        public CompanyRepresentativeEntity GetBusinessRepresentative(int id)
+        public CompanyRepresentativeEntity GetById(int id)
         {
             try
             {
@@ -44,45 +44,64 @@ namespace backend.DataAccess.Repositories
             }
         }
 
-        public bool UpdateBusinessRepresentative(CompanyRepresentativeEntity businessRepresentative)
+        public bool Update(CompanyRepresentativeEntity businessRepresentative)
         {
             try
             {
                  _context.Entry(businessRepresentative).State = EntityState.Modified;
-                 return true;
+                _context.SaveChanges();
+
+                return true;
             }
             catch (Exception ex)
             {
-                logger.Info(ex);
-                return false;
+                logger.Error(ex);
+                throw ex;
             }
         }
 
-        public bool DeleteBusinessRepresentative(CompanyRepresentativeEntity businessRepresentative)
+        public bool Delete(CompanyRepresentativeEntity businessRepresentative)
         {
             try
             {
                 _context.businessRepresentatives.Remove(businessRepresentative);
+                _context.SaveChanges();
+
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Info(ex);
-                return false;
+                logger.Error(ex);
+                throw ex;
             }
         }
 
-        public bool CreateBusinessRepresentative(CompanyRepresentativeEntity businessRepresentative)
+        public bool Insert(CompanyRepresentativeEntity businessRepresentative)
         {
             try
             {
                 _context.businessRepresentatives.Add(businessRepresentative);
+                _context.SaveChanges();
+
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Info(ex);
-                return false;
+                logger.Error(ex);
+                throw ex;
+            }
+        }
+
+        public CompanyRepresentativeEntity GetByEmail(string email)
+        {
+            try
+            {
+               return _context.businessRepresentatives.Where(x => x.email == email).ToList()[0];
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex); 
+                throw ex;
             }
         }
     }
