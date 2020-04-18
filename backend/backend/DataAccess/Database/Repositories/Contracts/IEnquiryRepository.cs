@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace backend.DataAccess.Database.Repositories.Contracts
 {
-    interface IEnquiryRepository
+   public interface IEnquiryRepository
     {
         public List<EnquiryEntity> GetAll();
         public EnquiryEntity GetById(int id);
         public bool Save(EnquiryEntity enquiry);
         public bool Update(EnquiryEntity enquiry);
-        public bool Delete(int id);
+        public bool Delete(EnquiryEntity enquiry);
     }
 }
