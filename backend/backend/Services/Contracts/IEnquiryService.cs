@@ -10,7 +10,7 @@ namespace backend.Services.Contracts
 {
     public interface IEnquiryService
     {
-        EnquiryResponseModel NewEnquiry(int id, int focusAreaId, DateTime enquiryDate, string quarter, string company, string companyRegistrationNumber, string description, int serviceTechId, int socioEconomicImpactId, int productExpectationid, double projectBudget, DateTime expectedCompletion);
+        EnquiryResponseModel NewEnquiry(EnquiryRequestModel model);
         EnquiryRequestModel GetById(int id);
         EnquiryResponseModel Save(EnquiryEntity entity);
         List<EnquiryRequestModel> GetAll();

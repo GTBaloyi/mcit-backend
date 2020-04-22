@@ -24,32 +24,76 @@ namespace backend.Controllers
         }
 
         [HttpPost("NewEnquiry")]//saves a new enquiry
-        public ActionResult<EnquiryResponseModel> CreateEnquiry([FromQuery]int id, [FromQuery] int focusAreaId, [FromQuery] DateTime enquiryDate, [FromQuery] string quarter, [FromQuery] string company, [FromQuery] string companyRegistrationNumber, [FromQuery] string description, [FromQuery] int serviceTechId, [FromQuery] int socioEconomicImpactId, [FromQuery] int productExpectationid, [FromQuery] double projectBudget, [FromQuery] DateTime expectedCompletion)
+        public ActionResult<EnquiryResponseModel> CreateEnquiry([FromBody] EnquiryRequestModel model)
         {
-            EnquiryResponseModel model = _enquiryService.NewEnquiry(id, focusAreaId, enquiryDate, quarter, company, companyRegistrationNumber, description, serviceTechId, socioEconomicImpactId, productExpectationid, projectBudget, expectedCompletion);
-            return model;
+            try
+            {
+                EnquiryResponseModel response = _enquiryService.NewEnquiry(model);
+                return response;
+            }
+            
+            catch (Exception)
+            {
+                return new EnquiryResponseModel(003, "Internal Server Error");
+            }
         }
 
 
         [HttpPut("Update")]//updates an existing enquiry
         public ActionResult<EnquiryResponseModel> UpdateEnquiry([FromBody] EnquiryRequestModel model)
         {
-            EnquiryResponseModel response = _enquiryService.Update(model);
-            return response;
+            try
+            {
+                EnquiryResponseModel response = _enquiryService.Update(model);
+                return response;
+            }
+
+            catch (Exception)
+            {
+                return new EnquiryResponseModel(004, "Could not Update Entry, internal server error");
+            }
+           
         }
 
-        [HttpGet("GetById")]
+        [HttpGet("GetById/{id}")]
         public ActionResult<EnquiryRequestModel> GetEnquiry([FromBody] int id)
         {
-            EnquiryRequestModel response = _enquiryService.GetById(id);
-            return response;
+            try
+            {
+                EnquiryRequestModel response = _enquiryService.GetById(id);
+                return response;
+                if (response != null)
+                {
+                    return response;
+                }
+                else
+                {
+                    return NotFound("Enquiry does not exist / has been deleted");
+                }
+            }
+
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
+            
         }
 
-        [HttpGet("GetAllEnquiries")]
+        [HttpGet("GetAll")]
         public ActionResult <List<EnquiryRequestModel>> GetAllEnquiries()
         {
-            List<EnquiryRequestModel> enquiries = _enquiryService.GetAll();
-            return enquiries;
+            try
+            {
+                List<EnquiryRequestModel> enquiries = _enquiryService.GetAll();
+                return enquiries;
+            }
+
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+           
         }
 
     }
