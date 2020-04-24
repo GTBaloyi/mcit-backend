@@ -20,4 +20,4 @@ pipelines:
           - dotnet build $PROJECT_NAME
           - dotnet publish --output publish --configuration release
           - cd ./publish
-          - ncftpput -v -u "$FTP_USERNAME" -p "$FTP_PASSWORD" -R $FTP_HOST /site/wwwroot *
+          - ncftpput -v -u "$FTP_USERNAME" -p "$FTP_PASSWORD" -R $FTP_HOST/site/wwwroot *
