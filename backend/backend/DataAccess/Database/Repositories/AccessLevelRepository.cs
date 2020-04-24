@@ -4,68 +4,53 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace backend.DataAccess.Repositories
 {
-    public class UsersRepository : IUsersRepository 
+    public class AccessLevelRepository : IAccessLevelRepository
     {
         private ApplicationDbContext _context;
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public UsersRepository(ApplicationDbContext context)
+        public AccessLevelRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public bool DeleteUser(UsersEntity user)
+        public List<AccessLevelEntity> GetAccessLevels()
         {
             try
             {
-                _context.users.Remove(user);
-                return true;
-            } 
-            catch (Exception ex)
-            {
-                logger.Info(ex);
-                return false;
-            }
-            
-        }
-
-        public UsersEntity GetUser(string username)
-        {
-            try
-            {
-               return _context.users.Find(username);
+                return _context.accessLevel.ToList();
             }
             catch (Exception ex)
             {
                 logger.Info(ex);
                 throw ex;
             }
-
         }
 
-        public List<UsersEntity> GetUsers()
+        public AccessLevelEntity GetAccessLevel(int id)
         {
             try
             {
-                return _context.users.ToList();
-                
+               return _context.accessLevel.Find(id);
             }
             catch (Exception ex)
             {
                 logger.Info(ex);
                 throw ex;
             }
-
         }
 
-        public bool SaveUser(UsersEntity user)
+        public bool UpdateAccessLevel(AccessLevelEntity accessLevel)
         {
             try
             {
-                _context.users.Add(user);
+                _context.Entry(accessLevel).State = EntityState.Modified;
+                _context.SaveChanges();
+
                 return true;
             }
             catch (Exception ex)
@@ -73,14 +58,15 @@ namespace backend.DataAccess.Repositories
                 logger.Info(ex);
                 return false;
             }
-
         }
 
-        public bool UpdateUser(UsersEntity user)
+        public bool CreateAccessLevel(AccessLevelEntity accessLevel)
         {
             try
             {
-                _context.Entry(user).State = EntityState.Modified;
+                _context.accessLevel.Add(accessLevel);
+                _context.SaveChanges();
+
                 return true;
             }
             catch (Exception ex)
@@ -88,10 +74,25 @@ namespace backend.DataAccess.Repositories
                 logger.Info(ex);
                 return false;
             }
-
         }
 
-        public void Save()
+        public bool DeleteAccessLevel(AccessLevelEntity accessLevel)
+        {
+            try
+            {
+                _context.accessLevel.Remove(accessLevel);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex);
+                return false;
+            }
+        }
+
+        void IAccessLevelRepository.Save()
         {
             _context.SaveChanges();
         }

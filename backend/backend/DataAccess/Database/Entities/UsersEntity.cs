@@ -17,5 +17,8 @@ namespace backend.DataAccess.Entities
         public int user_status_fk { get; set; }
         public int access_fk { get; set; }
         public int company_rep_fk { get; set; }
+        public DateTime last_login { get; set; }
+        public string otp { get; set; }
+        public string location { get; set; }
     }
 }
