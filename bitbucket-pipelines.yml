@@ -3,7 +3,8 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: microsoft/dotnet:sdk
+image: mcr.microsoft.com/dotnet/core/sdk:3.1
+
 
 pipelines:
   default:
@@ -11,16 +12,7 @@ pipelines:
         caches:
           - dotnetcore
         script: # Modify the commands below to build your repository.
-          - export PROJECT_NAME=mcp-frontend
-          - export TEST_NAME=mcp-test
-          - dotnet restore
+          - cd backend/backend/
+          - export PROJECT_NAME=backend.csproj
+          - dotnet restore 
           - dotnet build $PROJECT_NAME
-          - dotnet test $TEST_NAME
-          - pipe: atlassian/aws-elasticbeanstalk-deploy:0.6.2
-            variables:
-             AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-             AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-             AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-             APPLICATION_NAME: $APPLICATION_NAME
-             ENVIRONMENT_NAME: $ENVIRONMENT_NAME
-             ZIP_FILE: $ZIP_FILE

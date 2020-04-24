@@ -12,7 +12,7 @@ namespace backend.Models
 
         }
 
-        public UsersModel( string username, string? password, int? retry, int? userStatus, int? access)
+        public UsersModel(string username, string? password, int? retry, int? userStatus, int? access)
         {
             this.username = username;
             this.password = password;
@@ -22,7 +22,7 @@ namespace backend.Models
         }
 
         public string username { get; set; }
-        public string? password { get; set; } 
+        public string? password { get; set; }
         public int? retry { get; set; }
         public int? userStatus { get; set; }
         public int? access { get; set; }

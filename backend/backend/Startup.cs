@@ -4,8 +4,11 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using backend.DataAccess.Contracts;
+using backend.DataAccess.Database.Repositories;
+using backend.DataAccess.Database.Repositories.Contracts;
 using backend.DataAccess.Repositories;
 using backend.Services;
+using backend.Services.Builder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -47,12 +50,20 @@ namespace backend
                     Description = "This API serves the frontend with data from databases and other external services."
                 });
             });
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
             services.AddControllers();
             services.AddScoped<IUsersService, UserService>();
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IUserStatusRepository, UserStatusRepository>();
             services.AddScoped<ICompanyRepRepository, CompanyRepRepository>();
             services.AddScoped<IAccessLevelRepository, AccessLevelRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IEntityBuilder, EntityBuilder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +82,8 @@ namespace backend
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("MyPolicy");
 
             app.UseAuthorization();
 
