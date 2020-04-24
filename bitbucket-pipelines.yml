@@ -16,3 +16,6 @@ pipelines:
           - export PROJECT_NAME=backend.csproj
           - dotnet restore 
           - dotnet build $PROJECT_NAME
+          - dotnet publish --output publish --configuration release
+          - cd ./publish
+          - ncftpput -v -u "$FTP_USERNAME" -p "$FTP_PASSWORD" -R $FTP_HOST /site/wwwroot *
