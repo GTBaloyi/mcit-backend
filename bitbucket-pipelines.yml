@@ -13,6 +13,8 @@ pipelines:
           - dotnetcore
         script: # Modify the commands below to build your repository.
           - cd backend/backend/
+          - apt-get update
+          - apt-get install ncftp
           - export PROJECT_NAME=backend.csproj
           - dotnet restore 
           - dotnet build $PROJECT_NAME
