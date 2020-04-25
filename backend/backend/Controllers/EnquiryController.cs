@@ -24,17 +24,22 @@ namespace backend.Controllers
         }
 
         [HttpPost("NewEnquiry")]//saves a new enquiry
-        public ActionResult<EnquiryResponseModel> CreateEnquiry([FromBody] EnquiryRequestModel model)
+        public ActionResult CreateEnquiry([FromBody] EnquiryRequestModel enquiry)
         {
             try
             {
-                EnquiryResponseModel response = _enquiryService.NewEnquiry(model);
-                return response;
+                if (_enquiryService.NewEnquiry(enquiry))
+                {
+                    return StatusCode(200,"Enquiry Captured");
+                }
+                else
+                {
+                    return StatusCode(409, "Enquiry not saved");
+                }
             }
-            
             catch (Exception)
             {
-                return new EnquiryResponseModel(003, "Internal Server Error");
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -44,34 +49,38 @@ namespace backend.Controllers
         {
             try
             {
-                EnquiryResponseModel response = _enquiryService.Update(model);
-                return response;
-            }
 
+                EnquiryResponseModel response = _enquiryService.Update(model);
+                if(response != null)
+                {
+                    return StatusCode(200, response);
+                }
+                else
+                {
+                    return StatusCode(407, "Enquiry not updated");
+                }
+            }
             catch (Exception)
             {
-                return new EnquiryResponseModel(004, "Could not Update Entry, internal server error");
+                return StatusCode(500, "Internal Server Error");
             }
            
         }
 
         [HttpGet("GetById/{id}")]
-        public ActionResult<EnquiryRequestModel> GetEnquiry([FromBody] int id)
+        public ActionResult<EnquiryResponseModel> GetEnquiry(int id)
         {
             try
             {
-                EnquiryRequestModel response = _enquiryService.GetById(id);
-                return response;
-                if (response != null)
+                EnquiryResponseModel response = _enquiryService.GetById(id);
+                if(response !=null)
                 {
-                    return response;
-                }
-                else
+                    return StatusCode(200, response);
+                } else
                 {
-                    return NotFound("Enquiry does not exist / has been deleted");
+                    return StatusCode(404, "Enquiry not found");
                 }
             }
-
             catch (Exception)
             {
                 return StatusCode(500, "Internal Server Error");
@@ -81,12 +90,18 @@ namespace backend.Controllers
         }
 
         [HttpGet("GetAll")]
-        public ActionResult <List<EnquiryRequestModel>> GetAllEnquiries()
+        public ActionResult <List<EnquiryResponseModel>> GetAllEnquiries()
         {
             try
             {
-                List<EnquiryRequestModel> enquiries = _enquiryService.GetAll();
-                return enquiries;
+                List<EnquiryResponseModel> enquiries = _enquiryService.GetAll();
+                if(enquiries == null)
+                {
+                    return StatusCode(203, "No enquiries found");
+                } else
+                {
+                    return StatusCode(200,enquiries);
+                }
             }
 
             catch (Exception)

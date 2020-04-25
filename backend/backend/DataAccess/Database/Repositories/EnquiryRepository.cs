@@ -40,8 +40,6 @@ namespace backend.DataAccess.Database.Repositories
             try
             {
                 EnquiryEntity enquiry = _context.enquiry.Find(id);
-                
-
                 return enquiry;
             }
             catch (Exception ex)
@@ -53,12 +51,10 @@ namespace backend.DataAccess.Database.Repositories
         }
 
         public List<EnquiryEntity> GetAll()
-        {
+        {   
             try
             {
                 List<EnquiryEntity> enquiries = _context.enquiry.ToList();
-
-
                 return enquiries;
             }
             catch (Exception ex)

@@ -35,28 +35,16 @@ namespace backend.Services
             _enquiryRepo.Delete(entity);
         }
 
-        public List<EnquiryRequestModel> GetAll()
+        public List<EnquiryResponseModel> GetAll()
         {
             List<EnquiryEntity> entities = _enquiryRepo.GetAll();
-            List<EnquiryRequestModel> models = new List<EnquiryRequestModel>();
+            List<EnquiryResponseModel> models = new List<EnquiryResponseModel>();
             if (entities != null)
             {
                 foreach (EnquiryEntity entity in entities)
                 {
-                    EnquiryRequestModel model = new EnquiryRequestModel();
-                    model.id = entity.id;
-                    model.focus_area_fk = entity.focus_area_fk;
-                    model.enquiry_date = entity.enquiry_date;
-                    model.quarter = entity.quarter;
-                    model.company = entity.company;
-                    model.company_registration_number = entity.company_registration_number;
-                    model.description = entity.description;
-                    model.service_tech_fk = entity.service_tech_fk;
-                    model.socio_economic_impact_fk = entity.socio_economic_impact_fk;
-                    model.product_expectation_fk = entity.product_expectation_fk;
-                    model.project_budget = entity.project_budget;
-                    model.expected_completion = entity.expected_completion;
-
+                    EnquiryResponseModel model = new EnquiryResponseModel(entity.id, entity.focus_area_fk, entity.enquiry_date, entity.quarter, entity.company, entity.company_registration_number, entity.description,
+                     entity.service_tech_fk, entity.socio_economic_impact_fk, entity.product_expectation_fk, entity.project_budget, entity.expected_completion);                   
                     models.Add(model);
                 }
                 return models;
@@ -69,25 +57,13 @@ namespace backend.Services
             
         }
 
-        public EnquiryRequestModel GetById(int id)
+        public EnquiryResponseModel GetById(int id)
         {
             EnquiryEntity entity = _enquiryRepo.GetById(id);
             if (entity != null)
             {
-                EnquiryRequestModel model = new EnquiryRequestModel();
-                model.id = id;
-                model.focus_area_fk = entity.focus_area_fk;
-                model.enquiry_date = entity.enquiry_date;
-                model.quarter = entity.quarter;
-                model.company = entity.company;
-                model.company_registration_number = entity.company_registration_number;
-                model.description = entity.description;
-                model.service_tech_fk = entity.service_tech_fk;
-                model.socio_economic_impact_fk = entity.socio_economic_impact_fk;
-                model.product_expectation_fk = entity.product_expectation_fk;
-                model.project_budget = entity.project_budget;
-                model.expected_completion = entity.expected_completion;
-                return model;
+                return new EnquiryResponseModel(id, entity.focus_area_fk, entity.enquiry_date, entity.quarter, entity.company, entity.company_registration_number, entity.description,
+                     entity.service_tech_fk, entity.socio_economic_impact_fk, entity.product_expectation_fk, entity.project_budget, entity.expected_completion);
             }
             else
             {
@@ -95,19 +71,6 @@ namespace backend.Services
             }
         }
 
-        public EnquiryResponseModel Save(EnquiryEntity enquiry)
-        {
-            if (_enquiryRepo.Save(enquiry))
-            {
-                EnquiryResponseModel respose = new EnquiryResponseModel(001, "Enquiry saved successfully");
-                return respose;
-            }
-            else
-            {
-                EnquiryResponseModel respose = new EnquiryResponseModel(002, "Enquiry could not be saved");
-                return respose;
-            }
-        }
 
         public EnquiryResponseModel Update(EnquiryRequestModel model)
         {
@@ -116,23 +79,26 @@ namespace backend.Services
 
             if (_enquiryRepo.Update(enquiry))
             {
-                EnquiryResponseModel respose = new EnquiryResponseModel(201, "Enquiry updated successfully");
+                EnquiryResponseModel respose = new EnquiryResponseModel(enquiry.id, enquiry.focus_area_fk, enquiry.enquiry_date, enquiry.quarter, enquiry.company, enquiry.company_registration_number, enquiry.description, enquiry.service_tech_fk, enquiry.socio_economic_impact_fk, enquiry.product_expectation_fk, enquiry.project_budget, enquiry.expected_completion);
                 return respose;
             }
             else
             {
-                EnquiryResponseModel respose = new EnquiryResponseModel(400, "Enquiry could not be Updated");
-                return respose;
+                return null;
             }
         }
-        public EnquiryResponseModel NewEnquiry(EnquiryRequestModel model)
-        {
-            
-            EnquiryEntity enquiry = _entityBuilder.buildEnquiryEntity(model.id, model.focus_area_fk, model.enquiry_date, model.quarter, model.company, model.company_registration_number, model.description, model.service_tech_fk, model.socio_economic_impact_fk, model.product_expectation_fk, model.project_budget, model.expected_completion);
-            
-            EnquiryResponseModel response = Save(enquiry);
-            return response;
 
+        public bool NewEnquiry(EnquiryRequestModel model)
+        {
+            EnquiryEntity enquiry = _entityBuilder.buildEnquiryEntity(0, model.focus_area_fk, model.enquiry_date, model.quarter, model.company, model.company_registration_number, model.description, model.service_tech_fk, model.socio_economic_impact_fk, model.product_expectation_fk, model.project_budget, model.expected_completion);
+            if (_enquiryRepo.Save(enquiry))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }
