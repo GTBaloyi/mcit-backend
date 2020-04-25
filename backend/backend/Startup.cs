@@ -8,6 +8,7 @@ using backend.DataAccess.Database.Repositories;
 using backend.DataAccess.Database.Repositories.Contracts;
 using backend.DataAccess.Repositories;
 using backend.Services;
+using backend.Services.Contracts;
 using backend.Services.Builder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -58,6 +59,8 @@ namespace backend
             }));
             services.AddControllers();
             services.AddScoped<IUsersService, UserService>();
+            services.AddScoped<IEnquiryService, EnquiryService>();
+            services.AddScoped<IEnquiryRepository, EnquiryRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IUserStatusRepository, UserStatusRepository>();
             services.AddScoped<ICompanyRepRepository, CompanyRepRepository>();
