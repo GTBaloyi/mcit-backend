@@ -48,7 +48,7 @@ namespace backend.Services
                         if(result.user_status_fk == 1)
                         {
                             CompanyRepresentativeEntity userInfo = _companyRepRepo.GetById(result.company_rep_fk);
-                            LoginResponseModel loginResponse = new LoginResponseModel(userInfo.name, userInfo.surname, userInfo.avatar_path, result.access_fk, true);
+                            LoginResponseModel loginResponse = new LoginResponseModel(userInfo.name, userInfo.surname, userInfo.avatar_path, result.access_fk, true, result.user_status_fk);
                             return loginResponse;
                         } else
                         {
