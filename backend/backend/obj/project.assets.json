@@ -9857,11 +9857,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\themba.baloy\\Documents\\School\\Project\\mcp-back\\mcp-backend\\backend\\backend\\backend.csproj",
+      "projectUniqueName": "C:\\Users\\themba.baloy\\Documents\\School\\Project\\git-projects\\mcp-backend\\mcit-backend\\backend\\backend\\backend.csproj",
       "projectName": "backend",
-      "projectPath": "C:\\Users\\themba.baloy\\Documents\\School\\Project\\mcp-back\\mcp-backend\\backend\\backend\\backend.csproj",
+      "projectPath": "C:\\Users\\themba.baloy\\Documents\\School\\Project\\git-projects\\mcp-backend\\mcit-backend\\backend\\backend\\backend.csproj",
       "packagesPath": "C:\\Users\\themba.baloy\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\themba.baloy\\Documents\\School\\Project\\mcp-back\\mcp-backend\\backend\\backend\\obj\\",
+      "outputPath": "C:\\Users\\themba.baloy\\Documents\\School\\Project\\git-projects\\mcp-backend\\mcit-backend\\backend\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
