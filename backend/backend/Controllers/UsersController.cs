@@ -56,7 +56,6 @@ namespace backend.Controllers
                         return StatusCode(401, new ErrorMessage(401, "Something went wrong"));
                     }
                 }
-
                 
             }
             catch(Exception)
@@ -98,6 +97,50 @@ namespace backend.Controllers
             {
                 return StatusCode(500, "Internal Server Error");
             }
-        }       
+        }
+        
+        [HttpPut("/reset-password")]
+        public ActionResult ResetPassword([FromQuery] string username,[FromQuery] string oldPassword, [FromQuery] string newPassword)
+        {
+            try
+            {
+                _userService.resetPassword(username, oldPassword, newPassword);                    
+                return StatusCode(200, "Password changed successfully");
+                
+            } catch(McpCustomException e)
+            {
+                if(e.Message == "Incorrect Password")
+                {
+                    return StatusCode(401, e.Message);
+                } else
+                {
+                    return StatusCode(404, e.Message);
+                }
+            } catch(Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        [HttpPut("/forgot-password")]
+        public ActionResult ForgotPassword([FromQuery]string companyRegistration, [FromQuery]string email, [FromQuery]string phone)
+        {
+            try
+            {
+                _userService.forgotPassword(companyRegistration, email, phone);
+                return StatusCode(200, "New password sent successfully");
+
+            }
+            catch (McpCustomException e)
+            {
+                return StatusCode(401, e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+
     }
 }

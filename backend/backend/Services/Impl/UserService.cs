@@ -36,6 +36,27 @@ namespace backend.Services
             
         }
 
+        public bool forgotPassword(string companyRegistration, string email, string phone)
+        {
+            CompanyRepresentativeEntity companyRep = _companyRepRepo.GetByEmail(email);
+            CompanyEntity company = _companyRepo.GetByRegistrationNumber(companyRegistration);
+            if (companyRep != null && company !=null && companyRep.phone == phone)
+            {
+                
+                string  password = commonMethods.generateCode(8);
+                UsersEntity user = _userRepo.GetUser(email);
+                user.password = password;
+                user.user_status_fk = 0;
+                _userRepo.UpdateUser(user);
+                // TODO: send email with new password
+                return true;
+            }
+            else
+            {
+                throw new McpCustomException("verification failed");
+            }
+        }
+
         public LoginResponseModel loginService(string username, string password)
         {
             try
@@ -140,6 +161,27 @@ namespace backend.Services
 
         }
 
+        public bool resetPassword(string username, string oldPassword, string newPassword)
+        {
+            
+            UsersEntity user = _userRepo.GetUser(username);
+            if(user != null)
+            {
+                if(user.password == oldPassword)
+                {
+                    user.password = newPassword;
+                    _userRepo.UpdateUser(user);
+                    return true;
+                } else
+                {
+                    throw new McpCustomException("Incorrect Password");
+                }
+            } else
+            {
+                throw new McpCustomException("username not found");
+            }
+            
+        }
 
         private void saveRetry(UsersModel user)
         {
