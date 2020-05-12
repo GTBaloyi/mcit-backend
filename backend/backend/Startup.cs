@@ -19,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using backend.Services.Impl;
 
 namespace backend
 {
@@ -61,6 +62,8 @@ namespace backend
             services.AddScoped<IUsersService, UserService>();
             services.AddScoped<IEnquiryService, EnquiryService>();
             services.AddScoped<IEnquiryRepository, EnquiryRepository>();
+            services.AddScoped<IQuotationService, QuotationService>();
+            services.AddScoped<IQuotationRepository, QuotationRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IUserStatusRepository, UserStatusRepository>();
             services.AddScoped<ICompanyRepRepository, CompanyRepRepository>();

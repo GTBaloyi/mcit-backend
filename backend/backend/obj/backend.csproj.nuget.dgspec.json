@@ -1,26 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\themba.baloy\\Documents\\School\\Project\\mcp-back\\mcp-backend\\backend\\backend\\backend.csproj": {}
+    "C:\\Users\\User\\Desktop\\AprilRelease\\mcp-backend\\mcit-backend\\backend\\backend\\backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\themba.baloy\\Documents\\School\\Project\\mcp-back\\mcp-backend\\backend\\backend\\backend.csproj": {
+    "C:\\Users\\User\\Desktop\\AprilRelease\\mcp-backend\\mcit-backend\\backend\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\themba.baloy\\Documents\\School\\Project\\mcp-back\\mcp-backend\\backend\\backend\\backend.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\AprilRelease\\mcp-backend\\mcit-backend\\backend\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\themba.baloy\\Documents\\School\\Project\\mcp-back\\mcp-backend\\backend\\backend\\backend.csproj",
-        "packagesPath": "C:\\Users\\themba.baloy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\themba.baloy\\Documents\\School\\Project\\mcp-back\\mcp-backend\\backend\\backend\\obj\\",
+        "projectPath": "C:\\Users\\User\\Desktop\\AprilRelease\\mcp-backend\\mcit-backend\\backend\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\AprilRelease\\mcp-backend\\mcit-backend\\backend\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\themba.baloy\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -57,7 +55,7 @@
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[3.1.2, )"
             },
             "MySql.Data": {
               "target": "Package",
@@ -98,7 +96,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

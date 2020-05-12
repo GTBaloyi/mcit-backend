@@ -13,6 +13,8 @@ namespace backend.Services.Builder
         private CompanyRepresentativeEntity companyRepEntity;
         private UsersEntity userEntity;
         private EnquiryEntity enquiryEntity;
+        public QuotationEntity quotationEntity;
+  
        
         public CompanyEntity buildCompanyEntity(int id,string name, string companyRegistration, string companyProfile, bool isCompanyPresent, string quarter)
         {
@@ -66,6 +68,23 @@ namespace backend.Services.Builder
             enquiryEntity.expected_completion = expectedCompletion;
 
             return enquiryEntity;
+        }
+       
+        public QuotationEntity buildQuotationEntity(int Quote_id, int Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string bill_address, string Phone_number, double Grand_total, List<QuotationItemEntity> items)
+        {
+            quotationEntity = new QuotationEntity();
+            quotationEntity.Quote_id = Quote_id;
+            quotationEntity.Quote_reference = Quote_reference;
+            quotationEntity.Date_generated = Date_generated;
+            quotationEntity.Quote_expiryDate = Quote_expiryDate;
+            quotationEntity.Email = Email;
+            quotationEntity.Company_name = Company_name;
+            quotationEntity.Bill_address = bill_address;
+            quotationEntity.Phone_Number = Phone_number;
+            quotationEntity.Grand_total = Grand_total;
+            quotationEntity.Items = items;
+            return quotationEntity;
+      
         }
 
         public UsersEntity buildUserEntity(string username, string password, int retry, int userStatusId, int accessId, int companyRepId, DateTime lastLogin, string otp, string location)

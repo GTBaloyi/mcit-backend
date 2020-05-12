@@ -16,6 +16,8 @@ namespace backend.DataAccess.Repositories
         public DbSet<CompanyRepresentativeEntity> businessRepresentatives { get; set; }
         public DbSet<CompanyEntity> company { get; set; }
         public DbSet<EnquiryEntity> enquiry { get; set; }
+        public DbSet<QuotationEntity> quotation { get; set; }
+
 
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
