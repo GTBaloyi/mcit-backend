@@ -40,7 +40,7 @@ namespace backend.Services.Commons
         public string passwordEncyption(string password)
         {
 
-            string encryptionKey =  configuration.GetSection("DBencryption").GetSection("Key").Value;
+            string encryptionKey = "McitKey***Encrpyt!";
             byte[] clearBytes = Encoding.Unicode.GetBytes(password);
             using (Aes encryptor = Aes.Create())
             {
@@ -65,7 +65,7 @@ namespace backend.Services.Commons
 
         public string passwordDecryption(string password)
         {
-            string EncryptionKey =  configuration.GetSection("DBencryption").GetSection("Key").Value;    
+            string EncryptionKey = "McitKey***Encrpyt!";
              password = password.Replace(" ", "+");
             byte[] cipherBytes = Convert.FromBase64String(password);
             using (Aes encryptor = Aes.Create())
