@@ -45,7 +45,7 @@ namespace backend.Services
                 
                 string  password = commonMethods.generateCode(8);
                 UsersEntity user = _userRepo.GetUser(email);
-                user.password = password;
+                user.password =commonMethods.passwordEncyption(password);
                 user.user_status_fk = 0;
                 _userRepo.UpdateUser(user);
                 // TODO: send email with new password
@@ -64,7 +64,7 @@ namespace backend.Services
                 var result = _userRepo.GetUser(username);
                 if(result !=null)
                 {
-                    if (result.password == password)
+                    if (commonMethods.passwordEncyption(password) == result.password)
                     {
                         if(result.user_status_fk == 1)
                         {
@@ -111,7 +111,7 @@ namespace backend.Services
                         {
                             int companyRepId = _companyRepRepo.GetByEmail(data.contactEmail).id;
                             string otp = commonMethods.generateCode(4);
-                            string defaultPassword = commonMethods.generateCode(8);
+                            string defaultPassword =commonMethods.passwordEncyption(commonMethods.generateCode(8));
                             UsersEntity user = _entityBuilder.buildUserEntity(data.contactEmail, defaultPassword, 0, 2, 3, companyRepId, DateTime.Now, otp, null);
                             if (_userRepo.SaveUser(user))
                             {
@@ -167,9 +167,11 @@ namespace backend.Services
             UsersEntity user = _userRepo.GetUser(username);
             if(user != null)
             {
-                if(user.password == oldPassword)
-                {
-                    user.password = newPassword;
+
+                if(user.password == oldPassword) 
+                { 
+                
+                    user.password = commonMethods.passwordEncyption(newPassword);
                     _userRepo.UpdateUser(user);
                     return true;
                 } else
