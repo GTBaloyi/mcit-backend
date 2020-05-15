@@ -99,7 +99,7 @@ namespace backend.Controllers
             }
         }
         
-        [HttpPut("/reset-password")]
+        [HttpPut("reset-password")]
         public ActionResult ResetPassword([FromQuery] string username,[FromQuery] string oldPassword, [FromQuery] string newPassword)
         {
             try
@@ -122,7 +122,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut("/forgot-password")]
+        [HttpPut("forgot-password")]
         public ActionResult ForgotPassword([FromQuery]string companyRegistration, [FromQuery]string email, [FromQuery]string phone)
         {
             try
