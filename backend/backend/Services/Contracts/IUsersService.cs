@@ -10,7 +10,7 @@ namespace backend.Services
     {
         LoginResponseModel loginService(String username, string password);
         ClientRegistrationResponseModel registerService(ClientRegistrationRequestModel registrationData);
-        bool resetPassword(string username, string oldPassword, string newPassword);
+        bool resetPassword(string username, string oldPassword, string newPassword, int status);
         bool forgotPassword(string companyRegistration,string email,string phone);
     }
 }

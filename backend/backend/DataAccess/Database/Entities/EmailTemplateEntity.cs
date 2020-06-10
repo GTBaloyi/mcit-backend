@@ -5,14 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace backend.DataAccess.Entities
+namespace backend.DataAccess.Database.Entities
 {
-    [Table("user_status")]
-    public class UserStatusEntity
+    [Table("email_templates")]
+    public class EmailTemplateEntity
     {
         [Key]
         public int id { get; set; }
-        public string status { get; set; }
-     
+        public string code { get; set; }
+        public string email_type { get; set; }
     }
 }
