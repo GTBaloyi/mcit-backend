@@ -627,11 +627,12 @@ C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-bac
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.csprojAssemblyReference.cache
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\staticwebassets\backend.StaticWebAssets.Manifest.cache
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\staticwebassets\backend.StaticWebAssets.xml
-C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.AssemblyInfoInputs.cache
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.AssemblyInfo.cs
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.RazorTargetAssemblyInfo.cache
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.csproj.CopyComplete
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.dll
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.pdb
+C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\bin\Debug\netcoreapp3.1\SendGrid.dll
+C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cache
