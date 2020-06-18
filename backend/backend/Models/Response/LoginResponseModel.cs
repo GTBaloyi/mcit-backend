@@ -13,7 +13,7 @@ namespace backend.Models
             this.name = name;
             this.surname = surname;
             this.picture = picture;
-            this.loggedIn = loggedIn;
+            this.loggedIn = isLoggedIn;
             this.accessLevel = accessLevel;
             this.userStatus = userStatus;
         }
