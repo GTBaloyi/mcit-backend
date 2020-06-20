@@ -634,5 +634,6 @@ C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-bac
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.dll
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.pdb
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\bin\Debug\netcoreapp3.1\SendGrid.dll
+C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\themba.baloy\Documents\School\Project\git-projects\mcp-backend\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cache
