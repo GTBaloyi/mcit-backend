@@ -78,16 +78,10 @@ namespace backend.Services
                 {
                     if (password == commonMethods.passwordDecryption(result.password))
                     {
-                        if(result.user_status_fk == 1)
-                        {
+                        
                             CompanyRepresentativeEntity userInfo = _companyRepRepo.GetById(result.company_rep_fk);
                             LoginResponseModel loginResponse = new LoginResponseModel(userInfo.name, userInfo.surname, userInfo.avatar_path, result.access_fk, true, result.user_status_fk);
                             return loginResponse;
-                        } else
-                        {
-                            string status = _userStatusRepo.GetUserStatus(result.user_status_fk).status;
-                            throw new McpCustomException("User's account is " + status);
-                        }
                     }
                     else
                     {

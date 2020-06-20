@@ -17,8 +17,7 @@ namespace backend.DataAccess.Repositories
         public DbSet<CompanyEntity> company { get; set; }
         public DbSet<EnquiryEntity> enquiry { get; set; }
         public DbSet<EmailTemplateEntity> emailTemplate { get; set; }
-
-
+        public DbSet<InvoiceEntity> invoice { get; set; }
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 
