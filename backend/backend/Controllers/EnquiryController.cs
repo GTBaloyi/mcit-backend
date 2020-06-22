@@ -84,9 +84,7 @@ namespace backend.Controllers
             catch (Exception)
             {
                 return StatusCode(500, "Internal Server Error");
-            }
-
-            
+            } 
         }
 
         [HttpGet("GetAll")]

@@ -10,6 +10,7 @@ namespace backend.DataAccess.Entities
     [Table("Company")]
     public class CompanyEntity
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int id { get; set; }
         public string name { get; set; }
