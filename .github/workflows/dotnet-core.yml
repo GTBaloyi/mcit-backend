@@ -14,11 +14,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Change Directory
-      run: dir
+      run: cd backend
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+    - name: Check Directory
+      run: dir
     - name: Install dependencies
       run: dotnet restore
     - name: Build
