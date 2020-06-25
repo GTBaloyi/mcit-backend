@@ -10,6 +10,7 @@ namespace backend.DataAccess.Database.Entities
     [Table("email_templates")]
     public class EmailTemplateEntity
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int id { get; set; }
         public string code { get; set; }

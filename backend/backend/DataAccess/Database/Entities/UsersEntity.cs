@@ -10,6 +10,7 @@ namespace backend.DataAccess.Entities
     [Table("users")]
     public class UsersEntity
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public string username { get; set; }
         public string password { get; set; }

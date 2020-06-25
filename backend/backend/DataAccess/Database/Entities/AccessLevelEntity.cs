@@ -10,6 +10,7 @@ namespace backend.DataAccess.Entities
     [Table("access_levels")]
     public class AccessLevelEntity
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int id { get; set; }
         public string level { get; set; }
