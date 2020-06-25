@@ -23,7 +23,7 @@ namespace backend.Controllers
             _enquiryService = enquiryService;
         }
 
-        [HttpPost("NewEnquiry")]//saves a new enquiry
+        [HttpPost("create-enquiry")]//saves a new enquiry
         public ActionResult CreateEnquiry([FromBody] EnquiryRequestModel enquiry)
         {
             try
@@ -44,7 +44,7 @@ namespace backend.Controllers
         }
 
 
-        [HttpPut("Update")]//updates an existing enquiry
+        [HttpPut("update-enquiry")]//updates an existing enquiry
         public ActionResult<EnquiryResponseModel> UpdateEnquiry([FromBody] EnquiryRequestModel model)
         {
             try
@@ -67,7 +67,7 @@ namespace backend.Controllers
            
         }
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("enquiry/{id}")]
         public ActionResult<EnquiryResponseModel> GetEnquiry(int id)
         {
             try
@@ -87,7 +87,7 @@ namespace backend.Controllers
             } 
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("enquiries")]
         public ActionResult <List<EnquiryResponseModel>> GetAllEnquiries()
         {
             try
