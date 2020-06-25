@@ -23,7 +23,7 @@ namespace backend.Controllers
             _invoiceService = invoiceService;
         }
 
-        [HttpPost("GenerateInvoice")]//generate and saves a new invoice
+        [HttpPost("generate-invoice")]//generate and saves a new invoice
         public ActionResult CreateInvoice([FromBody] InvoiceRequestModel invoice)
         {
             try
@@ -45,7 +45,7 @@ namespace backend.Controllers
 
 
 
-        [HttpPut("Update")]//updates an existing invoice
+        [HttpPut("update-invoice")]//updates an existing invoice
         public ActionResult<InvoiceResponseModel> UpdateInvoice([FromBody] InvoiceRequestModel model)
         {
             try
@@ -68,7 +68,7 @@ namespace backend.Controllers
 
         }
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("invoice/{id}")]
         public ActionResult<InvoiceResponseModel> GetInvoice(int id)
         {
             try
@@ -91,7 +91,7 @@ namespace backend.Controllers
 
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("invoice")]
         public ActionResult<List<InvoiceResponseModel>> GetAllInvoices()
         {
             try
