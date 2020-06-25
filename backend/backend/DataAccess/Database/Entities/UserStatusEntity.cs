@@ -10,6 +10,7 @@ namespace backend.DataAccess.Entities
     [Table("user_status")]
     public class UserStatusEntity
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int id { get; set; }
         public string status { get; set; }
