@@ -102,5 +102,27 @@ namespace backend.Services.Builder
 
             return userEntity;
         }
+
+        public InvoiceEntity buildInvoiceEntity(int id, string reference, DateTime invoice_date, DateTime date_due, string title, string description, string vat_number, int bill_to_id,
+        string Vat, string terms, double total, double subtotal, int quantity, double total_due, int user_id)
+        {
+            InvoiceEntity InvoiceEntity = new InvoiceEntity();
+            InvoiceEntity.id = id;
+            InvoiceEntity.reference = reference;
+            InvoiceEntity.invoice_date = invoice_date;
+            InvoiceEntity.date_due = date_due;
+            InvoiceEntity.title = title;
+            InvoiceEntity.description = description;
+            InvoiceEntity.vat_number = vat_number;
+            InvoiceEntity.bill_to_id = bill_to_id;
+            InvoiceEntity.Vat = Vat;
+            InvoiceEntity.terms = terms;
+            InvoiceEntity.total = total;
+            InvoiceEntity.subtotal = subtotal;
+            InvoiceEntity.quantity = quantity;
+            InvoiceEntity.total_due = total_due;
+            InvoiceEntity.user_id = user_id;
+            return InvoiceEntity;
+        }
     }
 }

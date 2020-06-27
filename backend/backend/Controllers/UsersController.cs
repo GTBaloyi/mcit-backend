@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using backend.Exceptions;
 using backend.Models;
 using backend.Services;
+using backend.Services.Commons;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,9 +29,7 @@ namespace backend.Controllers
 
             try
             {
-               LoginResponseModel serviceResponse = _userService.loginService(username, password);
-               
-                
+               LoginResponseModel serviceResponse = _userService.loginService(username, password);                
                 if(serviceResponse != null)
                 {
                     return Ok(serviceResponse);
@@ -99,12 +98,12 @@ namespace backend.Controllers
             }
         }
         
-        [HttpPut("/reset-password")]
-        public ActionResult ResetPassword([FromQuery] string username,[FromQuery] string oldPassword, [FromQuery] string newPassword)
+        [HttpPut("reset-password")]
+        public ActionResult ResetPassword([FromQuery] string username,[FromQuery] string oldPassword, [FromQuery] string newPassword, [FromQuery] int status)
         {
             try
             {
-                _userService.resetPassword(username, oldPassword, newPassword);                    
+                _userService.resetPassword(username, oldPassword, newPassword, status);                    
                 return StatusCode(200, "Password changed successfully");
                 
             } catch(McpCustomException e)
@@ -122,7 +121,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut("/forgot-password")]
+        [HttpPut("forgot-password")]
         public ActionResult ForgotPassword([FromQuery]string companyRegistration, [FromQuery]string email, [FromQuery]string phone)
         {
             try

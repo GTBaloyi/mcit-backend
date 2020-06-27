@@ -51,7 +51,14 @@ namespace backend.DataAccess.Repositories
 
         public UserStatusEntity GetUserStatus(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _context.userStatus.Find(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<UserStatusEntity> GetUserStatuses()

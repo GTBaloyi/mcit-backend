@@ -70,6 +70,7 @@ namespace backend
             services.AddScoped<IAccessLevelRepository, AccessLevelRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IEntityBuilder, EntityBuilder>();
+            services.AddScoped<IEmailTemplateRepository, EmailTemplateRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
