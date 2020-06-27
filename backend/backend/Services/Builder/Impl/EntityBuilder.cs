@@ -123,5 +123,10 @@ namespace backend.Services.Builder
             return quotationEntity;
 
         }
+
+        public QuotationEntity buildQuotationEntity(int Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string bill_address, string Phone_number, double Grand_total, List<QuotationItemEntity> items)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

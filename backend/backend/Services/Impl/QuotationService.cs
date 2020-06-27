@@ -67,7 +67,7 @@ namespace backend.Services.Impl
         public QuotationResponseModel Update(QuotationModel model)
         {
 
-            QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_id, model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name, model.Bill_address, model.Phone_number, model.Grand_total, model.Items);
+            QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name, model.Bill_address, model.Phone_number, model.Grand_total, model.Items);
 
             if (_quotationRepo.Update(quote))
             {
@@ -82,7 +82,7 @@ namespace backend.Services.Impl
 
         public bool NewQuotation(QuotationModel model)
         {
-            QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_id, model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name, model.Bill_address, model.Phone_number, model.Grand_total, model.Items);
+            QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name, model.Bill_address, model.Phone_number, model.Grand_total, model.Items);
             if (_quotationRepo.Save(quote))
             {
                 return true;
