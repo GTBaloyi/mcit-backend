@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace backend.DataAccess.Database.Entities
 {
-    [Table("physical_metallurgy_equipment")]
-    public class PhysicalMetallurgyEquipmentEntity
+    [Table("broader_mcts_rates")]
+    public class BroaderMCTSRatesEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
