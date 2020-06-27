@@ -10,10 +10,10 @@
 # Learn more about Git LFS for large files:
 #     https://www.atlassian.com/git/tutorials/git-lfs
 bitbucket-pipelines.yml
-backend/backend/obj/*
+./backend/backend/obj/*
 backend/.vs/*
 *.suo
 *.user
 _ReSharper.*
-backend/backend/bin/*
-backend/backend/packages/*
+./backend/backend/bin/*
+./backend/backend/packages/*

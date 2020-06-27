@@ -16,11 +16,12 @@ namespace backend.DataAccess.Repositories
         public DbSet<CompanyRepresentativeEntity> businessRepresentatives { get; set; }
         public DbSet<CompanyEntity> company { get; set; }
         public DbSet<EnquiryEntity> enquiry { get; set; }
+        public DbSet<QuotationEntity> quotation { get; set; }
         public DbSet<EmailTemplateEntity> emailTemplate { get; set; }
         public DbSet<InvoiceEntity> invoice { get; set; }
         public DbSet<EquipmentUtilizationEntity> equipmentUtilization { get; set; }
         public DbSet<BroaderMCTSRatesEntity> broaderMCTSRates { get; set; }
-
+        public DbSet<TermsAndConditionsEntity> termsAndConditions { get; set; }
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 
