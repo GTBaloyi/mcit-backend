@@ -15,6 +15,5 @@ backend/.vs/*
 *.suo
 *.user
 _ReSharper.*
-backend/backend/bin
-backend/backend/obj
-backend/backend/packages
+backend/backend/bin/*
+backend/backend/packages/*
