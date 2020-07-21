@@ -38,7 +38,6 @@ namespace backend.Services.Impl
                 foreach (QuotationEntity quote in entities)
                 {
                     QuotationResponseModel model = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.Grand_total, quote.Items);
-
                     models.Add(model);
                 }
                 return models;

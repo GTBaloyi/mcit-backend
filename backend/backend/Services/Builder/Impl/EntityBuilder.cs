@@ -107,10 +107,9 @@ namespace backend.Services.Builder
             return InvoiceEntity;
         }
 
-        public QuotationEntity buildQuotationEntity(int Quote_id, int Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string bill_address, string Phone_number, double Grand_total, List<QuotationItemEntity> items)
+        public QuotationEntity buildQuotationEntity(int Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string bill_address, string Phone_number, double Grand_total, List<QuotationItemEntity> items)
         {
             quotationEntity = new QuotationEntity();
-            quotationEntity.Quote_id = Quote_id;
             quotationEntity.Quote_reference = Quote_reference;
             quotationEntity.Date_generated = Date_generated;
             quotationEntity.Quote_expiryDate = Quote_expiryDate;
@@ -121,12 +120,6 @@ namespace backend.Services.Builder
             quotationEntity.Grand_total = Grand_total;
             quotationEntity.Items = items;
             return quotationEntity;
-
-        }
-
-        public QuotationEntity buildQuotationEntity(int Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string bill_address, string Phone_number, double Grand_total, List<QuotationItemEntity> items)
-        {
-            throw new NotImplementedException();
         }
     }
 }

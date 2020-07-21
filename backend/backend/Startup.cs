@@ -71,6 +71,9 @@ namespace backend
             services.AddScoped<IEmailTemplateRepository, EmailTemplateRepository>();
             services.AddScoped<IQuotationRepository, QuotationRepository>();
             services.AddScoped<IQuotationService, QuotationService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IFocusAreaRepository, FocusAreaRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
