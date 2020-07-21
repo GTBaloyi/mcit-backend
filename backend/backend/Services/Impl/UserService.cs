@@ -23,8 +23,9 @@ namespace backend.Services
         private readonly CommonServices commonServices;
         private readonly CommonMethods commonMethods;
         private readonly IEntityBuilder _entityBuilder;
+        private readonly IEmailTemplateRepository _emailTemplate;
 
-        public UserService(IUsersRepository userRepo, ICompanyRepRepository companyRepRepository, IUserStatusRepository userStatusRepository, IEntityBuilder entityBuilder, ICompanyRepository companyRepository)
+        public UserService(IUsersRepository userRepo, ICompanyRepRepository companyRepRepository, IUserStatusRepository userStatusRepository, IEntityBuilder entityBuilder, ICompanyRepository companyRepository, IEmailTemplateRepository emailTemplateRepository)
         {
             _userRepo = userRepo;
             _companyRepRepo = companyRepRepository;
@@ -33,22 +34,25 @@ namespace backend.Services
             commonMethods = new CommonMethods();
             _entityBuilder = entityBuilder;
             _companyRepo = companyRepository;
+            _emailTemplate = emailTemplateRepository;
             
         }
 
-        public bool forgotPassword(string companyRegistration, string email, string phone)
+        public bool forgotPassword(string companyRegistration, string emailAddress, string phone)
         {
-            CompanyRepresentativeEntity companyRep = _companyRepRepo.GetByEmail(email);
+            CompanyRepresentativeEntity companyRep = _companyRepRepo.GetByEmail(emailAddress);
             CompanyEntity company = _companyRepo.GetByRegistrationNumber(companyRegistration);
             if (companyRep != null && company !=null && companyRep.phone == phone)
-            {
-                
+            {   
+                string name = _companyRepRepo.GetByEmail(emailAddress).name;   
                 string  password = commonMethods.generateCode(8);
-                UsersEntity user = _userRepo.GetUser(email);
+                UsersEntity user = _userRepo.GetUser(emailAddress);
                 user.password =commonMethods.passwordEncyption(password);
-                user.user_status_fk = 0;
+                user.user_status_fk = 2;
                 _userRepo.UpdateUser(user);
-                // TODO: send email with new password
+                string template = _emailTemplate.GetByType("ForgotPassword").code;
+                string mail = BuildEmail(template,name,password);
+                commonServices.SendEmail("Password Reset Successful", mail, emailAddress);
                 return true;
             }
             else
@@ -57,6 +61,14 @@ namespace backend.Services
             }
         }
 
+        private string BuildEmail(string template, string name, string password)
+        {
+            string result = @template.Replace("{first_name}", name);
+            return result.Replace("{pwd}", password);
+        }
+
+        
+
         public LoginResponseModel loginService(string username, string password)
         {
             try
@@ -64,18 +76,12 @@ namespace backend.Services
                 var result = _userRepo.GetUser(username);
                 if(result !=null)
                 {
-                    if (commonMethods.passwordEncyption(password) == result.password)
+                    if (password == commonMethods.passwordDecryption(result.password))
                     {
-                        if(result.user_status_fk == 1)
-                        {
+                        
                             CompanyRepresentativeEntity userInfo = _companyRepRepo.GetById(result.company_rep_fk);
                             LoginResponseModel loginResponse = new LoginResponseModel(userInfo.name, userInfo.surname, userInfo.avatar_path, result.access_fk, true, result.user_status_fk);
                             return loginResponse;
-                        } else
-                        {
-                            string status = _userStatusRepo.GetUserStatus(result.user_status_fk).status;
-                            throw new McpCustomException("User's account is" + status);
-                        }
                     }
                     else
                     {
@@ -116,6 +122,9 @@ namespace backend.Services
                             if (_userRepo.SaveUser(user))
                             {
                                 //TODO: Send email
+                                string template = _emailTemplate.GetByType("Registration").code;
+                                string mail = BuildRegistrationEmail(template, data.contactName, user.username, commonMethods.passwordDecryption(user.password));
+                                commonServices.SendEmail("MCIT Registration successful", mail, user.username);
                                 return new ClientRegistrationResponseModel(200, "Company, Company Representative and user details registered successfully");
                             }
                             else
@@ -161,18 +170,37 @@ namespace backend.Services
 
         }
 
-        public bool resetPassword(string username, string oldPassword, string newPassword)
+        private string BuildRegistrationEmail(string template, string name, string username, string password)
+        {
+            string result = @template.Replace("{first_name}", name);
+            result = result.Replace("{usr}", username);
+            result = result.Replace("{pwd}", password);
+            return result;
+        }
+        public bool resetPassword(string username, string oldPassword, string newPassword, int status)
         {
             
             UsersEntity user = _userRepo.GetUser(username);
             if(user != null)
             {
 
-                if(user.password == oldPassword) 
+                if(commonMethods.passwordDecryption(user.password) == oldPassword) 
                 { 
                 
                     user.password = commonMethods.passwordEncyption(newPassword);
+                    if(status == 2)
+                    {
+                        user.user_status_fk = 1;
+                    }
+                    if (status == 1)
+                    {
+                        user.user_status_fk = status;
+                    }
                     _userRepo.UpdateUser(user);
+                    string name = _companyRepRepo.GetByEmail(user.username).name;
+                    string template = _emailTemplate.GetByType("ResetPassword").code;
+                    string mail = BuildResetPasswordEmail(template, name, newPassword);
+                    commonServices.SendEmail("Password Reset Successfully", mail, user.username);
                     return true;
                 } else
                 {
@@ -183,6 +211,13 @@ namespace backend.Services
                 throw new McpCustomException("username not found");
             }
             
+        }
+
+        private string BuildResetPasswordEmail(string template, string name, string password)
+        {
+            string result = @template.Replace("{first_name}", name);
+            result = result.Replace("{pwd}", password);
+            return result;
         }
 
         private void saveRetry(UsersModel user)

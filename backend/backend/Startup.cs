@@ -19,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using backend.Services.Impl;
 
 namespace backend
 {
@@ -67,6 +68,12 @@ namespace backend
             services.AddScoped<IAccessLevelRepository, AccessLevelRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IEntityBuilder, EntityBuilder>();
+            services.AddScoped<IEmailTemplateRepository, EmailTemplateRepository>();
+            services.AddScoped<IQuotationRepository, QuotationRepository>();
+            services.AddScoped<IQuotationService, QuotationService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IFocusAreaRepository, FocusAreaRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
