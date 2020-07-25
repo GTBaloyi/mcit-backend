@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace backend.DataAccess.Database.Entities
 {
-    [Table("physical_metallurgy_equipment")]
-    public class PhysicalMetallurgyEquipmentEntity
+    [Table("broader_mcts_rates")]
+    public class BroaderMCTSRatesEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         public string name { get; set; }
+        public double time_study_per_test { get; set; }
+        public double rate_per_hour { get; set; }
     }
 }

@@ -14,5 +14,7 @@ namespace backend.DataAccess.Database.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         public string name { get; set; }
+        public double time_study_per_test { get; set; }
+        public double rate_per_hour { get; set; }
     }
 }

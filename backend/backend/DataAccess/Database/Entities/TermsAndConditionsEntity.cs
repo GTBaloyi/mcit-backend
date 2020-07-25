@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace backend.DataAccess.Database.Entities
 {
-    [Table("moulding_tech_equipment")]
-    public class MouldingTechEquipmentEntity
+    [Table("terms_and_conditions")]
+    public class TermsAndConditionsEntity
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
-        public string name { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
     }
 }

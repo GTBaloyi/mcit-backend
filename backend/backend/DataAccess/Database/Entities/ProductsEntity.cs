@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace backend.DataAccess.Database.Entities
 {
-    [Table("support_equipment")]
-    public class SupportEquipmentEntity
+    [Table("products")]
+    public class ProductsEntity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         public string name { get; set; }
+        public double time_study_per_test { get; set; }
+        public double rate_per_hour { get; set; }
+        public int focus_area_fk { get; set; }
     }
 }

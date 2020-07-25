@@ -16,10 +16,15 @@ namespace backend.DataAccess.Repositories
         public DbSet<CompanyRepresentativeEntity> businessRepresentatives { get; set; }
         public DbSet<CompanyEntity> company { get; set; }
         public DbSet<EnquiryEntity> enquiry { get; set; }
+        public DbSet<QuotationEntity> quotation { get; set; }
+        public DbSet <QuotationItemEntity> quotationItem { get; set; }
         public DbSet<EmailTemplateEntity> emailTemplate { get; set; }
         public DbSet<InvoiceEntity> invoice { get; set; }
         public DbSet<EquipmentUtilizationEntity> equipmentUtilization { get; set; }
-
+        public DbSet<BroaderMCTSRatesEntity> broaderMCTSRates { get; set; }
+        public DbSet<TermsAndConditionsEntity> termsAndConditions { get; set; }
+        public DbSet<FocusAreaEntity> focusAreas { get; set; }
+        public DbSet<ProductsEntity> products { get; set; }
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 
@@ -50,8 +55,10 @@ namespace backend.DataAccess.Repositories
                     new FocusAreaEntity() { id = 1, name = "Physical Metallurgy"},
                     new FocusAreaEntity() { id = 2, name = "Moulding Tech" },
                     new FocusAreaEntity() { id = 3, name = "Foundry Tech" },
-                    new FocusAreaEntity() { id = 4, name = "Support" },
-                    new FocusAreaEntity() { id = 5, name = "Other"}
+                    new FocusAreaEntity() { id = 4, name = "SupportEquipment" },
+                    new FocusAreaEntity() { id = 5, name = "Support" },
+                    new FocusAreaEntity() { id = 6, name = "Other"},
+                    new FocusAreaEntity() { id = 7, name = "BroaderMCTSRates" }
                 );
 
             modelBuilder.Entity<ProductExpectation>().HasData(
@@ -63,15 +70,98 @@ namespace backend.DataAccess.Repositories
                     new ProductExpectation() { id = 6, name = "Other" }
                 );
 
-            modelBuilder.Entity<FoundryTechEquipmentEntity>().HasData(
-                    new FoundryTechEquipmentEntity() { id = 1, name = "ProE" },
-                    new FoundryTechEquipmentEntity() { id = 2, name = "MDX" },
-                    new FoundryTechEquipmentEntity() { id = 3, name = "AutoD" },
-                    new FoundryTechEquipmentEntity() { id = 4, name = "ALIA" },
-                    new FoundryTechEquipmentEntity() { id = 5, name = "3DP" },
-                    new FoundryTechEquipmentEntity() { id = 6, name = "Click To Cast" },
-                    new FoundryTechEquipmentEntity() { id = 7, name = "Non Testing Act(Ftec)" }                
-                 );
+            modelBuilder.Entity<ProductsEntity>().HasData(
+                    new ProductsEntity() { id = 1, name = "ProE", time_study_per_test = 60, rate_per_hour = 550.00, focus_area_fk = 3 },
+                    new ProductsEntity() { id = 2, name = "MDX", time_study_per_test = 60, rate_per_hour = 550.00, focus_area_fk = 3 },
+                    new ProductsEntity() { id = 3, name = "AutoD", time_study_per_test = 60, rate_per_hour = 550.00, focus_area_fk = 3 },
+                    new ProductsEntity() { id = 4, name = "ALIA", time_study_per_test = 9600, rate_per_hour = 937.50, focus_area_fk = 3 },
+                    new ProductsEntity() { id = 5, name = "3DP", time_study_per_test = 60, rate_per_hour = 550.00, focus_area_fk = 3 },
+                    new ProductsEntity() { id = 6, name = "Click To Cast", time_study_per_test = 60, rate_per_hour = 550.00, focus_area_fk = 3 },
+                    new ProductsEntity() { id = 7, name = "Non Testing Act(Ftec)", time_study_per_test = 60, rate_per_hour = 772.32, focus_area_fk = 3 },
+
+                   new ProductsEntity() { id = 8, name = "Spin Cast", time_study_per_test = 60, rate_per_hour = 250.00,focus_area_fk = 4  },
+                   new ProductsEntity() { id = 9, name = "Ind Coil Furn", time_study_per_test = 60, rate_per_hour = 250.00, focus_area_fk = 4 },
+                   new ProductsEntity() { id = 10, name = "Valcanizer", time_study_per_test = 60, rate_per_hour = 250.00, focus_area_fk = 4 },
+                   new ProductsEntity() { id = 11, name = "Host Interns", time_study_per_test = 60, rate_per_hour = 0.00, focus_area_fk = 4 },
+                   new ProductsEntity() { id = 12, name = "SLP / Tail Dem1", time_study_per_test = 1, rate_per_hour = 18.20, focus_area_fk = 4 },
+                   new ProductsEntity() { id = 13, name = "SLP / Tail Dem2", time_study_per_test = 0, rate_per_hour = 0.00, focus_area_fk = 4 },
+                   new ProductsEntity() { id = 14, name = "SLP / Tail Dem3", time_study_per_test = 0, rate_per_hour = 0.00, focus_area_fk = 4 },
+                   new ProductsEntity() { id = 15, name = "SLP / Tail Dem4", time_study_per_test = 0, rate_per_hour = 0.00, focus_area_fk = 4 },
+                   new ProductsEntity() { id = 16, name = "Lazer Cutter", time_study_per_test = 60, rate_per_hour = 20.00, focus_area_fk = 4 },
+                   new ProductsEntity() { id = 17, name = "Design Software", time_study_per_test = 60, rate_per_hour = 50.00, focus_area_fk = 4 },
+                   new ProductsEntity() { id = 18, name = "Non Testing Act (Sup)", time_study_per_test = 60, rate_per_hour = 687.73, focus_area_fk = 4 },
+
+                   new ProductsEntity() { id = 19, name = "Testing & Analysis", time_study_per_test = 0, rate_per_hour = 224.38, focus_area_fk = 7 },
+                   new ProductsEntity() { id = 20, name = "Prototyping & Manufacturing", time_study_per_test = 0, rate_per_hour = 800.00, focus_area_fk = 7 },
+                   new ProductsEntity() { id = 21, name = "Consult / Technology Audit", time_study_per_test = 0, rate_per_hour = 500.00, focus_area_fk = 7 },
+                   new ProductsEntity() { id = 22, name = "Product and Process Development", time_study_per_test = 0, rate_per_hour = 800.00, focus_area_fk = 7 },
+                   new ProductsEntity() { id = 23, name = "Research and Development", time_study_per_test = 0, rate_per_hour = 800.00, focus_area_fk = 7 },
+                   new ProductsEntity() { id = 24, name = "Technology Demonstration / Transfer", time_study_per_test = 0, rate_per_hour = 800.00, focus_area_fk = 7 },
+                   new ProductsEntity() { id = 25, name = "Knowledge Transfer / SLP", time_study_per_test = 0, rate_per_hour = 250.00, focus_area_fk = 7 },
+                   new ProductsEntity() { id = 26, name = "Investigative Projects (Failure / Defect)", time_study_per_test = 0, rate_per_hour = 0.00, focus_area_fk = 7 },
+
+
+                   new ProductsEntity() { id = 27, name = "Green Stren", time_study_per_test = 120, rate_per_hour = 21.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 28, name = "Dry Stren", time_study_per_test = 240, rate_per_hour = 42.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 29, name = "Friability", time_study_per_test = 120, rate_per_hour = 21.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 30, name = "Permeab", time_study_per_test = 120, rate_per_hour = 21.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 31, name = "Green Shea", time_study_per_test = 120, rate_per_hour = 21.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 32, name = "Dry Shea", time_study_per_test = 240, rate_per_hour = 42.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 33, name = "Shatter In", time_study_per_test = 120, rate_per_hour = 21.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 34, name = "Wet Ten", time_study_per_test = 120, rate_per_hour = 21.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 35, name = "Compact", time_study_per_test = 120, rate_per_hour = 21.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 36, name = "Compress", time_study_per_test = 120, rate_per_hour = 21.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 37, name = "Moisture", time_study_per_test = 240, rate_per_hour = 42.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 38, name = "Voliti", time_study_per_test = 160, rate_per_hour = 28.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 39, name = "Activ C", time_study_per_test = 90, rate_per_hour = 18.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 40, name = "Clay Wash", time_study_per_test = 180, rate_per_hour = 32.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 41, name = "LOl", time_study_per_test = 160, rate_per_hour = 28.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 42, name = "Tensile", time_study_per_test = 120, rate_per_hour = 179.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 43, name = "Transv Stre", time_study_per_test = 120, rate_per_hour = 179.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 44, name = "Swe Ind", time_study_per_test = 120, rate_per_hour = 47.23, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 45, name = "Visco", time_study_per_test = 60, rate_per_hour = 27.63, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 46, name = "CEC", time_study_per_test = 120, rate_per_hour = 47.23, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 47, name = "PH", time_study_per_test = 120, rate_per_hour = 47.23, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 48, name = "XRF", time_study_per_test = 180, rate_per_hour = 66.51, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 49, name = "XRD Sand", time_study_per_test = 180, rate_per_hour = 66.51, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 50, name = "Sieve Ana", time_study_per_test = 60, rate_per_hour = 27.66, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 51, name = "Grain Sha", time_study_per_test = 60, rate_per_hour = 14.78, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 52, name = "Sintering", time_study_per_test = 480, rate_per_hour = 72.32, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 53, name = "ADV", time_study_per_test = 180, rate_per_hour = 41.84, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 54, name = "Core Preparation", time_study_per_test = 20, rate_per_hour = 42.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 55, name = "Full Green Sand Anal", time_study_per_test = 2270, rate_per_hour = 400.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 56, name = "Full Resin Sand Aval", time_study_per_test = 480, rate_per_hour = 400.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 57, name = "Full Bentonite Anal", time_study_per_test = 1240, rate_per_hour = 400.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 58, name = "Full Ref San Anal", time_study_per_test = 1720, rate_per_hour = 400.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 59, name = "Core Making", time_study_per_test = 260, rate_per_hour = 400.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 60, name = "Calibration", time_study_per_test = 60, rate_per_hour = 400.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 61, name = "Mould Coating", time_study_per_test = 60, rate_per_hour = 400.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 62, name = "Oolitization", time_study_per_test = 60, rate_per_hour = 300.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 63, name = "TGA Analysis", time_study_per_test = 120, rate_per_hour = 21.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 64, name = "Sample Preparation", time_study_per_test = 180, rate_per_hour = 84.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 65, name = "Total Gas Evolution", time_study_per_test = 120, rate_per_hour = 600.00, focus_area_fk = 2 },
+                   new ProductsEntity() { id = 66, name = "Non Testing Act", time_study_per_test = 60, rate_per_hour = 1233.64, focus_area_fk = 2 },
+
+                    new ProductsEntity() { id = 67, name = "Macr Vick", time_study_per_test = 15, rate_per_hour = 75.00, focus_area_fk = 1},
+                   new ProductsEntity() { id = 68, name = "Micr Vick", time_study_per_test = 15, rate_per_hour = 75.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 69, name = "Rockewell", time_study_per_test = 15, rate_per_hour = 75.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 70, name = "Brinell", time_study_per_test = 60, rate_per_hour = 75.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 71, name = "Charpy", time_study_per_test = 80, rate_per_hour = 490.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 72, name = "Tensile", time_study_per_test = 80, rate_per_hour = 450.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 73, name = "HT Fur 1", time_study_per_test = 60, rate_per_hour = 118.75, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 74, name = "HT Fur Big", time_study_per_test = 60, rate_per_hour = 118.75, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 75, name = "AI Furn", time_study_per_test = 60, rate_per_hour = 118.75, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 76, name = "Ind Furn", time_study_per_test = 60, rate_per_hour = 400.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 77, name = "Metallog", time_study_per_test = 80, rate_per_hour = 400.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 78, name = "Spectro", time_study_per_test = 60, rate_per_hour = 200.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 79, name = "Lecco", time_study_per_test = 80, rate_per_hour = 200.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 80, name = "XRD", time_study_per_test = 60, rate_per_hour = 500.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 81, name = "SEM", time_study_per_test = 60, rate_per_hour = 250.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 82, name = "Mill&M", time_study_per_test = 60, rate_per_hour = 250.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 83, name = "Stereo", time_study_per_test = 30, rate_per_hour = 80.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 84, name = "XRF", time_study_per_test = 60, rate_per_hour = 500.00, focus_area_fk = 1 },
+                   new ProductsEntity() { id = 85, name = "Non Testing Act (Phys)", time_study_per_test = 60, rate_per_hour = 953.30, focus_area_fk = 1 }
+               );
 
             modelBuilder.Entity<SocioEconomicImpactEntity>().HasData(
                    new SocioEconomicImpactEntity() { id = 1, name = "Productivity/ Increase in turnover " },
@@ -94,84 +184,7 @@ namespace backend.DataAccess.Repositories
                    new TechStationServiceEntity() { id = 7, name = "Knowledge Transfer / SLP" },
                    new TechStationServiceEntity() { id = 8, name = "Investigative Project (Failure /  Defect)" }
                 );
-
-            modelBuilder.Entity<SupportEquipmentEntity>().HasData(
-                   new SupportEquipmentEntity() { id = 1, name = "Spin Cast" },
-                   new SupportEquipmentEntity() { id = 2, name = "Ind Coil Furn" },
-                   new SupportEquipmentEntity() { id = 3, name = "Valcanizer" },
-                   new SupportEquipmentEntity() { id = 4, name = "Host Interns" },
-                   new SupportEquipmentEntity() { id = 5, name = "SLP / Tail Dem1" },
-                   new SupportEquipmentEntity() { id = 6, name = "SLP / Tail Dem2" },
-                   new SupportEquipmentEntity() { id = 7, name = "SLP / Tail Dem3" },
-                   new SupportEquipmentEntity() { id = 8, name = "SLP / Tail Dem4" },
-                   new SupportEquipmentEntity() { id = 9, name = "Lazer Cutter" },
-                   new SupportEquipmentEntity() { id = 10, name = "Design Software" },
-                   new SupportEquipmentEntity() { id = 11, name = "Non Testing Act (Sup)" }
-                );
-
-            modelBuilder.Entity<MouldingTechEquipmentEntity>().HasData(
-                   new MouldingTechEquipmentEntity() { id = 1, name = "Green Stren" },
-                   new MouldingTechEquipmentEntity() { id = 2, name = "Dry Stren" },
-                   new MouldingTechEquipmentEntity() { id = 3, name = "Friability" },
-                   new MouldingTechEquipmentEntity() { id = 4, name = "Permeab" },
-                   new MouldingTechEquipmentEntity() { id = 5, name = "Green Shea" },
-                   new MouldingTechEquipmentEntity() { id = 6, name = "Dry Shea" },
-                   new MouldingTechEquipmentEntity() { id = 7, name = "Shatter In" },
-                   new MouldingTechEquipmentEntity() { id = 8, name = "Wet Ten" },
-                   new MouldingTechEquipmentEntity() { id = 9, name = "Compact" },
-                   new MouldingTechEquipmentEntity() { id = 10, name = "Compress" },
-                   new MouldingTechEquipmentEntity() { id = 11, name = "Moisture" },
-                   new MouldingTechEquipmentEntity() { id = 12, name = "Voliti" },
-                   new MouldingTechEquipmentEntity() { id = 13, name = "Activ C" },
-                   new MouldingTechEquipmentEntity() { id = 14, name = "Clay Wash" },
-                   new MouldingTechEquipmentEntity() { id = 15, name = "LOl" },
-                   new MouldingTechEquipmentEntity() { id = 16, name = "Tensile" },
-                   new MouldingTechEquipmentEntity() { id = 17, name = "Transv Stre" },
-                   new MouldingTechEquipmentEntity() { id = 18, name = "Swe Ind" },
-                   new MouldingTechEquipmentEntity() { id = 19, name = "Visco" },
-                   new MouldingTechEquipmentEntity() { id = 20, name = "CEC" },
-                   new MouldingTechEquipmentEntity() { id = 21, name = "PH" },
-                   new MouldingTechEquipmentEntity() { id = 22, name = "XRF" },
-                   new MouldingTechEquipmentEntity() { id = 23, name = "XRD Sand" },
-                   new MouldingTechEquipmentEntity() { id = 24, name = "Sieve Ana" },
-                   new MouldingTechEquipmentEntity() { id = 25, name = "Grain Sha" }, 
-                   new MouldingTechEquipmentEntity() { id = 26, name = "Sintering" },
-                   new MouldingTechEquipmentEntity() { id = 27, name = "ADV" },
-                   new MouldingTechEquipmentEntity() { id = 28, name = "Core Preparation" },
-                   new MouldingTechEquipmentEntity() { id = 29, name = "Full Green Sand Anal" },
-                   new MouldingTechEquipmentEntity() { id = 30, name = "Full Resin Sand Aval" },
-                   new MouldingTechEquipmentEntity() { id = 31, name = "Full Bentonite Anal" },
-                   new MouldingTechEquipmentEntity() { id = 32, name = "Full Ref San Anal" },
-                   new MouldingTechEquipmentEntity() { id = 33, name = "Core Making" },
-                   new MouldingTechEquipmentEntity() { id = 34, name = "Calibration" },
-                   new MouldingTechEquipmentEntity() { id = 35, name = "Mould Coating " },
-                   new MouldingTechEquipmentEntity() { id = 36, name = "Oolitization" },
-                   new MouldingTechEquipmentEntity() { id = 37, name = "TGA Analysis" },
-                   new MouldingTechEquipmentEntity() { id = 38, name = "Sample Preparation" },
-                   new MouldingTechEquipmentEntity() { id = 39, name = "Total Gas Evolution" }
-                );
-
-            modelBuilder.Entity<PhysicalMetallurgyEquipmentEntity>().HasData(
-                   new PhysicalMetallurgyEquipmentEntity() { id = 1, name = "Macr Vick" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 2, name = "Micr Vick" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 3, name = "Rockewell" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 4, name = "Brinell" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 5, name = "Charpy" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 6, name = "Tensile" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 7, name = "HT Fur 1" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 8, name = "HT Fur Big" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 9, name = "AI Furn" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 10, name = "Ind Furn" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 11, name = "Metallog" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 12, name = "Spectro" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 13, name = "Lecco" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 14, name = "XRD" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 15, name = "SEM" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 16, name = "Mill&M" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 17, name = "Stereo" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 18, name = "XRF" },
-                   new PhysicalMetallurgyEquipmentEntity() { id = 19, name = "Non Testing Act (Phys)" }
-                );
+          
         }
 
         private class EmailTemplate

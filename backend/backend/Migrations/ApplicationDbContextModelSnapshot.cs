@@ -17,6 +17,26 @@ namespace backend.Migrations
                 .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("backend.DataAccess.Database.Entities.BroaderMCTSRatesEntity", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<double>("rate_per_hour")
+                        .HasColumnType("double");
+
+                    b.Property<double>("time_study_per_test")
+                        .HasColumnType("double");
+
+                    b.HasKey("id");
+
+                    b.ToTable("broader_mcts_rates");
+                });
+
             modelBuilder.Entity("backend.DataAccess.Database.Entities.EmailTemplateEntity", b =>
                 {
                     b.Property<int>("id")
@@ -1202,63 +1222,22 @@ namespace backend.Migrations
                         new
                         {
                             id = 4,
+                            name = "SupportEquipment"
+                        },
+                        new
+                        {
+                            id = 5,
                             name = "Support"
                         },
                         new
                         {
-                            id = 5,
-                            name = "Other"
-                        });
-                });
-
-            modelBuilder.Entity("backend.DataAccess.Database.Entities.FoundryTechEquipmentEntity", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("id");
-
-                    b.ToTable("foundry_tech_equipment");
-
-                    b.HasData(
-                        new
-                        {
-                            id = 1,
-                            name = "ProE"
-                        },
-                        new
-                        {
-                            id = 2,
-                            name = "MDX"
-                        },
-                        new
-                        {
-                            id = 3,
-                            name = "AutoD"
-                        },
-                        new
-                        {
-                            id = 4,
-                            name = "ALIA"
-                        },
-                        new
-                        {
-                            id = 5,
-                            name = "3DP"
-                        },
-                        new
-                        {
                             id = 6,
-                            name = "Click To Cast"
+                            name = "Other"
                         },
                         new
                         {
                             id = 7,
-                            name = "Non Testing Act(Ftec)"
+                            name = "BroaderMCTSRates"
                         });
                 });
 
@@ -1320,328 +1299,6 @@ namespace backend.Migrations
                     b.ToTable("invoice");
                 });
 
-            modelBuilder.Entity("backend.DataAccess.Database.Entities.MouldingTechEquipmentEntity", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("id");
-
-                    b.ToTable("moulding_tech_equipment");
-
-                    b.HasData(
-                        new
-                        {
-                            id = 1,
-                            name = "Green Stren"
-                        },
-                        new
-                        {
-                            id = 2,
-                            name = "Dry Stren"
-                        },
-                        new
-                        {
-                            id = 3,
-                            name = "Friability"
-                        },
-                        new
-                        {
-                            id = 4,
-                            name = "Permeab"
-                        },
-                        new
-                        {
-                            id = 5,
-                            name = "Green Shea"
-                        },
-                        new
-                        {
-                            id = 6,
-                            name = "Dry Shea"
-                        },
-                        new
-                        {
-                            id = 7,
-                            name = "Shatter In"
-                        },
-                        new
-                        {
-                            id = 8,
-                            name = "Wet Ten"
-                        },
-                        new
-                        {
-                            id = 9,
-                            name = "Compact"
-                        },
-                        new
-                        {
-                            id = 10,
-                            name = "Compress"
-                        },
-                        new
-                        {
-                            id = 11,
-                            name = "Moisture"
-                        },
-                        new
-                        {
-                            id = 12,
-                            name = "Voliti"
-                        },
-                        new
-                        {
-                            id = 13,
-                            name = "Activ C"
-                        },
-                        new
-                        {
-                            id = 14,
-                            name = "Clay Wash"
-                        },
-                        new
-                        {
-                            id = 15,
-                            name = "LOl"
-                        },
-                        new
-                        {
-                            id = 16,
-                            name = "Tensile"
-                        },
-                        new
-                        {
-                            id = 17,
-                            name = "Transv Stre"
-                        },
-                        new
-                        {
-                            id = 18,
-                            name = "Swe Ind"
-                        },
-                        new
-                        {
-                            id = 19,
-                            name = "Visco"
-                        },
-                        new
-                        {
-                            id = 20,
-                            name = "CEC"
-                        },
-                        new
-                        {
-                            id = 21,
-                            name = "PH"
-                        },
-                        new
-                        {
-                            id = 22,
-                            name = "XRF"
-                        },
-                        new
-                        {
-                            id = 23,
-                            name = "XRD Sand"
-                        },
-                        new
-                        {
-                            id = 24,
-                            name = "Sieve Ana"
-                        },
-                        new
-                        {
-                            id = 25,
-                            name = "Grain Sha"
-                        },
-                        new
-                        {
-                            id = 26,
-                            name = "Sintering"
-                        },
-                        new
-                        {
-                            id = 27,
-                            name = "ADV"
-                        },
-                        new
-                        {
-                            id = 28,
-                            name = "Core Preparation"
-                        },
-                        new
-                        {
-                            id = 29,
-                            name = "Full Green Sand Anal"
-                        },
-                        new
-                        {
-                            id = 30,
-                            name = "Full Resin Sand Aval"
-                        },
-                        new
-                        {
-                            id = 31,
-                            name = "Full Bentonite Anal"
-                        },
-                        new
-                        {
-                            id = 32,
-                            name = "Full Ref San Anal"
-                        },
-                        new
-                        {
-                            id = 33,
-                            name = "Core Making"
-                        },
-                        new
-                        {
-                            id = 34,
-                            name = "Calibration"
-                        },
-                        new
-                        {
-                            id = 35,
-                            name = "Mould Coating "
-                        },
-                        new
-                        {
-                            id = 36,
-                            name = "Oolitization"
-                        },
-                        new
-                        {
-                            id = 37,
-                            name = "TGA Analysis"
-                        },
-                        new
-                        {
-                            id = 38,
-                            name = "Sample Preparation"
-                        },
-                        new
-                        {
-                            id = 39,
-                            name = "Total Gas Evolution"
-                        });
-                });
-
-            modelBuilder.Entity("backend.DataAccess.Database.Entities.PhysicalMetallurgyEquipmentEntity", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("id");
-
-                    b.ToTable("physical_metallurgy_equipment");
-
-                    b.HasData(
-                        new
-                        {
-                            id = 1,
-                            name = "Macr Vick"
-                        },
-                        new
-                        {
-                            id = 2,
-                            name = "Micr Vick"
-                        },
-                        new
-                        {
-                            id = 3,
-                            name = "Rockewell"
-                        },
-                        new
-                        {
-                            id = 4,
-                            name = "Brinell"
-                        },
-                        new
-                        {
-                            id = 5,
-                            name = "Charpy"
-                        },
-                        new
-                        {
-                            id = 6,
-                            name = "Tensile"
-                        },
-                        new
-                        {
-                            id = 7,
-                            name = "HT Fur 1"
-                        },
-                        new
-                        {
-                            id = 8,
-                            name = "HT Fur Big"
-                        },
-                        new
-                        {
-                            id = 9,
-                            name = "AI Furn"
-                        },
-                        new
-                        {
-                            id = 10,
-                            name = "Ind Furn"
-                        },
-                        new
-                        {
-                            id = 11,
-                            name = "Metallog"
-                        },
-                        new
-                        {
-                            id = 12,
-                            name = "Spectro"
-                        },
-                        new
-                        {
-                            id = 13,
-                            name = "Lecco"
-                        },
-                        new
-                        {
-                            id = 14,
-                            name = "XRD"
-                        },
-                        new
-                        {
-                            id = 15,
-                            name = "SEM"
-                        },
-                        new
-                        {
-                            id = 16,
-                            name = "Mill&M"
-                        },
-                        new
-                        {
-                            id = 17,
-                            name = "Stereo"
-                        },
-                        new
-                        {
-                            id = 18,
-                            name = "XRF"
-                        },
-                        new
-                        {
-                            id = 19,
-                            name = "Non Testing Act (Phys)"
-                        });
-                });
-
             modelBuilder.Entity("backend.DataAccess.Database.Entities.ProductExpectation", b =>
                 {
                     b.Property<int>("id")
@@ -1686,6 +1343,780 @@ namespace backend.Migrations
                             id = 6,
                             name = "Other"
                         });
+                });
+
+            modelBuilder.Entity("backend.DataAccess.Database.Entities.ProductsEntity", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("focus_area_fk")
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<double>("rate_per_hour")
+                        .HasColumnType("double");
+
+                    b.Property<double>("time_study_per_test")
+                        .HasColumnType("double");
+
+                    b.HasKey("id");
+
+                    b.ToTable("products");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            focus_area_fk = 3,
+                            name = "ProE",
+                            rate_per_hour = 550.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 2,
+                            focus_area_fk = 3,
+                            name = "MDX",
+                            rate_per_hour = 550.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 3,
+                            focus_area_fk = 3,
+                            name = "AutoD",
+                            rate_per_hour = 550.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 4,
+                            focus_area_fk = 3,
+                            name = "ALIA",
+                            rate_per_hour = 937.5,
+                            time_study_per_test = 9600.0
+                        },
+                        new
+                        {
+                            id = 5,
+                            focus_area_fk = 3,
+                            name = "3DP",
+                            rate_per_hour = 550.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 6,
+                            focus_area_fk = 3,
+                            name = "Click To Cast",
+                            rate_per_hour = 550.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 7,
+                            focus_area_fk = 3,
+                            name = "Non Testing Act(Ftec)",
+                            rate_per_hour = 772.32000000000005,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 8,
+                            focus_area_fk = 4,
+                            name = "Spin Cast",
+                            rate_per_hour = 250.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 9,
+                            focus_area_fk = 4,
+                            name = "Ind Coil Furn",
+                            rate_per_hour = 250.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 10,
+                            focus_area_fk = 4,
+                            name = "Valcanizer",
+                            rate_per_hour = 250.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 11,
+                            focus_area_fk = 4,
+                            name = "Host Interns",
+                            rate_per_hour = 0.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 12,
+                            focus_area_fk = 4,
+                            name = "SLP / Tail Dem1",
+                            rate_per_hour = 18.199999999999999,
+                            time_study_per_test = 1.0
+                        },
+                        new
+                        {
+                            id = 13,
+                            focus_area_fk = 4,
+                            name = "SLP / Tail Dem2",
+                            rate_per_hour = 0.0,
+                            time_study_per_test = 0.0
+                        },
+                        new
+                        {
+                            id = 14,
+                            focus_area_fk = 4,
+                            name = "SLP / Tail Dem3",
+                            rate_per_hour = 0.0,
+                            time_study_per_test = 0.0
+                        },
+                        new
+                        {
+                            id = 15,
+                            focus_area_fk = 4,
+                            name = "SLP / Tail Dem4",
+                            rate_per_hour = 0.0,
+                            time_study_per_test = 0.0
+                        },
+                        new
+                        {
+                            id = 16,
+                            focus_area_fk = 4,
+                            name = "Lazer Cutter",
+                            rate_per_hour = 20.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 17,
+                            focus_area_fk = 4,
+                            name = "Design Software",
+                            rate_per_hour = 50.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 18,
+                            focus_area_fk = 4,
+                            name = "Non Testing Act (Sup)",
+                            rate_per_hour = 687.73000000000002,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 19,
+                            focus_area_fk = 7,
+                            name = "Testing & Analysis",
+                            rate_per_hour = 224.38,
+                            time_study_per_test = 0.0
+                        },
+                        new
+                        {
+                            id = 20,
+                            focus_area_fk = 7,
+                            name = "Prototyping & Manufacturing",
+                            rate_per_hour = 800.0,
+                            time_study_per_test = 0.0
+                        },
+                        new
+                        {
+                            id = 21,
+                            focus_area_fk = 7,
+                            name = "Consult / Technology Audit",
+                            rate_per_hour = 500.0,
+                            time_study_per_test = 0.0
+                        },
+                        new
+                        {
+                            id = 22,
+                            focus_area_fk = 7,
+                            name = "Product and Process Development",
+                            rate_per_hour = 800.0,
+                            time_study_per_test = 0.0
+                        },
+                        new
+                        {
+                            id = 23,
+                            focus_area_fk = 7,
+                            name = "Research and Development",
+                            rate_per_hour = 800.0,
+                            time_study_per_test = 0.0
+                        },
+                        new
+                        {
+                            id = 24,
+                            focus_area_fk = 7,
+                            name = "Technology Demonstration / Transfer",
+                            rate_per_hour = 800.0,
+                            time_study_per_test = 0.0
+                        },
+                        new
+                        {
+                            id = 25,
+                            focus_area_fk = 7,
+                            name = "Knowledge Transfer / SLP",
+                            rate_per_hour = 250.0,
+                            time_study_per_test = 0.0
+                        },
+                        new
+                        {
+                            id = 26,
+                            focus_area_fk = 7,
+                            name = "Investigative Projects (Failure / Defect)",
+                            rate_per_hour = 0.0,
+                            time_study_per_test = 0.0
+                        },
+                        new
+                        {
+                            id = 27,
+                            focus_area_fk = 2,
+                            name = "Green Stren",
+                            rate_per_hour = 21.0,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 28,
+                            focus_area_fk = 2,
+                            name = "Dry Stren",
+                            rate_per_hour = 42.0,
+                            time_study_per_test = 240.0
+                        },
+                        new
+                        {
+                            id = 29,
+                            focus_area_fk = 2,
+                            name = "Friability",
+                            rate_per_hour = 21.0,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 30,
+                            focus_area_fk = 2,
+                            name = "Permeab",
+                            rate_per_hour = 21.0,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 31,
+                            focus_area_fk = 2,
+                            name = "Green Shea",
+                            rate_per_hour = 21.0,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 32,
+                            focus_area_fk = 2,
+                            name = "Dry Shea",
+                            rate_per_hour = 42.0,
+                            time_study_per_test = 240.0
+                        },
+                        new
+                        {
+                            id = 33,
+                            focus_area_fk = 2,
+                            name = "Shatter In",
+                            rate_per_hour = 21.0,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 34,
+                            focus_area_fk = 2,
+                            name = "Wet Ten",
+                            rate_per_hour = 21.0,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 35,
+                            focus_area_fk = 2,
+                            name = "Compact",
+                            rate_per_hour = 21.0,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 36,
+                            focus_area_fk = 2,
+                            name = "Compress",
+                            rate_per_hour = 21.0,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 37,
+                            focus_area_fk = 2,
+                            name = "Moisture",
+                            rate_per_hour = 42.0,
+                            time_study_per_test = 240.0
+                        },
+                        new
+                        {
+                            id = 38,
+                            focus_area_fk = 2,
+                            name = "Voliti",
+                            rate_per_hour = 28.0,
+                            time_study_per_test = 160.0
+                        },
+                        new
+                        {
+                            id = 39,
+                            focus_area_fk = 2,
+                            name = "Activ C",
+                            rate_per_hour = 18.0,
+                            time_study_per_test = 90.0
+                        },
+                        new
+                        {
+                            id = 40,
+                            focus_area_fk = 2,
+                            name = "Clay Wash",
+                            rate_per_hour = 32.0,
+                            time_study_per_test = 180.0
+                        },
+                        new
+                        {
+                            id = 41,
+                            focus_area_fk = 2,
+                            name = "LOl",
+                            rate_per_hour = 28.0,
+                            time_study_per_test = 160.0
+                        },
+                        new
+                        {
+                            id = 42,
+                            focus_area_fk = 2,
+                            name = "Tensile",
+                            rate_per_hour = 179.0,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 43,
+                            focus_area_fk = 2,
+                            name = "Transv Stre",
+                            rate_per_hour = 179.0,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 44,
+                            focus_area_fk = 2,
+                            name = "Swe Ind",
+                            rate_per_hour = 47.229999999999997,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 45,
+                            focus_area_fk = 2,
+                            name = "Visco",
+                            rate_per_hour = 27.629999999999999,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 46,
+                            focus_area_fk = 2,
+                            name = "CEC",
+                            rate_per_hour = 47.229999999999997,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 47,
+                            focus_area_fk = 2,
+                            name = "PH",
+                            rate_per_hour = 47.229999999999997,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 48,
+                            focus_area_fk = 2,
+                            name = "XRF",
+                            rate_per_hour = 66.510000000000005,
+                            time_study_per_test = 180.0
+                        },
+                        new
+                        {
+                            id = 49,
+                            focus_area_fk = 2,
+                            name = "XRD Sand",
+                            rate_per_hour = 66.510000000000005,
+                            time_study_per_test = 180.0
+                        },
+                        new
+                        {
+                            id = 50,
+                            focus_area_fk = 2,
+                            name = "Sieve Ana",
+                            rate_per_hour = 27.66,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 51,
+                            focus_area_fk = 2,
+                            name = "Grain Sha",
+                            rate_per_hour = 14.779999999999999,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 52,
+                            focus_area_fk = 2,
+                            name = "Sintering",
+                            rate_per_hour = 72.319999999999993,
+                            time_study_per_test = 480.0
+                        },
+                        new
+                        {
+                            id = 53,
+                            focus_area_fk = 2,
+                            name = "ADV",
+                            rate_per_hour = 41.840000000000003,
+                            time_study_per_test = 180.0
+                        },
+                        new
+                        {
+                            id = 54,
+                            focus_area_fk = 2,
+                            name = "Core Preparation",
+                            rate_per_hour = 42.0,
+                            time_study_per_test = 20.0
+                        },
+                        new
+                        {
+                            id = 55,
+                            focus_area_fk = 2,
+                            name = "Full Green Sand Anal",
+                            rate_per_hour = 400.0,
+                            time_study_per_test = 2270.0
+                        },
+                        new
+                        {
+                            id = 56,
+                            focus_area_fk = 2,
+                            name = "Full Resin Sand Aval",
+                            rate_per_hour = 400.0,
+                            time_study_per_test = 480.0
+                        },
+                        new
+                        {
+                            id = 57,
+                            focus_area_fk = 2,
+                            name = "Full Bentonite Anal",
+                            rate_per_hour = 400.0,
+                            time_study_per_test = 1240.0
+                        },
+                        new
+                        {
+                            id = 58,
+                            focus_area_fk = 2,
+                            name = "Full Ref San Anal",
+                            rate_per_hour = 400.0,
+                            time_study_per_test = 1720.0
+                        },
+                        new
+                        {
+                            id = 59,
+                            focus_area_fk = 2,
+                            name = "Core Making",
+                            rate_per_hour = 400.0,
+                            time_study_per_test = 260.0
+                        },
+                        new
+                        {
+                            id = 60,
+                            focus_area_fk = 2,
+                            name = "Calibration",
+                            rate_per_hour = 400.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 61,
+                            focus_area_fk = 2,
+                            name = "Mould Coating",
+                            rate_per_hour = 400.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 62,
+                            focus_area_fk = 2,
+                            name = "Oolitization",
+                            rate_per_hour = 300.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 63,
+                            focus_area_fk = 2,
+                            name = "TGA Analysis",
+                            rate_per_hour = 21.0,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 64,
+                            focus_area_fk = 2,
+                            name = "Sample Preparation",
+                            rate_per_hour = 84.0,
+                            time_study_per_test = 180.0
+                        },
+                        new
+                        {
+                            id = 65,
+                            focus_area_fk = 2,
+                            name = "Total Gas Evolution",
+                            rate_per_hour = 600.0,
+                            time_study_per_test = 120.0
+                        },
+                        new
+                        {
+                            id = 66,
+                            focus_area_fk = 2,
+                            name = "Non Testing Act",
+                            rate_per_hour = 1233.6400000000001,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 67,
+                            focus_area_fk = 1,
+                            name = "Macr Vick",
+                            rate_per_hour = 75.0,
+                            time_study_per_test = 15.0
+                        },
+                        new
+                        {
+                            id = 68,
+                            focus_area_fk = 1,
+                            name = "Micr Vick",
+                            rate_per_hour = 75.0,
+                            time_study_per_test = 15.0
+                        },
+                        new
+                        {
+                            id = 69,
+                            focus_area_fk = 1,
+                            name = "Rockewell",
+                            rate_per_hour = 75.0,
+                            time_study_per_test = 15.0
+                        },
+                        new
+                        {
+                            id = 70,
+                            focus_area_fk = 1,
+                            name = "Brinell",
+                            rate_per_hour = 75.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 71,
+                            focus_area_fk = 1,
+                            name = "Charpy",
+                            rate_per_hour = 490.0,
+                            time_study_per_test = 80.0
+                        },
+                        new
+                        {
+                            id = 72,
+                            focus_area_fk = 1,
+                            name = "Tensile",
+                            rate_per_hour = 450.0,
+                            time_study_per_test = 80.0
+                        },
+                        new
+                        {
+                            id = 73,
+                            focus_area_fk = 1,
+                            name = "HT Fur 1",
+                            rate_per_hour = 118.75,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 74,
+                            focus_area_fk = 1,
+                            name = "HT Fur Big",
+                            rate_per_hour = 118.75,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 75,
+                            focus_area_fk = 1,
+                            name = "AI Furn",
+                            rate_per_hour = 118.75,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 76,
+                            focus_area_fk = 1,
+                            name = "Ind Furn",
+                            rate_per_hour = 400.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 77,
+                            focus_area_fk = 1,
+                            name = "Metallog",
+                            rate_per_hour = 400.0,
+                            time_study_per_test = 80.0
+                        },
+                        new
+                        {
+                            id = 78,
+                            focus_area_fk = 1,
+                            name = "Spectro",
+                            rate_per_hour = 200.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 79,
+                            focus_area_fk = 1,
+                            name = "Lecco",
+                            rate_per_hour = 200.0,
+                            time_study_per_test = 80.0
+                        },
+                        new
+                        {
+                            id = 80,
+                            focus_area_fk = 1,
+                            name = "XRD",
+                            rate_per_hour = 500.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 81,
+                            focus_area_fk = 1,
+                            name = "SEM",
+                            rate_per_hour = 250.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 82,
+                            focus_area_fk = 1,
+                            name = "Mill&M",
+                            rate_per_hour = 250.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 83,
+                            focus_area_fk = 1,
+                            name = "Stereo",
+                            rate_per_hour = 80.0,
+                            time_study_per_test = 30.0
+                        },
+                        new
+                        {
+                            id = 84,
+                            focus_area_fk = 1,
+                            name = "XRF",
+                            rate_per_hour = 500.0,
+                            time_study_per_test = 60.0
+                        },
+                        new
+                        {
+                            id = 85,
+                            focus_area_fk = 1,
+                            name = "Non Testing Act (Phys)",
+                            rate_per_hour = 953.29999999999995,
+                            time_study_per_test = 60.0
+                        });
+                });
+
+            modelBuilder.Entity("backend.DataAccess.Database.Entities.QuotationEntity", b =>
+                {
+                    b.Property<int>("Quote_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Bill_address")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Company_name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("Date_generated")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<double>("Grand_total")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Phone_Number")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("Quote_expiryDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Quote_reference")
+                        .HasColumnType("int");
+
+                    b.HasKey("Quote_id");
+
+                    b.ToTable("quotation");
+                });
+
+            modelBuilder.Entity("backend.DataAccess.Database.Entities.QuotationItemEntity", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("FocusArea")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Item")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("QuotationEntityQuote_id")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Unit_Price")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("QuotationEntityQuote_id");
+
+                    b.ToTable("quotation_item");
                 });
 
             modelBuilder.Entity("backend.DataAccess.Database.Entities.SocioEconomicImpactEntity", b =>
@@ -1744,77 +2175,6 @@ namespace backend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("backend.DataAccess.Database.Entities.SupportEquipmentEntity", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("id");
-
-                    b.ToTable("support_equipment");
-
-                    b.HasData(
-                        new
-                        {
-                            id = 1,
-                            name = "Spin Cast"
-                        },
-                        new
-                        {
-                            id = 2,
-                            name = "Ind Coil Furn"
-                        },
-                        new
-                        {
-                            id = 3,
-                            name = "Valcanizer"
-                        },
-                        new
-                        {
-                            id = 4,
-                            name = "Host Interns"
-                        },
-                        new
-                        {
-                            id = 5,
-                            name = "SLP / Tail Dem1"
-                        },
-                        new
-                        {
-                            id = 6,
-                            name = "SLP / Tail Dem2"
-                        },
-                        new
-                        {
-                            id = 7,
-                            name = "SLP / Tail Dem3"
-                        },
-                        new
-                        {
-                            id = 8,
-                            name = "SLP / Tail Dem4"
-                        },
-                        new
-                        {
-                            id = 9,
-                            name = "Lazer Cutter"
-                        },
-                        new
-                        {
-                            id = 10,
-                            name = "Design Software"
-                        },
-                        new
-                        {
-                            id = 11,
-                            name = "Non Testing Act (Sup)"
-                        });
-                });
-
             modelBuilder.Entity("backend.DataAccess.Database.Entities.TechStationServiceEntity", b =>
                 {
                     b.Property<int>("id")
@@ -1869,6 +2229,23 @@ namespace backend.Migrations
                             id = 8,
                             name = "Investigative Project (Failure /  Defect)"
                         });
+                });
+
+            modelBuilder.Entity("backend.DataAccess.Database.Entities.TermsAndConditionsEntity", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("title")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("id");
+
+                    b.ToTable("terms_and_conditions");
                 });
 
             modelBuilder.Entity("backend.DataAccess.Entities.AccessLevelEntity", b =>
@@ -2042,6 +2419,13 @@ namespace backend.Migrations
                     b.HasOne("backend.DataAccess.Entities.UsersEntity", "users")
                         .WithMany()
                         .HasForeignKey("usersusername");
+                });
+
+            modelBuilder.Entity("backend.DataAccess.Database.Entities.QuotationItemEntity", b =>
+                {
+                    b.HasOne("backend.DataAccess.Database.Entities.QuotationEntity", null)
+                        .WithMany("Items")
+                        .HasForeignKey("QuotationEntityQuote_id");
                 });
 #pragma warning restore 612, 618
         }
