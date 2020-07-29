@@ -91,5 +91,24 @@ namespace backend.Services.Impl
                 return false;
             }
         }
+
+        public List<QuotationResponseModel> GetQuotationByCompany(string email)
+        {
+            List<QuotationEntity> allQuotations = _quotationRepo.GetAll();
+            List<QuotationResponseModel> quotations = new List<QuotationResponseModel>();
+            foreach(QuotationEntity quote in allQuotations)
+            {
+                if(quote.Email.ToLower() == email.ToLower())
+                {
+                    QuotationResponseModel data = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.Grand_total, quote.Items);
+                    quotations.Add(data);
+                }
+
+            }
+
+            return quotations;
+
+           
+        }
     }
 }
