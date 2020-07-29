@@ -26,6 +26,7 @@ namespace backend.Controllers
         {
             try
             {
+               
                 return Ok(_clientService.GetAllClients());
             }
             catch(Exception)

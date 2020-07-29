@@ -87,6 +87,23 @@ namespace backend.Controllers
 
         }
 
+        [HttpGet("quotes/{email}")]
+        public ActionResult<List<QuotationResponseModel>> GetQuoteByCompany(string email)
+        {
+            try
+            {
+                List<QuotationResponseModel> response = _quotationService.GetQuotationByCompany(email);
+                return StatusCode(200, response);
+              
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
+
+        }
+
         [HttpGet("quotes")]
         public ActionResult<List<QuotationResponseModel>> GetAllEnquiries()
         {

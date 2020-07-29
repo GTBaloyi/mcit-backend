@@ -29,7 +29,7 @@ namespace backend.Controllers
             return null;
         }
 
-        [HttpPut("create-project")]
+        [HttpPost("create-project")]
         public ActionResult CreateProject([FromBody] string project)
         {
             return null;
