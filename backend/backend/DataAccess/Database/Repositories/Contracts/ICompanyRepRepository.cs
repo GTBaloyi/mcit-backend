@@ -11,6 +11,7 @@ namespace backend.DataAccess.Contracts
         List<CompanyRepresentativeEntity> GetList();
         CompanyRepresentativeEntity GetById(int id);
         CompanyRepresentativeEntity GetByEmail(string email);
+        CompanyRepresentativeEntity GetByCompany(int companyId);
         bool Update(CompanyRepresentativeEntity businessRepresentative);
         bool Delete(CompanyRepresentativeEntity businessRepresentative);
         bool Insert(CompanyRepresentativeEntity businessRepresentative);
