@@ -14,6 +14,6 @@ namespace backend.Services.Contracts
         public List<QuotationResponseModel> GetAll();
         public void Delete(int id);
         public QuotationResponseModel Update(QuotationModel model);
-        public List<QuotationResponseModel> GetQuotationByCompany(string companyName);
+        public List<QuotationResponseModel> GetQuotationByCompany(string email);
     }
 }

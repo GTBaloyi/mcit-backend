@@ -87,12 +87,12 @@ namespace backend.Controllers
 
         }
 
-        [HttpGet("quotes/{companyName}")]
-        public ActionResult<List<QuotationResponseModel>> GetQuoteByCompany(string companyName)
+        [HttpGet("quotes/{email}")]
+        public ActionResult<List<QuotationResponseModel>> GetQuoteByCompany(string email)
         {
             try
             {
-                List<QuotationResponseModel> response = _quotationService.GetQuotationByCompany(companyName);
+                List<QuotationResponseModel> response = _quotationService.GetQuotationByCompany(email);
                 return StatusCode(200, response);
               
             }
