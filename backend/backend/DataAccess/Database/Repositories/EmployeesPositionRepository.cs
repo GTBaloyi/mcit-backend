@@ -9,28 +9,36 @@ using System.Threading.Tasks;
 
 namespace backend.DataAccess.Database.Repositories
 {
-    public class EmailTemplateRepository : IEmailTemplateRepository
+    public class EmployeesPositionRepository : IEmployeesPositionRepository
     {
 
         private ApplicationDbContext _context;
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public EmailTemplateRepository(ApplicationDbContext context)
+        public EmployeesPositionRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
 
-        public bool Delete(EmailTemplateEntity emailTemplate)
+        public EmployeesPositionEntity GetByEmployeePositionById(int id)
         {
-
             try
             {
-                _context.emailTemplate.Remove(emailTemplate);
+                return _context.employeesPosition.Find(id);
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex);
+                throw ex;
+            }
+        }
+
+        public bool Save(EmployeesPositionEntity employeesPosition)
+        {
+            try
+            {
+                _context.employeesPosition.Add(employeesPosition);
                 _context.SaveChanges();
 
                 return true;
@@ -42,43 +50,28 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public List<EmailTemplateEntity> GetAll()
+        public bool Update(EmployeesPositionEntity employeesPosition)
         {
             try
             {
-                return _context.emailTemplate.ToList();
+                _context.Entry(employeesPosition).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return true;
             }
             catch (Exception ex)
             {
                 logger.Info(ex);
-                throw ex;
+                return false;
             }
         }
-
-        public EmailTemplateEntity GetById(int id)
-        {
-            return _context.emailTemplate.Find(id);
-        }
-
-        public EmailTemplateEntity GetByType(string emailType)
+        public bool Delete(EmployeesPositionEntity employeesPositionEntity)
         {
             try
             {
-                return _context.emailTemplate.Where(x => x.email_type == emailType).ToList()[0];
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex);
-                throw ex;
-            }
-        }
-
-        public bool Save(EmailTemplateEntity emailTemplate)
-        {
-            try
-            {
-                _context.emailTemplate.Add(emailTemplate);
+                _context.employeesPosition.Remove(employeesPositionEntity);
                 _context.SaveChanges();
+
                 return true;
             }
             catch (Exception ex)
@@ -88,20 +81,22 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public bool Update(EmailTemplateEntity emailTemplate)
+        public List<EmployeesPositionEntity> GetAll()
         {
             try
             {
-                _context.Entry(emailTemplate).State = EntityState.Modified;
-                _context.SaveChanges();
-
-                return true;
+                return _context.employeesPosition.ToList();
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
+                logger.Info(ex);
                 throw ex;
             }
+        }
+
+        public EmployeesPositionEntity GetByEmployeePositionByName(string name)
+        {
+            return _context.employeesPosition.Where(x => x.position == name).FirstOrDefault();
         }
     }
 }

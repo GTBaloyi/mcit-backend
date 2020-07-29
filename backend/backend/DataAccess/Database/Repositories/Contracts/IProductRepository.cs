@@ -10,6 +10,7 @@ namespace backend.DataAccess.Database.Repositories.Contracts
     {
          List<ProductsEntity> GetAll();
          ProductsEntity GetById(int id);
+        List<ProductsEntity> GetByFocusArea(int focusAreaId);
          bool Save(ProductsEntity product);
          bool Update(ProductsEntity product);
          bool Delete(ProductsEntity product);
