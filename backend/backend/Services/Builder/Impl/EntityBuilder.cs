@@ -14,6 +14,7 @@ namespace backend.Services.Builder
         private UsersEntity userEntity;
         private EnquiryEntity enquiryEntity;
         public QuotationEntity quotationEntity { get; set; }
+        private EmployeesEntity employeesEntity;
 
         public CompanyEntity buildCompanyEntity(int id,string name, string companyRegistration, string companyProfile, bool isCompanyPresent, string quarter)
         {
@@ -120,6 +121,20 @@ namespace backend.Services.Builder
             quotationEntity.Grand_total = Grand_total;
             quotationEntity.Items = items;
             return quotationEntity;
+        }
+
+        public EmployeesEntity BuildEmployeesEntity(string employeeNumber,string name, string surname, int positionId, string email, string cell, string address, DateTime createdOn)
+        {
+            employeesEntity = new EmployeesEntity();
+            employeesEntity.employee_number = employeeNumber;
+            employeesEntity.name = name;
+            employeesEntity.surname = surname;
+            employeesEntity.position_fk = positionId;
+            employeesEntity.email = email;
+            employeesEntity.cell = cell;
+            employeesEntity.address = address;
+            employeesEntity.created_on = createdOn;
+            return employeesEntity;
         }
     }
 }

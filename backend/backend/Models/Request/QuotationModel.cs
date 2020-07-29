@@ -20,6 +20,7 @@ namespace backend.Models.Request
         public double GlobalDiscount { get; set; }
         public double GlobalTax { get; set; }
         public double Grand_total { get; set; }
+        public string status { get; set; }
 
     }
 }

@@ -104,5 +104,18 @@ namespace backend.DataAccess.Repositories
                 throw ex;
             }
         }
+
+        public CompanyRepresentativeEntity GetByCompany(int companyId)
+        {
+            try
+            {
+                return _context.businessRepresentatives.Where(x => x.company_fk == companyId).ToList()[0];
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                throw ex;
+            }
+        }
     }
 }

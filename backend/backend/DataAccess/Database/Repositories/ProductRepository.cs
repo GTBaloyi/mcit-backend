@@ -107,5 +107,18 @@ namespace backend.DataAccess.Database.Repositories
             }
 
         }
+
+        public List<ProductsEntity> GetByFocusArea(int focusAreaId)
+        {
+            try
+            {
+                return _context.products.Where(x => x.focus_area_fk == focusAreaId).ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex);
+                return null;
+            }
+        }
     }
 }

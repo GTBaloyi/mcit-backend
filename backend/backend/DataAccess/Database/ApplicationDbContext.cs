@@ -25,6 +25,8 @@ namespace backend.DataAccess.Repositories
         public DbSet<TermsAndConditionsEntity> termsAndConditions { get; set; }
         public DbSet<FocusAreaEntity> focusAreas { get; set; }
         public DbSet<ProductsEntity> products { get; set; }
+        public DbSet<EmployeesEntity> employees { get; set; }
+        public DbSet<EmployeesPositionEntity> employeesPosition { get; set; }
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 
@@ -37,6 +39,12 @@ namespace backend.DataAccess.Repositories
                     new UserStatusEntity() {id = 2, status = "InActive"},
                     new UserStatusEntity() {id = 3, status = "Suspended"},
                     new UserStatusEntity() {id = 4, status = "Deactivated"}
+                );
+
+            modelBuilder.Entity<EmployeesPositionEntity>().HasData(
+                    new EmployeesPositionEntity() { id=1, position = "Administrator"},
+                    new EmployeesPositionEntity() { id = 2, position = "General Staff" },
+                    new EmployeesPositionEntity() { id = 3, position = "Manager" }
                 );
 
             modelBuilder.Entity<AccessLevelEntity>().HasData(

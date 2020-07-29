@@ -9,28 +9,23 @@ using System.Threading.Tasks;
 
 namespace backend.DataAccess.Database.Repositories
 {
-    public class EmailTemplateRepository : IEmailTemplateRepository
+    public class EmployeesRepository : IEmployeesRepository
     {
 
         private ApplicationDbContext _context;
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public EmailTemplateRepository(ApplicationDbContext context)
+        public EmployeesRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
 
-        public bool Delete(EmailTemplateEntity emailTemplate)
+        public bool Delete(EmployeesEntity employee)
         {
-
             try
             {
-                _context.emailTemplate.Remove(emailTemplate);
+                _context.employees.Remove(employee);
                 _context.SaveChanges();
 
                 return true;
@@ -42,11 +37,11 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public List<EmailTemplateEntity> GetAll()
+        public List<EmployeesEntity> GetAll()
         {
             try
             {
-                return _context.emailTemplate.ToList();
+                return _context.employees.ToList();
             }
             catch (Exception ex)
             {
@@ -55,30 +50,18 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public EmailTemplateEntity GetById(int id)
+        public EmployeesEntity GetByEmployeeNumber(string employeeNumber)
         {
-            return _context.emailTemplate.Find(id);
+            return _context.employees.Where(x => x.employee_number == employeeNumber).FirstOrDefault();
         }
 
-        public EmailTemplateEntity GetByType(string emailType)
+        public bool Save(EmployeesEntity employee)
         {
             try
             {
-                return _context.emailTemplate.Where(x => x.email_type == emailType).ToList()[0];
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex);
-                throw ex;
-            }
-        }
-
-        public bool Save(EmailTemplateEntity emailTemplate)
-        {
-            try
-            {
-                _context.emailTemplate.Add(emailTemplate);
+                _context.employees.Add(employee);
                 _context.SaveChanges();
+
                 return true;
             }
             catch (Exception ex)
@@ -88,19 +71,19 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public bool Update(EmailTemplateEntity emailTemplate)
+        public bool Update(EmployeesEntity employee)
         {
             try
             {
-                _context.Entry(emailTemplate).State = EntityState.Modified;
+                _context.Entry(employee).State = EntityState.Modified;
                 _context.SaveChanges();
 
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
-                throw ex;
+                logger.Info(ex);
+                return false;
             }
         }
     }
