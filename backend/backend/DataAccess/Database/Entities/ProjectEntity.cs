@@ -16,7 +16,6 @@ namespace backend.DataAccess.Database.Entities
 
         [Index(IsUnique = true)]
         public string project_number { get; set; }
-
         public string project_leader { get; set; }
         public DateTime start_date { get; set; }
         public DateTime due_date { get; set; }

@@ -16,5 +16,6 @@ namespace backend.Services.Builder
         QuotationEntity buildQuotationEntity( int Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string bill_address, string Phone_number, double Grand_total, List<QuotationItemEntity> items);
         InvoiceEntity buildInvoiceEntity(int id, string reference, DateTime invoice_date, DateTime date_due, string title, string description, string vat_number, int bill_to_id,
         string Vat, string terms, double total, double subtotal, int quantity, double total_due, int user_id);
+        EmployeesEntity BuildEmployeesEntity(string employeeNumber,string name, string surname, int positionId, string email, string cell, string address, DateTime createdOn);
     }
 }

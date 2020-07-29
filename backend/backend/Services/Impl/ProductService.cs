@@ -68,24 +68,22 @@ namespace backend.Services.Impl
         {
             try
             {
-                AllProductsResponseModel product = new AllProductsResponseModel();
+                
                 FocusAreaEntity FA = _focusAreaRepo.GetByName(focusArea);
 
                 if(FA != null)
                 {
-                    List<ProductsEntity> productsEntity = _productRepo.GetAll();
+                    List<ProductsEntity> productsEntity = _productRepo.GetByFocusArea(FA.id);
                     List<AllProductsResponseModel> result = new List<AllProductsResponseModel>();
                     foreach (ProductsEntity prod in productsEntity)
                     {
-                        if(prod.focus_area_fk == FA.id)
-                        {
+                            AllProductsResponseModel product = new AllProductsResponseModel();
                             product.focusAreaId = prod.focus_area_fk;
                             product.item = prod.name;
                             product.productId = prod.id;
                             product.ratePerHour = prod.rate_per_hour;
                             product.timeStudyPerTest = prod.time_study_per_test;
                             result.Add(product);
-                        }
                     }
                     return result;
                 }
