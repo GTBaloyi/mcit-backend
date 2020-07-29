@@ -68,9 +68,7 @@ namespace backend.Services.Impl
         {
             try
             {
-                
                 FocusAreaEntity FA = _focusAreaRepo.GetByName(focusArea);
-
                 if(FA != null)
                 {
                     List<ProductsEntity> productsEntity = _productRepo.GetByFocusArea(FA.id);
