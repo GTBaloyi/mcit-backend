@@ -9,7 +9,7 @@ namespace backend.Models.Response
     public class QuotationResponseModel
     {
         public int Quote_id { get; set; }
-        public int Quote_reference { get; set; }
+        public string Quote_reference { get; set; }
         public DateTime Date_generated { get; set; }
         public DateTime Quote_expiryDate { get; set; }
         public string Email { get; set; }
@@ -18,8 +18,9 @@ namespace backend.Models.Response
         public string Phone_Number { get; set; }
         public double Grand_total { get; set; }
         public List<QuotationItemEntity> Items { get; set; }// list of items in the quote
+        public string status { get; set; }
 
-        public QuotationResponseModel(int Quote_id, int Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string bill_address, string Phone_number, double Grand_total, List<QuotationItemEntity> items)
+        public QuotationResponseModel(int Quote_id, string Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string bill_address, string Phone_number, double Grand_total, List<QuotationItemEntity> items, string status)
         {
             this.Quote_id = Quote_id;
             this.Quote_reference = Quote_reference;
@@ -31,6 +32,7 @@ namespace backend.Models.Response
             this.Phone_Number = Phone_number;
             this.Grand_total = Grand_total;
             this.Items = items;
+            this.status = status;
         }
 
     }
