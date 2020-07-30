@@ -14,5 +14,6 @@ namespace backend.DataAccess.Database.Entities
         public string Unit_Price { get; set; }
         public int Quantity { get; set; }
         public double Total { get; set; }
+        public int quote_fk { get; set; }
     }
 }
