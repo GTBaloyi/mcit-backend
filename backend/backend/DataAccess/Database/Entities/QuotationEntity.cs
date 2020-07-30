@@ -12,7 +12,7 @@ namespace backend.DataAccess.Database.Entities
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Quote_id { get; set; }
-        public int Quote_reference { get; set; }
+        public string Quote_reference { get; set; }
         public DateTime Date_generated { get; set; }
         public DateTime Quote_expiryDate { get; set; }
         public string Email { get; set; }
@@ -20,6 +20,7 @@ namespace backend.DataAccess.Database.Entities
         public string Bill_address { get; set; }
         public string Phone_Number { get; set; }
         public double Grand_total { get; set; }
-        public List<QuotationItemEntity> Items { get; set; }
+        public string status { get; set; }
+
     }
 }
