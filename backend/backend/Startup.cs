@@ -71,6 +71,7 @@ namespace backend
             services.AddScoped<IEmailTemplateRepository, EmailTemplateRepository>();
             services.AddScoped<IQuotationRepository, QuotationRepository>();
             services.AddScoped<IQuotationService, QuotationService>();
+            services.AddScoped<IQuotationItemsRepository, QuotationItemRepository>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IFocusAreaRepository, FocusAreaRepository>();
