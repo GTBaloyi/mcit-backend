@@ -103,6 +103,35 @@ namespace backend.Services.Impl
             }
         }
 
+        public ClientRegistrationRequestModel GetClientByEmail(string email)
+        {
+            try
+            {
+
+                CompanyRepresentativeEntity companyRep = _companyRepRepo.GetByEmail(email);
+                CompanyEntity company = _companyRepo.GetById(companyRep.company_fk);
+
+                ClientRegistrationRequestModel client = new ClientRegistrationRequestModel();
+                client.contactName = companyRep.name;
+                client.contactSurname = companyRep.surname;
+                client.title = companyRep.title;
+                client.gender = companyRep.gender;
+                client.contactEmail = companyRep.email;
+                client.contactNumber = companyRep.phone;
+                client.companyName = company.name;
+                client.companyRegistrationNumber = company.registration_number;
+                client.isCompanyPresent = company.isCompanyPresent;
+                client.companyProfile = company.company_profile;
+
+                return client;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public bool UpdateClient(ClientRegistrationRequestModel client)
         {
             try

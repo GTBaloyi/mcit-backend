@@ -26,7 +26,6 @@ namespace backend.Controllers
         {
             try
             {
-               
                 return Ok(_clientService.GetAllClients());
             }
             catch(Exception)
@@ -35,7 +34,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpGet("{companyRegistration}")]
+        [HttpGet("by-registration/{companyRegistration}")]
         public ActionResult<ClientRegistrationRequestModel> GetClientId(string companyRegistration)
         {
             try
@@ -48,7 +47,20 @@ namespace backend.Controllers
             }
         }
 
-        
+
+        [HttpGet("by-email/{email}")]
+        public ActionResult<ClientRegistrationRequestModel> GetClientByEmail(string email)
+        {
+            try
+            {
+                return Ok(_clientService.GetClientByEmail(email));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
         [HttpPut("update-client")]
         public ActionResult UpdateClient([FromBody] ClientRegistrationRequestModel client)
         {
