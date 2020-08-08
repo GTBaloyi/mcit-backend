@@ -11,6 +11,7 @@ namespace backend.Services.Contracts
         bool UpdateClient(ClientRegistrationRequestModel client);
         bool DeleteClient(string companyRegistrationNumber);
         ClientRegistrationRequestModel GetClient(string companyRegistrationNumber);
+        ClientRegistrationRequestModel GetClientByEmail(string email);
         List<ClientRegistrationRequestModel> GetAllClients();
     }
 }
