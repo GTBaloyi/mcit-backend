@@ -35,12 +35,11 @@ namespace backend.DataAccess.Database.Repositories
 
         }
 
-        public InvoiceEntity GetById(int id)
+        public List<InvoiceEntity> GetById(string companyRegistration)
         {
             try
             {
-                InvoiceEntity invoice = _context.invoice.Find(id);
-                return invoice;
+                return _context.invoice.Where(x => x.company_registration == companyRegistration).ToList();
             }
             catch (Exception ex)
             {
@@ -107,7 +106,18 @@ namespace backend.DataAccess.Database.Repositories
 
         }
 
-
+        public InvoiceEntity GetByReference(string reference)
+        {
+            try
+            {
+                return _context.invoice.Where(x => x.reference == reference).First();
+            }
+            catch(Exception e)
+            {
+                logger.Info(e);
+                return null;
+            }
+        }
     }
 }
 
