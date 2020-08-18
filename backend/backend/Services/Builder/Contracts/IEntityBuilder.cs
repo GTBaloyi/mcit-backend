@@ -14,8 +14,8 @@ namespace backend.Services.Builder
         CompanyRepresentativeEntity buildCompanyRepEntity(int id, string title, string name, string surname, string gender, string email, string phone, int companyId, DateTime dateCaptured, string avatar);
         EnquiryEntity buildEnquiryEntity(int id, int focusAreaId, DateTime enquiryDate, string quarter, string company, string companyRegistrationNumber, string description, int serviceTechId, int socioEconomicImpactId, int productExpectationid, double projectBudget, DateTime expectedCompletion);
         QuotationEntity buildQuotationEntity( string Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string bill_address, string Phone_number, double Grand_total, string status);
-        InvoiceEntity buildInvoiceEntity(int id, string reference, DateTime invoice_date, DateTime date_due, string title, string description, string vat_number, int bill_to_id,
-        string Vat, string terms, double total, double subtotal, int quantity, double total_due, int user_id);
+        InvoiceEntity buildInvoiceEntity(int id, string reference, DateTime invoice_date, DateTime date_due, string quotation_reference, double vat_number, string bill_address,
+        double vat, double subtotal, int quantity, double total_due, string company_registration, string generatedBy, string approvedBy);
         EmployeesEntity BuildEmployeesEntity(string employeeNumber,string name, string surname, int positionId, string email, string cell, string address, DateTime createdOn);
     }
 }

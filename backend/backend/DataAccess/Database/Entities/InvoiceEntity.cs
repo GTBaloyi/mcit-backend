@@ -15,18 +15,16 @@ namespace backend.DataAccess.Database.Entities
         public string reference { get; set; }
         public DateTime invoice_date { get; set; }
         public DateTime date_due { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
-        public string vat_number { get; set; }
-        public int bill_to_id { get; set; }
-        public string Vat { get; set; }
-        public string terms { get; set; }
-        public double total { get; set; }
+        public string quotation_reference { get; set; }
+        public double vat_number { get; set; }
+        public string bill_address { get; set; }
+        public double vat { get; set; }
         public double subtotal { get; set; }
         public int quantity { get; set; }
         public double total_due { get; set; }
-        public int user_id { get; set; }
-        public virtual UsersEntity users { get; set; }
+        public string company_registration { get; set; }
+        public string generatedBy { get; set; }
+        public string approvedBy { get; set; }
 
     }
 }

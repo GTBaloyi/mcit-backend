@@ -11,9 +11,9 @@ namespace backend.DataAccess.Database.Entities
         public string FocusArea { get; set; }
         public string Item { get; set; }
         public string Description { get; set; }
-        public string Unit_Price { get; set; }
+        public double Unit_Price { get; set; }
         public int Quantity { get; set; }
         public double Total { get; set; }
-        public int quote_fk { get; set; }
+        public string quote_reference { get; set; }
     }
 }
