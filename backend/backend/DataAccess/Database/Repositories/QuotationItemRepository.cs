@@ -63,11 +63,11 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public List<QuotationItemEntity> GetByQuote(int quoteFk)
+        public List<QuotationItemEntity> GetByQuote(string quoteReference)
         {
             try
             {
-                return _context.quotationItem.Where(x => x.quote_fk == quoteFk).ToList();
+                return _context.quotationItem.Where(x => x.quote_reference == quoteReference).ToList();
             }
             catch (Exception ex)
             {

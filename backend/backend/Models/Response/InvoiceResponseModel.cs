@@ -1,4 +1,5 @@
-﻿using System;
+﻿using backend.DataAccess.Database.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,36 +12,37 @@ namespace backend.Models.Response
         public string reference { get; set; }
         public DateTime invoice_date { get; set; }
         public DateTime date_due { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
-        public string vat_number { get; set; }
-        public int bill_to_id { get; set; }
-        public string Vat { get; set; }
-        public string terms { get; set; }
-        public double total { get; set; }
+        public List<QuotationItemEntity> items { get; set; }
+        public double vat_number { get; set; }
+        public string bill_address { get; set; }
+        public double vat { get; set; }
         public double subtotal { get; set; }
         public int quantity { get; set; }
         public double total_due { get; set; }
-        public int user_id { get; set; }
+        public string company_registration { get; set; }
+        public string generatedBy { get; set; }
+        public string approvedBy { get; set; }
 
-        public InvoiceResponseModel(int id, string reference, DateTime invoice_date, DateTime date_due, string title, string description, string vat_number, int bill_to_id,
-          string Vat, string terms, double total, double subtotal, int quantity, double total_due, int user_id)
+        public InvoiceResponseModel(int id, string reference, DateTime invoice_date, DateTime date_due, List<QuotationItemEntity> items, double vat_number, string bill_address,
+        double vat, double subtotal, int quantity, double total_due, string company_registration, string generatedBy, string approvedBy)
         {
             this.id = id;
             this.reference = reference;
             this.invoice_date = invoice_date;
             this.date_due = date_due;
-            this.title = title;
-            this.description = description;
+            foreach(QuotationItemEntity item in items)
+            {
+                this.items.Add(item);
+            }
             this.vat_number = vat_number;
-            this.bill_to_id = bill_to_id;
-            this.Vat = Vat;
-            this.terms = terms;
-            this.total = total;
+            this.bill_address = bill_address;
+            this.vat = vat;
             this.subtotal = subtotal;
             this.quantity = quantity;
             this.total_due = total_due;
-            this.user_id = user_id;
+            this.company_registration = company_registration;
+            this.generatedBy = generatedBy;
+            this.approvedBy = approvedBy;
         }
 
     }

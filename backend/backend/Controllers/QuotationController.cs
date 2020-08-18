@@ -64,6 +64,7 @@ namespace backend.Controllers
 
         }
 
+
         [HttpGet("quote/{id}")]
         public ActionResult<QuotationResponseModel> GetQuoteById(int id)
         {

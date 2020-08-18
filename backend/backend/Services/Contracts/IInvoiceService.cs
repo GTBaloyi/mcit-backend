@@ -11,10 +11,12 @@ namespace backend.Services.Contracts
     public interface IInvoiceService
     {
         bool GenerateInvoice(InvoiceRequestModel model);
-        InvoiceResponseModel GetById(int id);
+        List<InvoiceResponseModel> GetById(string reference);
         List<InvoiceResponseModel> GetAll();
-        void Delete(int id);
+        void Delete(string reference);
         InvoiceResponseModel Update(InvoiceRequestModel model);
+        InvoiceEntity GetByReferernce(string reference);
+
 
 
     }

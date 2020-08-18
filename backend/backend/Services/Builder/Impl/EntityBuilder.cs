@@ -86,25 +86,24 @@ namespace backend.Services.Builder
             return userEntity;
         }
 
-        public InvoiceEntity buildInvoiceEntity(int id, string reference, DateTime invoice_date, DateTime date_due, string title, string description, string vat_number, int bill_to_id,
-        string Vat, string terms, double total, double subtotal, int quantity, double total_due, int user_id)
+        public InvoiceEntity buildInvoiceEntity(int id, string reference, DateTime invoice_date, DateTime date_due, string quotation_reference, double vat_number, string bill_address,
+        double vat, double subtotal, int quantity, double total_due, string company_registration, string generatedBy, string approvedBy)
         {
             InvoiceEntity InvoiceEntity = new InvoiceEntity();
             InvoiceEntity.id = id;
             InvoiceEntity.reference = reference;
             InvoiceEntity.invoice_date = invoice_date;
             InvoiceEntity.date_due = date_due;
-            InvoiceEntity.title = title;
-            InvoiceEntity.description = description;
+            InvoiceEntity.quotation_reference = quotation_reference;
             InvoiceEntity.vat_number = vat_number;
-            InvoiceEntity.bill_to_id = bill_to_id;
-            InvoiceEntity.Vat = Vat;
-            InvoiceEntity.terms = terms;
-            InvoiceEntity.total = total;
+            InvoiceEntity.bill_address = bill_address;
+            InvoiceEntity.vat = vat;
             InvoiceEntity.subtotal = subtotal;
             InvoiceEntity.quantity = quantity;
             InvoiceEntity.total_due = total_due;
-            InvoiceEntity.user_id = user_id;
+            InvoiceEntity.company_registration = company_registration;
+            InvoiceEntity.generatedBy = generatedBy;
+            InvoiceEntity.approvedBy = approvedBy;
             return InvoiceEntity;
         }
 

@@ -3,6 +3,7 @@ using backend.DataAccess.Database.Repositories.Contracts;
 using backend.Models.Request;
 using backend.Models.Response;
 using backend.Services.Builder;
+using backend.Services.Commons;
 using backend.Services.Contracts;
 using FluentNHibernate.Conventions.Inspections;
 using System;
@@ -17,11 +18,15 @@ namespace backend.Services.Impl
         private readonly IQuotationRepository _quotationRepo;
         private readonly IQuotationItemsRepository _quotationItemsRepo;
         private readonly IEntityBuilder _entityBuilder;
+        private readonly CommonServices commonServices = new CommonServices();
+        private readonly CommonMethods commonMethods = new CommonMethods();
+        private readonly IEmailTemplateRepository _emailTemplateRepository;
 
-        public QuotationService(IEntityBuilder builder, IQuotationRepository quotationRepo, IQuotationItemsRepository quotationItemsRepo)
+        public QuotationService(IEntityBuilder builder, IQuotationRepository quotationRepo, IQuotationItemsRepository quotationItemsRepo, IEmailTemplateRepository emailTemplateRepository)
         {
             _quotationRepo = quotationRepo;
             _quotationItemsRepo = quotationItemsRepo;
+            _emailTemplateRepository = emailTemplateRepository;
             _entityBuilder = builder;
 
         }
@@ -43,7 +48,7 @@ namespace backend.Services.Impl
                 {
                     foreach (QuotationEntity q in entities)
                     {
-                        List<QuotationItemEntity> quotationItems = _quotationItemsRepo.GetByQuote(q.Quote_id);
+                        List<QuotationItemEntity> quotationItems = _quotationItemsRepo.GetByQuote(q.Quote_reference);
                         foreach (QuotationEntity quote in entities)
                         {
                             QuotationResponseModel model = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.Grand_total, quotationItems, quote.status);
@@ -72,7 +77,7 @@ namespace backend.Services.Impl
                 if (quote != null)
                 {
 
-                    List<QuotationItemEntity> items = _quotationItemsRepo.GetByQuote(id);
+                    List<QuotationItemEntity> items = _quotationItemsRepo.GetByQuote(quote.Quote_reference);
                     List<QuotationItemEntity> quoteItems = new List<QuotationItemEntity>();
                     foreach (QuotationItemEntity qItems in items)
                     {
@@ -98,15 +103,20 @@ namespace backend.Services.Impl
             try
             {
                 QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name, model.Bill_address, model.Phone_number, model.Grand_total, model.status);
+                quote.Quote_id = model.quote_id;
                 List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();
                 foreach (QuotationItemEntity item in model.Items)
                 {
                     _quotationItemsRepo.Update(item);
+                    quoteItem.Add(item);
                 }
 
                 if (_quotationRepo.Update(quote))
                 {
+
                     QuotationResponseModel response = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, model.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.Grand_total, quoteItem, quote.status);
+
+                    statusCheck(response);
                     return response;
                 }
                 else
@@ -118,6 +128,47 @@ namespace backend.Services.Impl
             {
                 throw e;
             }
+        }
+
+        private void statusCheck(QuotationResponseModel response)
+        {
+            string emailMessage = "";
+            if (response.status.ToLower() == "pending")
+            {
+                emailMessage = _emailTemplateRepository.GetByType("QuotationPending").code;
+                emailMessage = emailMessage.Replace("{company_name}", response.Company_name);
+                emailMessage = emailMessage.Replace("{quotationi_status}", "Pending");
+            }
+
+            if (response.status.ToLower() == "pending manager approval")
+            {
+                emailMessage = _emailTemplateRepository.GetByType("QuotationPendingManagerApproval").code;
+                emailMessage = emailMessage.Replace("{company_name}", response.Company_name);
+                emailMessage = emailMessage.Replace("{quotationi_status}", "Pending Manager Approval");
+
+            }
+
+            if (response.status.ToLower() == "pending client approval")
+            {
+                emailMessage = _emailTemplateRepository.GetByType("QuotationClientApproval").code;
+                emailMessage = emailMessage.Replace("{company_name}", response.Company_name);
+                emailMessage = emailMessage.Replace("{quotationi_status}", "Pending Client Approval");
+            }
+
+            if (response.status.ToLower() == "accepted")
+            {
+                emailMessage = _emailTemplateRepository.GetByType("QuotationApproved").code;
+                emailMessage = emailMessage.Replace("{company_name}", response.Company_name);
+                emailMessage = emailMessage.Replace("{quotationi_status}", "Quotation Accepted");
+            }
+
+            if (response.status.ToLower() == "rejected")
+            {
+                emailMessage = _emailTemplateRepository.GetByType("QuotationRejected").code;
+                emailMessage = emailMessage.Replace("{company_name}", response.Company_name);
+                emailMessage = emailMessage.Replace("{quotationi_status}", "Quotation Rejected");
+            }
+            commonServices.SendEmail("MCTS: Quotation Status Update", emailMessage, response.Email);
         }
 
         public bool NewQuotation(QuotationModel model)
@@ -134,7 +185,7 @@ namespace backend.Services.Impl
                     foreach (QuotationItemEntity item in model.Items)
                     {
                         QuotationEntity quotation = _quotationRepo.GetAll().Last();
-                        item.quote_fk = quotation.Quote_id;
+                        item.quote_reference = quotation.Quote_reference;
                         _quotationItemsRepo.Save(item);
                     }
                     return true;
@@ -178,7 +229,7 @@ namespace backend.Services.Impl
                     if (quote.Email.ToLower() == email.ToLower())
                     {
                         List<QuotationResponseModel> quotations = new List<QuotationResponseModel>();
-                        List<QuotationItemEntity> quotationsItems = _quotationItemsRepo.GetByQuote(quote.Quote_id);
+                        List<QuotationItemEntity> quotationsItems = _quotationItemsRepo.GetByQuote(quote.Quote_reference);
 
                         List<QuotationItemEntity> items = new List<QuotationItemEntity>();
                         foreach (QuotationItemEntity qItems in quotationsItems)
