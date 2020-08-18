@@ -8,6 +8,7 @@ namespace backend.Models.Request
 {
     public class QuotationModel
     {
+        public int quote_id { get; set; }
         public string Quote_reference { get; set; }
         public DateTime Date_generated { get; set; }
         public DateTime Quote_expiryDate { get; set; }

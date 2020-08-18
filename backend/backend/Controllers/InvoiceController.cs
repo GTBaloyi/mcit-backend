@@ -68,12 +68,12 @@ namespace backend.Controllers
 
         }
 
-        [HttpGet("invoice/{id}")]
-        public ActionResult<InvoiceResponseModel> GetInvoice(int id)
+        [HttpGet("invoice/{invoiceReference}")]
+        public ActionResult<List<InvoiceResponseModel>> GetInvoice(string invoiceReference)
         {
             try
             {
-                InvoiceResponseModel response = _invoiceService.GetById(id);
+                List<InvoiceResponseModel> response = _invoiceService.GetById(invoiceReference);
                 if (response != null)
                 {
                     return StatusCode(200, response);

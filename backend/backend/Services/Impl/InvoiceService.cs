@@ -23,30 +23,59 @@ namespace backend.Services
     {
         private readonly IInvoiceRepository _invoiceRepo;
         private readonly IEntityBuilder _entityBuilder;
+        private readonly IQuotationItemsRepository _quotationItemsRepository;
 
-        public InvoiceService(IEntityBuilder builder, IInvoiceRepository i_invoiceRepo)
+        public InvoiceService(IEntityBuilder builder, IInvoiceRepository i_invoiceRepo, IQuotationItemsRepository quotationItemsRepository)
         {
             _invoiceRepo = i_invoiceRepo;
             _entityBuilder = builder;
+            _quotationItemsRepository = quotationItemsRepository;
 
         }
 
-        public void Delete(int id)
+        public InvoiceEntity GetByReferernce (string reference)
         {
-            InvoiceEntity entity = _invoiceRepo.GetById(id);
-            _invoiceRepo.Delete(entity);
+           try
+            {
+                return _invoiceRepo.GetByReference(reference);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public void Delete(string referenceId)
+        {
+            try
+            {
+                InvoiceEntity entity = _invoiceRepo.GetByReference(referenceId);
+                _invoiceRepo.Delete(entity);
+            } 
+            catch(Exception e)
+            {
+                throw e;
+            }
+            
         }
 
         public List<InvoiceResponseModel> GetAll()
         {
             List<InvoiceEntity> entities = _invoiceRepo.GetAll();
             List<InvoiceResponseModel> models = new List<InvoiceResponseModel>();
+            
             if (entities != null)
             {
+              
+
                 foreach (InvoiceEntity entity in entities)
                 {
-                    InvoiceResponseModel model = new InvoiceResponseModel(entity.id, entity.reference, entity.invoice_date, entity.date_due, entity.title, entity.description, entity.vat_number, entity.bill_to_id,
-          entity.Vat, entity.terms, entity.total, entity.subtotal, entity.quantity, entity.total_due, entity.user_id);
+                    List<QuotationItemEntity> items = _quotationItemsRepository.GetByQuote(entity.quotation_reference);
+
+
+                    InvoiceResponseModel model = new InvoiceResponseModel(entity.id, entity.reference, entity.invoice_date, entity.date_due, items, entity.vat_number, entity.bill_address,
+                                                                            entity.vat,  entity.subtotal, entity.quantity, entity.total_due, entity.company_registration,entity.generatedBy, entity.approvedBy);
                     models.Add(model);
                 }
                 return models;
@@ -59,13 +88,23 @@ namespace backend.Services
 
         }
 
-        public InvoiceResponseModel GetById(int id)
+        public List<InvoiceResponseModel> GetById(string companyRegistration)
         {
-            InvoiceEntity entity = _invoiceRepo.GetById(id);
+            List<InvoiceEntity> entity = _invoiceRepo.GetById(companyRegistration);
+            List<InvoiceResponseModel> result = new List<InvoiceResponseModel>();
+
             if (entity != null)
             {
-                return new InvoiceResponseModel(id, entity.reference, entity.invoice_date, entity.date_due, entity.title, entity.description, entity.vat_number, entity.bill_to_id,
-          entity.Vat, entity.terms, entity.total, entity.subtotal, entity.quantity, entity.total_due, entity.user_id);
+                foreach (InvoiceEntity invoiceResult in entity)
+                {
+                    List<QuotationItemEntity> items = _quotationItemsRepository.GetByQuote(invoiceResult.quotation_reference);
+                    InvoiceResponseModel ans = new InvoiceResponseModel(invoiceResult.id, invoiceResult.reference, invoiceResult.invoice_date, invoiceResult.date_due, items, invoiceResult.vat_number, invoiceResult.bill_address,
+                                                                            invoiceResult.vat, invoiceResult.subtotal, invoiceResult.quantity, invoiceResult.total_due, invoiceResult.company_registration, invoiceResult.generatedBy, invoiceResult.approvedBy);
+
+                    result.Add(ans);
+                }
+
+                return result;
             }
             else
             {
@@ -78,13 +117,14 @@ namespace backend.Services
         {
 
             
-            InvoiceEntity invoice = _entityBuilder.buildInvoiceEntity(model.id, model.reference, model.invoice_date, model.date_due, model.title, model.description, model.vat_number, model.bill_to_id,
-          model.Vat, model.terms, model.total, model.subtotal, model.quantity, model.total_due, model.user_id);
+            InvoiceEntity invoice = _entityBuilder.buildInvoiceEntity(model.id, model.reference, model.invoice_date, model.date_due, model.quotation_Reference, model.vat_number, model.bill_address,
+                                                                        model.vat, model.subtotal, model.quantity, model.total_due, model.company_registration,model.generatedBy,model.approvedBy);
 
             if (_invoiceRepo.Update(invoice))
             {
-                InvoiceResponseModel respose = new InvoiceResponseModel(invoice.id, invoice.reference, invoice.invoice_date, invoice.date_due, invoice.title, invoice.description, invoice.vat_number, invoice.bill_to_id,
-          invoice.Vat, invoice.terms, invoice.total, invoice.subtotal, invoice.quantity, invoice.total_due, invoice.user_id);
+                List<QuotationItemEntity> items = _quotationItemsRepository.GetByQuote(invoice.quotation_reference);
+                InvoiceResponseModel respose = new InvoiceResponseModel(invoice.id, invoice.reference, invoice.invoice_date, invoice.date_due,items, invoice.vat_number, invoice.bill_address,
+                                                                            invoice.vat, invoice.subtotal, invoice.quantity, invoice.total_due, invoice.company_registration, invoice.generatedBy, invoice.approvedBy);
                 return respose;
             }
             else
@@ -95,8 +135,8 @@ namespace backend.Services
 
         public bool GenerateInvoice(InvoiceRequestModel model)
         {
-            InvoiceEntity invoice = _entityBuilder.buildInvoiceEntity(model.id, model.reference, model.invoice_date, model.date_due, model.title, model.description, model.vat_number, model.bill_to_id,
-          model.Vat, model.terms, model.total, model.subtotal, model.quantity, model.total_due, model.user_id);
+            InvoiceEntity invoice = _entityBuilder.buildInvoiceEntity(model.id, model.reference, model.invoice_date, model.date_due,model.quotation_Reference, model.vat_number, model.bill_address,
+                                                                        model.vat, model.subtotal, model.quantity, model.total_due, model.company_registration, model.generatedBy, model.approvedBy);
             if (_invoiceRepo.Save(invoice))
             {
                 return true;

@@ -9,7 +9,7 @@ namespace backend.DataAccess.Database.Repositories.Contracts
     public interface IQuotationItemsRepository
     {
         public List<QuotationItemEntity> GetAll();
-        public List<QuotationItemEntity> GetByQuote(int quoteFk);
+        public List<QuotationItemEntity> GetByQuote(string quoteReference);
         public QuotationItemEntity GetById(int id);
         public bool Save(QuotationItemEntity item);
         public bool Update(QuotationItemEntity item);
