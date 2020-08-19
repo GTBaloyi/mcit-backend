@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.DataAccess.Repositories;
 
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200818202757_mcts-db-update-v1.1")]
+    partial class mctsdbupdatev11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3354,17 +3356,14 @@ namespace backend.Migrations
                     b.Property<DateTime>("date_due")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<double>("discount")
-                        .HasColumnType("double");
-
                     b.Property<string>("generatedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<double>("grand_total")
-                        .HasColumnType("double");
-
                     b.Property<DateTime>("invoice_date")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("int");
 
                     b.Property<string>("quotation_reference")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -3375,10 +3374,13 @@ namespace backend.Migrations
                     b.Property<double>("subtotal")
                         .HasColumnType("double");
 
+                    b.Property<double>("total_due")
+                        .HasColumnType("double");
+
                     b.Property<double>("vat")
                         .HasColumnType("double");
 
-                    b.Property<double>("vat_percentage")
+                    b.Property<double>("vat_number")
                         .HasColumnType("double");
 
                     b.HasKey("id");
@@ -4193,6 +4195,9 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("FocusArea")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -4206,9 +4211,6 @@ namespace backend.Migrations
                         .HasColumnType("double");
 
                     b.Property<double>("Unit_Price")
-                        .HasColumnType("double");
-
-                    b.Property<double>("numberOfTests")
                         .HasColumnType("double");
 
                     b.Property<string>("quote_reference")

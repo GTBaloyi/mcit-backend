@@ -79,6 +79,8 @@ namespace backend
             services.AddScoped<IEmployeeServices, EmployeeService>();
             services.AddScoped<IEmployeesPositionRepository, EmployeesPositionRepository>();
             services.AddScoped<IEmployeesRepository, EmployeesRepository>();
+            services.AddScoped<IInvoiceService, InvoiceService>();
+            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -120,5 +120,18 @@ namespace backend.DataAccess.Database.Repositories
                 return null;
             }
         }
+
+        public ProductsEntity GetByName(string productName)
+        {
+            try
+            {
+                return _context.products.Where(x => x.name == productName).First();
+            }
+            catch(Exception e)
+            {
+                logger.Info(e);
+                return null;
+            }
+        }
     }
 }

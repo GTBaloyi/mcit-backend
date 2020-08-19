@@ -86,8 +86,8 @@ namespace backend.Services.Builder
             return userEntity;
         }
 
-        public InvoiceEntity buildInvoiceEntity(int id, string reference, DateTime invoice_date, DateTime date_due, string quotation_reference, double vat_number, string bill_address,
-        double vat, double subtotal, int quantity, double total_due, string company_registration, string generatedBy, string approvedBy)
+        public InvoiceEntity buildInvoiceEntity(int id, string reference, DateTime invoice_date, DateTime date_due, string quotation_reference, double vat_percentage, string bill_address,
+        double vat, double discount, double subtotal, double grand_total, string company_registration, string generatedBy, string approvedBy)
         {
             InvoiceEntity InvoiceEntity = new InvoiceEntity();
             InvoiceEntity.id = id;
@@ -95,12 +95,12 @@ namespace backend.Services.Builder
             InvoiceEntity.invoice_date = invoice_date;
             InvoiceEntity.date_due = date_due;
             InvoiceEntity.quotation_reference = quotation_reference;
-            InvoiceEntity.vat_number = vat_number;
+            InvoiceEntity.vat_percentage = vat_percentage;
             InvoiceEntity.bill_address = bill_address;
             InvoiceEntity.vat = vat;
+            InvoiceEntity.discount = discount;
             InvoiceEntity.subtotal = subtotal;
-            InvoiceEntity.quantity = quantity;
-            InvoiceEntity.total_due = total_due;
+            InvoiceEntity.grand_total = grand_total;
             InvoiceEntity.company_registration = company_registration;
             InvoiceEntity.generatedBy = generatedBy;
             InvoiceEntity.approvedBy = approvedBy;
