@@ -64,6 +64,29 @@ namespace backend.Controllers
 
         }
 
+        [HttpPut("generate-quote")]//updates an existing Quotation
+        public ActionResult<QuotationResponseModel> GenerateQuote([FromBody] QuotationModel model)
+        {
+            try
+            {
+
+                QuotationResponseModel response = _quotationService.GenerateQuotation(model);
+                if (response != null)
+                {
+                    return StatusCode(200, response);
+                }
+                else
+                {
+                    return StatusCode(407, "Quotation Generated");
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
+        }
+
 
         [HttpGet("quote/{id}")]
         public ActionResult<QuotationResponseModel> GetQuoteById(int id)

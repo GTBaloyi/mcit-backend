@@ -1,4 +1,5 @@
 ﻿using backend.DataAccess.Database.Entities;
+using backend.DataAccess.Database.Repositories;
 using backend.DataAccess.Database.Repositories.Contracts;
 using backend.Models.Request;
 using backend.Models.Response;
@@ -17,17 +18,19 @@ namespace backend.Services.Impl
     {
         private readonly IQuotationRepository _quotationRepo;
         private readonly IQuotationItemsRepository _quotationItemsRepo;
+        private readonly IProductRepository _productsRepo;
         private readonly IEntityBuilder _entityBuilder;
         private readonly CommonServices commonServices = new CommonServices();
         private readonly CommonMethods commonMethods = new CommonMethods();
         private readonly IEmailTemplateRepository _emailTemplateRepository;
 
-        public QuotationService(IEntityBuilder builder, IQuotationRepository quotationRepo, IQuotationItemsRepository quotationItemsRepo, IEmailTemplateRepository emailTemplateRepository)
+        public QuotationService(IEntityBuilder builder, IQuotationRepository quotationRepo, IQuotationItemsRepository quotationItemsRepo, IEmailTemplateRepository emailTemplateRepository, IProductRepository productRepository)
         {
             _quotationRepo = quotationRepo;
             _quotationItemsRepo = quotationItemsRepo;
             _emailTemplateRepository = emailTemplateRepository;
             _entityBuilder = builder;
+            _productsRepo = productRepository;
 
         }
 
@@ -51,7 +54,7 @@ namespace backend.Services.Impl
                         List<QuotationItemEntity> quotationItems = _quotationItemsRepo.GetByQuote(q.Quote_reference);
                         foreach (QuotationEntity quote in entities)
                         {
-                            QuotationResponseModel model = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.Grand_total, quotationItems, quote.status);
+                            QuotationResponseModel model = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number,quote.SubTotal,quote.Vat,quote.Vat_Amount,quote.Discount, quote.Grand_total, quotationItems, quote.status);
                             models.Add(model);
                         }
 
@@ -83,7 +86,7 @@ namespace backend.Services.Impl
                     {
                         quoteItems.Add(qItems);
                     }
-                    return new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.Grand_total, quoteItems, quote.status);
+                    return new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItems, quote.status);
                 }
                 else
                 {
@@ -107,6 +110,7 @@ namespace backend.Services.Impl
                 List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();
                 foreach (QuotationItemEntity item in model.Items)
                 {
+
                     _quotationItemsRepo.Update(item);
                     quoteItem.Add(item);
                 }
@@ -114,7 +118,7 @@ namespace backend.Services.Impl
                 if (_quotationRepo.Update(quote))
                 {
 
-                    QuotationResponseModel response = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, model.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.Grand_total, quoteItem, quote.status);
+                    QuotationResponseModel response = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, model.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItem, quote.status);
 
                     statusCheck(response);
                     return response;
@@ -208,7 +212,7 @@ namespace backend.Services.Impl
             int number = 1;
             List<QuotationEntity> quotations = _quotationRepo.GetAll();
 
-            if (quotations.Count != 0)
+            if (quotations != null)
             {
                 return "mcts-q" + date + "" + quotations.Last().Quote_id + 1;
             }
@@ -230,14 +234,13 @@ namespace backend.Services.Impl
                     {
                         List<QuotationResponseModel> quotations = new List<QuotationResponseModel>();
                         List<QuotationItemEntity> quotationsItems = _quotationItemsRepo.GetByQuote(quote.Quote_reference);
-
                         List<QuotationItemEntity> items = new List<QuotationItemEntity>();
                         foreach (QuotationItemEntity qItems in quotationsItems)
                         {
                             items.Add(qItems);
                         }
 
-                        QuotationResponseModel data = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.Grand_total, items, quote.status);
+                        QuotationResponseModel data = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, items, quote.status);
                         results.Add(data);
                     }
 
@@ -251,5 +254,46 @@ namespace backend.Services.Impl
             }
         }
 
+        public QuotationResponseModel GenerateQuotation(QuotationModel quotation)
+        {
+            try
+            {
+                QuotationEntity quote = _entityBuilder.buildQuotationEntity(quotation.Quote_reference, quotation.Quote_expiryDate, quotation.Date_generated, quotation.Email, quotation.Company_name, quotation.Bill_address, quotation.Phone_number, quotation.Grand_total, quotation.status);
+                quote.Quote_id = quotation.quote_id;
+                List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();
+                foreach (QuotationItemEntity item in quotation.Items)
+                {
+                    ProductsEntity product = _productsRepo.GetByName(item.Item);
+                    double totalTestMinutes = item.numberOfTests * product.time_study_per_test;
+                    double ratePerMinute = product.rate_per_hour / 60;
+                    item.Unit_Price = totalTestMinutes * ratePerMinute;
+                    item.Total = item.Unit_Price * item.Quantity;
+                    quote.SubTotal += item.Total;
+                    _quotationItemsRepo.Update(item);
+                    quoteItem.Add(item);
+
+                }
+
+                double calculateTotal =quote.SubTotal - (quote.SubTotal * quote.Discount);
+                quote.Vat = 0.15;
+                quote.Vat_Amount = calculateTotal * quote.Vat;
+                quote.Grand_total = calculateTotal + quote.Vat_Amount;
+
+                if (_quotationRepo.Update(quote))
+                {
+                    QuotationResponseModel response = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quotation.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItem, quote.status);
+                    statusCheck(response);
+                    return response;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

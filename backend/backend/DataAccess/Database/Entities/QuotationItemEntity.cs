@@ -10,7 +10,7 @@ namespace backend.DataAccess.Database.Entities
         public int id { get; set; }
         public string FocusArea { get; set; }
         public string Item { get; set; }
-        public string Description { get; set; }
+        public double numberOfTests { get; set; }
         public double Unit_Price { get; set; }
         public int Quantity { get; set; }
         public double Total { get; set; }
