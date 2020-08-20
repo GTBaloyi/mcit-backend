@@ -24,6 +24,8 @@ namespace backend.Models.Request
         public string company_registration { get; set; }
         public string generatedBy { get; set; }
         public string approvedBy { get; set; }
+        public double amountDue { get; set; }
+        public double amountPayed { get; set; }
 
     }
 }

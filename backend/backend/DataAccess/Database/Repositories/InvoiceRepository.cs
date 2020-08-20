@@ -118,6 +118,19 @@ namespace backend.DataAccess.Database.Repositories
                 return null;
             }
         }
+
+        public InvoiceEntity GetByQuotationReference(string quotationReference)
+        {
+            try
+            {
+                return _context.invoice.Where(x => x.quotation_reference == quotationReference).First();
+            }
+            catch (Exception e)
+            {
+                logger.Info(e);
+                return null;
+            }
+        }
     }
 }
 

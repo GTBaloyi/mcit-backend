@@ -10,6 +10,7 @@ namespace backend.DataAccess.Database.Repositories.Contracts
     {
         public List<QuotationEntity> GetAll();
         public QuotationEntity GetById(int id);
+        public List<QuotationEntity> GetById(string email);
         public bool Save(QuotationEntity quote);
         public bool Update(QuotationEntity quote);
         public bool Delete(QuotationEntity quote);
