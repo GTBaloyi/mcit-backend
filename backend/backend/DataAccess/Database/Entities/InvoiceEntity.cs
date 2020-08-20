@@ -25,5 +25,7 @@ namespace backend.DataAccess.Database.Entities
         public string company_registration { get; set; }
         public string generatedBy { get; set; }
         public string approvedBy { get; set; }
+        public double amount_due { get; set; }
+        public double amount_payed { get; set; }
     }
 }

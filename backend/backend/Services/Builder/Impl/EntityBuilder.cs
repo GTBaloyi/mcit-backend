@@ -87,7 +87,7 @@ namespace backend.Services.Builder
         }
 
         public InvoiceEntity buildInvoiceEntity(int id, string reference, DateTime invoice_date, DateTime date_due, string quotation_reference, double vat_percentage, string bill_address,
-        double vat, double discount, double subtotal, double grand_total, string company_registration, string generatedBy, string approvedBy)
+        double vat, double discount, double subtotal, double grand_total, string company_registration, string generatedBy, string approvedBy, double amount_due, double amount_payed)
         {
             InvoiceEntity InvoiceEntity = new InvoiceEntity();
             InvoiceEntity.id = id;
@@ -104,10 +104,12 @@ namespace backend.Services.Builder
             InvoiceEntity.company_registration = company_registration;
             InvoiceEntity.generatedBy = generatedBy;
             InvoiceEntity.approvedBy = approvedBy;
+            InvoiceEntity.amount_due = amount_due;
+            InvoiceEntity.amount_payed = amount_payed;
             return InvoiceEntity;
         }
 
-        public QuotationEntity buildQuotationEntity(string Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string bill_address, string Phone_number, double Grand_total, string status)
+        public QuotationEntity buildQuotationEntity(string Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string Company_Registration,string bill_address, string Phone_number, double Grand_total, string status)
         {
             quotationEntity = new QuotationEntity();
             quotationEntity.Quote_reference = Quote_reference;
@@ -115,6 +117,7 @@ namespace backend.Services.Builder
             quotationEntity.Quote_expiryDate = Quote_expiryDate;
             quotationEntity.Email = Email;
             quotationEntity.Company_name = Company_name;
+            quotationEntity.Company_Registration = Company_Registration;
             quotationEntity.Bill_address = bill_address;
             quotationEntity.Phone_Number = Phone_number;
             quotationEntity.Grand_total = Grand_total;
