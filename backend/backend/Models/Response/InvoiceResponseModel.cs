@@ -21,24 +21,25 @@ namespace backend.Models.Response
         public string company_registration { get; set; }
         public string generatedBy { get; set; }
         public string approvedBy { get; set; }
+        public double amount_due { get; set; }
+        public double amount_payed { get; set; }
 
         public InvoiceResponseModel(int id, string reference, DateTime invoice_date, DateTime date_due, List<QuotationItemEntity> items, double vat_number, string bill_address,
-        double vat, double subtotal, double total_due, string company_registration, string generatedBy, string approvedBy)
+        double vat, double subtotal, double total_due, string company_registration, string generatedBy, string approvedBy, double amountDue, double amount_payed)
         {
             this.id = id;
             this.reference = reference;
             this.invoice_date = invoice_date;
             this.date_due = date_due;
-            foreach(QuotationItemEntity item in items)
-            {
-                this.items.Add(item);
-            }
+            this.items = items;
             this.vat_percentage = vat_number;
             this.bill_address = bill_address;
             this.vat = vat;
             this.subtotal = subtotal;
             this.grand_totoal = total_due;
             this.company_registration = company_registration;
+            this.amount_due = amountDue;
+            this.amount_payed = amount_payed;
             this.generatedBy = generatedBy;
             this.approvedBy = approvedBy;
         }

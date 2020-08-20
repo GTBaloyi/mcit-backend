@@ -66,46 +66,30 @@ namespace backend.Services
 
         public List<InvoiceResponseModel> GetAll()
         {
-            /*List<InvoiceEntity> entities = _invoiceRepo.GetAll();
-            List<InvoiceResponseModel> models = new List<InvoiceResponseModel>();
-            
-            if (entities != null)
+            List<InvoiceEntity> savedInvoice = _invoiceRepo.GetAll();
+            List<InvoiceResponseModel> results = new List<InvoiceResponseModel>();
+            foreach (InvoiceEntity invoiceTemp in savedInvoice)
             {
-              
+                List<QuotationItemEntity> quotationItems = _quotationItemsRepository.GetByQuote(invoiceTemp.quotation_reference);
+                results.Add(new InvoiceResponseModel(invoiceTemp.id, invoiceTemp.reference, invoiceTemp.invoice_date, invoiceTemp.date_due, quotationItems, invoiceTemp.vat_percentage, invoiceTemp.bill_address, invoiceTemp.vat, invoiceTemp.subtotal, invoiceTemp.subtotal, invoiceTemp.company_registration, invoiceTemp.generatedBy, invoiceTemp.approvedBy, invoiceTemp.amount_due, invoiceTemp.amount_payed));
 
-                foreach (InvoiceEntity entity in entities)
-                {
-                    List<QuotationItemEntity> items = _quotationItemsRepository.GetByQuote(entity.quotation_reference);
-
-
-                    InvoiceResponseModel model = new InvoiceResponseModel(entity.id, entity.reference, entity.invoice_date, entity.date_due, items, entity.vat_number, entity.bill_address,
-                                                                            entity.vat,  entity.subtotal, entity.quantity, entity.total_due, entity.company_registration,entity.generatedBy, entity.approvedBy);
-                    models.Add(model);
-                }
-                return models;
             }
-            else
-            {
-                return null;
-            }*/
 
-            return null;
+
+            return results;
 
         }
 
         public List<InvoiceResponseModel> GetById(string companyRegistration)
         {
 
-            CompanyEntity company = _companyRepository.GetByRegistrationNumber(companyRegistration);       
-            List<InvoiceEntity> savedInvoice = _invoiceRepo.GetAll();
+            List<InvoiceEntity> savedInvoice = _invoiceRepo.GetById( companyRegistration);
             List<InvoiceResponseModel> results = new List<InvoiceResponseModel>();
             foreach(InvoiceEntity invoiceTemp in savedInvoice)
             {
-                if(invoiceTemp.company_registration == companyRegistration)
-                {
                     List<QuotationItemEntity> quotationItems = _quotationItemsRepository.GetByQuote(invoiceTemp.quotation_reference);
-                    results.Add(new InvoiceResponseModel(invoiceTemp.id, invoiceTemp.reference, invoiceTemp.invoice_date, invoiceTemp.date_due,quotationItems, invoiceTemp.vat_percentage, invoiceTemp.bill_address, invoiceTemp.vat, invoiceTemp.subtotal, invoiceTemp.subtotal, invoiceTemp.company_registration, invoiceTemp.generatedBy, invoiceTemp.approvedBy));
-                }
+                    results.Add(new InvoiceResponseModel(invoiceTemp.id, invoiceTemp.reference, invoiceTemp.invoice_date, invoiceTemp.date_due,quotationItems, invoiceTemp.vat_percentage, invoiceTemp.bill_address, invoiceTemp.vat, invoiceTemp.subtotal, invoiceTemp.subtotal, invoiceTemp.company_registration, invoiceTemp.generatedBy, invoiceTemp.approvedBy, invoiceTemp.amount_due, invoiceTemp.amount_payed));
+         
             }
 
 
@@ -116,13 +100,13 @@ namespace backend.Services
         public InvoiceResponseModel Update(InvoiceRequestModel model)
         {
             InvoiceEntity invoice = _entityBuilder.buildInvoiceEntity(model.id, model.reference, DateTime.Now, model.daysBeforeExpiry != 0 ? DateTime.Now.AddDays(model.daysBeforeExpiry) : model.date_due, model.quotation_Reference, model.vat_percentage, model.bill_address,
-                                                                        model.vat, model.discount, model.subtotal, model.grand_total, model.company_registration, model.generatedBy, model.approvedBy);
+                                                                        model.vat, model.discount, model.subtotal, model.grand_total, model.company_registration, model.generatedBy, model.approvedBy,model.amountDue, model.amountPayed);
             if (_invoiceRepo.Update(invoice))
             {
                 InvoiceEntity savedInvoice = _invoiceRepo.GetByReference(invoice.reference);
                 List<QuotationItemEntity> quotationItem = _quotationItemsRepository.GetByQuote(savedInvoice.quotation_reference);
 
-                return new InvoiceResponseModel(savedInvoice.id, savedInvoice.reference, savedInvoice.invoice_date, savedInvoice.date_due, quotationItem, savedInvoice.vat_percentage, savedInvoice.bill_address, savedInvoice.vat, savedInvoice.subtotal, savedInvoice.subtotal, savedInvoice.company_registration, savedInvoice.generatedBy, savedInvoice.approvedBy);
+                return new InvoiceResponseModel(savedInvoice.id, savedInvoice.reference, savedInvoice.invoice_date, savedInvoice.date_due, quotationItem, savedInvoice.vat_percentage, savedInvoice.bill_address, savedInvoice.vat, savedInvoice.subtotal, savedInvoice.subtotal, savedInvoice.company_registration, savedInvoice.generatedBy, savedInvoice.approvedBy, savedInvoice.amount_due, savedInvoice.amount_payed);
             }
             else
             {
@@ -137,13 +121,13 @@ namespace backend.Services
             {
                 string invoice_reference = generateInvoiceReference();
                 InvoiceEntity invoice = _entityBuilder.buildInvoiceEntity(0, invoice_reference, DateTime.Now, DateTime.Now.AddDays(model.daysBeforeExpiry), model.quotation_Reference, model.vat_percentage, model.bill_address,
-                                                                            model.vat, model.discount, model.subtotal, model.grand_total, model.company_registration, model.generatedBy, model.approvedBy);
+                                                                            model.vat, model.discount, model.subtotal, model.grand_total, model.company_registration, model.generatedBy, model.approvedBy, model.amountDue, model.amountPayed);
                 if (_invoiceRepo.Save(invoice))
                 {
                     InvoiceEntity savedInvoice = _invoiceRepo.GetByReference(invoice_reference);
                     List<QuotationItemEntity> quotationItem = _quotationItemsRepository.GetByQuote(savedInvoice.quotation_reference);
 
-                    return new InvoiceResponseModel(savedInvoice.id, savedInvoice.reference, savedInvoice.invoice_date, savedInvoice.date_due, quotationItem, savedInvoice.vat_percentage, savedInvoice.bill_address, savedInvoice.vat, savedInvoice.subtotal, savedInvoice.subtotal, savedInvoice.company_registration, savedInvoice.generatedBy, savedInvoice.approvedBy);
+                    return new InvoiceResponseModel(savedInvoice.id, savedInvoice.reference, savedInvoice.invoice_date, savedInvoice.date_due, quotationItem, savedInvoice.vat_percentage, savedInvoice.bill_address, savedInvoice.vat, savedInvoice.subtotal, savedInvoice.subtotal, savedInvoice.company_registration, savedInvoice.generatedBy, savedInvoice.approvedBy, savedInvoice.amount_due, savedInvoice.amount_payed);
                 }
                 else
                 {

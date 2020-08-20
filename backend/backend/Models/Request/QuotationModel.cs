@@ -14,6 +14,7 @@ namespace backend.Models.Request
         public DateTime Quote_expiryDate { get; set; }
         public string Email { get; set; }
         public string Company_name { get; set; }
+        public string Company_Registration { get; set; }
         public string Bill_address { get; set; }
         public string Phone_number { get; set; }
         public List<QuotationItemEntity> Items { get; set; }// list of items in the quote
