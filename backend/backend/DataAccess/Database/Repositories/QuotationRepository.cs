@@ -108,5 +108,18 @@ namespace backend.DataAccess.Database.Repositories
 
         }
 
+        public List<QuotationEntity> GetById(string email)
+        {
+
+            try
+            {
+                return _context.quotation.Where(x => x.Email == email).ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex);
+                return null;
+            }
+        }
     }
 }
