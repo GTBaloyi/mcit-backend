@@ -24,18 +24,23 @@ namespace backend.Controllers
         }
 
         [HttpPost("generate-invoice")]//generate and saves a new invoice
-        public ActionResult CreateInvoice([FromBody] InvoiceRequestModel invoice)
+        public ActionResult<InvoiceResponseModel> CreateInvoice([FromBody] InvoiceRequestModel invoice)
         {
             try
             {
-                if (_invoiceService.GenerateInvoice(invoice))
+                InvoiceResponseModel result = _invoiceService.GenerateInvoice(invoice);
+                if (result != null)
                 {
-                    return StatusCode(200, "Invoice Captured");
+                    return StatusCode(200, result);
                 }
                 else
                 {
                     return StatusCode(409, "Invoice not saved");
                 }
+            }
+            catch(McpCustomException e)
+            {
+                return StatusCode(409, e.Message);
             }
             catch (Exception)
             {
@@ -68,12 +73,12 @@ namespace backend.Controllers
 
         }
 
-        [HttpGet("invoice/{invoiceReference}")]
-        public ActionResult<List<InvoiceResponseModel>> GetInvoice(string invoiceReference)
+        [HttpGet("invoice/{companyRegistration}")]
+        public ActionResult<List<InvoiceResponseModel>> GetInvoice(string companyRegistration)
         {
             try
             {
-                List<InvoiceResponseModel> response = _invoiceService.GetById(invoiceReference);
+                List<InvoiceResponseModel> response = _invoiceService.GetById(companyRegistration);
                 if (response != null)
                 {
                     return StatusCode(200, response);

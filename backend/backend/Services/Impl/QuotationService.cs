@@ -256,8 +256,10 @@ namespace backend.Services.Impl
 
         public QuotationResponseModel GenerateQuotation(QuotationModel quotation)
         {
+           
             try
             {
+
                 QuotationEntity quote = _entityBuilder.buildQuotationEntity(quotation.Quote_reference, quotation.Quote_expiryDate, quotation.Date_generated, quotation.Email, quotation.Company_name, quotation.Bill_address, quotation.Phone_number, quotation.Grand_total, quotation.status);
                 quote.Quote_id = quotation.quote_id;
                 List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();

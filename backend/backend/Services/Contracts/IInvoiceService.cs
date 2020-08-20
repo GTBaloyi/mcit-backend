@@ -10,8 +10,8 @@ namespace backend.Services.Contracts
 {
     public interface IInvoiceService
     {
-        bool GenerateInvoice(InvoiceRequestModel model);
-        List<InvoiceResponseModel> GetById(string reference);
+        InvoiceResponseModel GenerateInvoice(InvoiceRequestModel model);
+        List<InvoiceResponseModel> GetById(string companyRegistration);
         List<InvoiceResponseModel> GetAll();
         void Delete(string reference);
         InvoiceResponseModel Update(InvoiceRequestModel model);
