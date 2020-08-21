@@ -45,6 +45,7 @@ namespace backend.DataAccess.Database.Repositories
             } 
             catch(Exception e)
             {
+                logger.Info(e);
                 return null;
             }
         }
