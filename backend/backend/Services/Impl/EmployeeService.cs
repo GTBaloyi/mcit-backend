@@ -41,7 +41,7 @@ namespace backend.Services.Impl
                 EmployeesEntity employeesEntity = _entityBuilder.BuildEmployeesEntity(employeeNumber, employee.name, employee.surname, positionId, employee.email, employee.cell, employee.address, DateTime.Now);
                 _employeesRepository.Save(employeesEntity);
                 
-                UsersEntity user =  _entityBuilder.buildUserEntity(employeeNumber, commonMethods.passwordEncyption(commonMethods.generateCode(8)), 0, 2, 2, 0, DateTime.Now, null, null);
+                UsersEntity user =  _entityBuilder.buildUserEntity(employeeNumber, commonMethods.passwordEncyption(commonMethods.generateCode(8)),0, 2, 2, 0, DateTime.Now, null, null);
                 _userRepo.SaveUser(user);
 
                 string code = _emailTemplateRepo.GetByType("Employee Registration").code;

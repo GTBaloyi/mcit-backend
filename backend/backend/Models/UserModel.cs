@@ -5,13 +5,16 @@ using System.Threading.Tasks;
 
 namespace backend.Models
 {
+#nullable enable
     public class UsersModel
     {
-        public UsersModel()
-        {
+        public string username { get; set; }
+        public string? password { get; set; }
+        public int? retry { get; set; }
+        public int? userStatus { get; set; }
+        public int? access { get; set; }
 
-        }
-
+       
         public UsersModel(string username, string? password, int? retry, int? userStatus, int? access)
         {
             this.username = username;
@@ -21,11 +24,7 @@ namespace backend.Models
             this.access = access;
         }
 
-        public string username { get; set; }
-        public string? password { get; set; }
-        public int? retry { get; set; }
-        public int? userStatus { get; set; }
-        public int? access { get; set; }
+        
     }
 
 }

@@ -20,6 +20,7 @@ namespace backend.Models
 
         public string name { get; set; }
         public string surname { get; set; }
+#nullable enable
         public string? picture { get; set; }
         public bool loggedIn { get; set; }
         public int accessLevel { get; set; }

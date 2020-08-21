@@ -26,6 +26,8 @@ namespace backend.DataAccess.Database.Entities
         public double Discount { get; set; }
         public double Grand_total { get; set; }
         public string status { get; set; }
+        public string reason { get; set; }
+        public string description { get; set; }
 
     }
 }

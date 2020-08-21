@@ -109,7 +109,7 @@ namespace backend.Services.Builder
             return InvoiceEntity;
         }
 
-        public QuotationEntity buildQuotationEntity(string Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string Company_Registration,string bill_address, string Phone_number, double Grand_total, string status)
+        public QuotationEntity buildQuotationEntity(string Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string Company_Registration,string bill_address, string Phone_number, double Grand_total, string status, string description, string reason)
         {
             quotationEntity = new QuotationEntity();
             quotationEntity.Quote_reference = Quote_reference;
