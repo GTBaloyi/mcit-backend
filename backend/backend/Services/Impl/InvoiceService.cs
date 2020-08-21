@@ -144,7 +144,6 @@ namespace backend.Services
         private string generateInvoiceReference()
         {
             string date = DateTime.Now.Year + "" + DateTime.Now.Month + "" + DateTime.Now.Day + "" + 0;
-            int number = 1;
             List<InvoiceEntity> invoice = _invoiceRepo.GetAll();
 
             if (invoice != null)

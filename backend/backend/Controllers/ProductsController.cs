@@ -58,7 +58,7 @@ namespace backend.Controllers
             {
                 return StatusCode(404, ex.Message);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return StatusCode(500, "External Server Error");
             }
