@@ -109,17 +109,22 @@ namespace backend.Services.Impl
             try
             {
                 EmployeesEntity employeesEntity =  _employeesRepository.GetByEmployeeNumber(employeeNumber);
-                EmployeeResponseModel emp = new EmployeeResponseModel();
-                emp.id = employeesEntity.id;
-                emp.employeeNumber = employeesEntity.employee_number;
-                emp.name = employeesEntity.name;
-                emp.surname = employeesEntity.surname;
-                emp.position = _employeesPositionRepository.GetByEmployeePositionById(employeesEntity.position_fk).position;
-                emp.email = employeesEntity.email;
-                emp.cell = employeesEntity.cell;
-                emp.address = employeesEntity.address;
-                emp.createdOn = employeesEntity.created_on;
-                return emp;
+                if(employeesEntity != null )
+                {
+                    EmployeeResponseModel emp = new EmployeeResponseModel();
+                    emp.id = employeesEntity.id;
+                    emp.employeeNumber = employeesEntity.employee_number;
+                    emp.name = employeesEntity.name;
+                    emp.surname = employeesEntity.surname;
+                    emp.position = _employeesPositionRepository.GetByEmployeePositionById(employeesEntity.position_fk).position;
+                    emp.email = employeesEntity.email;
+                    emp.cell = employeesEntity.cell;
+                    emp.address = employeesEntity.address;
+                    emp.createdOn = employeesEntity.created_on;
+                    return emp;
+                }
+
+                return null;
             }
             catch(Exception e)
             {

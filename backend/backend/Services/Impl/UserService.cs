@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using backend.Services.Commons;
 using backend.Services.Builder;
 using backend.DataAccess.Database.Repositories.Contracts;
+using backend.Services.Contracts;
+using backend.DataAccess.Database.Entities;
 
 namespace backend.Services
 {
@@ -20,12 +22,13 @@ namespace backend.Services
         private readonly ICompanyRepository _companyRepo;
         private readonly ICompanyRepRepository _companyRepRepo;
         private readonly IUserStatusRepository _userStatusRepo;
+        private readonly IEmployeesRepository _employeeRepo;
         private readonly CommonServices commonServices;
         private readonly CommonMethods commonMethods;
         private readonly IEntityBuilder _entityBuilder;
         private readonly IEmailTemplateRepository _emailTemplate;
 
-        public UserService(IUsersRepository userRepo, ICompanyRepRepository companyRepRepository, IUserStatusRepository userStatusRepository, IEntityBuilder entityBuilder, ICompanyRepository companyRepository, IEmailTemplateRepository emailTemplateRepository)
+        public UserService(IUsersRepository userRepo, ICompanyRepRepository companyRepRepository, IUserStatusRepository userStatusRepository, IEntityBuilder entityBuilder, ICompanyRepository companyRepository, IEmailTemplateRepository emailTemplateRepository, IEmployeesRepository employeeRepo)
         {
             _userRepo = userRepo;
             _companyRepRepo = companyRepRepository;
@@ -35,7 +38,7 @@ namespace backend.Services
             _entityBuilder = entityBuilder;
             _companyRepo = companyRepository;
             _emailTemplate = emailTemplateRepository;
-            
+            _employeeRepo = employeeRepo;
         }
 
         public bool forgotPassword(string companyRegistration, string emailAddress, string phone)
@@ -78,13 +81,19 @@ namespace backend.Services
                 {
                     if (password == commonMethods.passwordDecryption(result.password))
                     {
-                        
-                            CompanyRepresentativeEntity userInfo = _companyRepRepo.GetById(result.company_rep_fk);
-                            LoginResponseModel loginResponse = new LoginResponseModel(userInfo.name, userInfo.surname, userInfo.avatar_path, result.access_fk, true, result.user_status_fk);
-                            return loginResponse;
+                        if(result.access_fk != 1)
+                        {
+                            EmployeesEntity employeesEntity = _employeeRepo.GetByEmployeeNumber(username);
+                            return new LoginResponseModel(employeesEntity.name, employeesEntity.surname, "", result.access_fk, true, result.user_status_fk);
+                        }
+
+                        CompanyRepresentativeEntity userInfo = _companyRepRepo.GetById(result.company_rep_fk);
+                        LoginResponseModel loginResponse = new LoginResponseModel(userInfo.name, userInfo.surname, userInfo.avatar_path, result.access_fk, true, result.user_status_fk);
+                        return loginResponse;
                     }
                     else
                     {
+                       
                         UsersModel user = new UsersModel(result.username, result.password, result.retry, result.user_status_fk, result.access_fk);
                         saveRetry(user);
                         throw new McpCustomException("Incorrect password");
