@@ -105,7 +105,7 @@ namespace backend.Services.Impl
         {
             try
             {
-                QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name,model.Company_Registration, model.Bill_address, model.Phone_number, model.Grand_total, model.status, model.description, model.reason);
+                QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name,model.Company_Registration, model.Bill_address, model.Phone_number, model.Grand_total, model.status, model.description, model.reason, model.generatedBy, model.approvedBy);
                 quote.Quote_id = model.quote_id;
                 List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();
                 foreach (QuotationItemEntity item in model.Items)
@@ -183,7 +183,7 @@ namespace backend.Services.Impl
                 model.Quote_expiryDate = model.Date_generated.AddDays(30);
                 model.Quote_reference = generateQuotationReference();
 
-                QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name, model.Company_Registration, model.Bill_address, model.Phone_number, model.Grand_total, model.status, model.description, model.reason);
+                QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name, model.Company_Registration, model.Bill_address, model.Phone_number, model.Grand_total, model.status, model.description, model.reason, model.generatedBy, model.approvedBy);
                 if (_quotationRepo.Save(quote))
                 {
                     foreach (QuotationItemEntity item in model.Items)
@@ -259,7 +259,7 @@ namespace backend.Services.Impl
             try
             {
 
-                QuotationEntity quote = _entityBuilder.buildQuotationEntity(quotation.Quote_reference, quotation.Quote_expiryDate, quotation.Date_generated, quotation.Email, quotation.Company_name, quotation.Company_Registration, quotation.Bill_address, quotation.Phone_number, quotation.Grand_total, quotation.status, quotation.description, quotation.reason);
+                QuotationEntity quote = _entityBuilder.buildQuotationEntity(quotation.Quote_reference, quotation.Quote_expiryDate, quotation.Date_generated, quotation.Email, quotation.Company_name, quotation.Company_Registration, quotation.Bill_address, quotation.Phone_number, quotation.Grand_total, quotation.status, quotation.description, quotation.reason, quotation.generatedBy, quotation.approvedBy);
                 quote.Quote_id = quotation.quote_id;
                 List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();
                 foreach (QuotationItemEntity item in quotation.Items)

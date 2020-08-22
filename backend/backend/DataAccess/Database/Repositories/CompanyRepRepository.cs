@@ -96,7 +96,7 @@ namespace backend.DataAccess.Repositories
         {
             try
             {
-               return _context.businessRepresentatives.Where(x => x.email == email).ToList()[0];
+               return _context.businessRepresentatives.Where(x => x.email == email).First();
             }
             catch (Exception ex)
             {
@@ -109,7 +109,7 @@ namespace backend.DataAccess.Repositories
         {
             try
             {
-                return _context.businessRepresentatives.Where(x => x.company_fk == companyId).ToList()[0];
+                return _context.businessRepresentatives.Where(x => x.company_fk == companyId).First();
             }
             catch (Exception ex)
             {

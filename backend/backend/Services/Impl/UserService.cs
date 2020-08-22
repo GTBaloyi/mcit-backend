@@ -110,6 +110,10 @@ namespace backend.Services
             }
         }
 
+
+
+
+
         public ClientRegistrationResponseModel registerService(ClientRegistrationRequestModel data)
         {
             try
@@ -127,7 +131,7 @@ namespace backend.Services
                             int companyRepId = _companyRepRepo.GetByEmail(data.contactEmail).id;
                             string otp = commonMethods.generateCode(4);
                             string defaultPassword =commonMethods.passwordEncyption(commonMethods.generateCode(8));
-                            UsersEntity user = _entityBuilder.buildUserEntity(data.contactEmail, defaultPassword, 0, 2, 3, companyRepId, DateTime.Now, otp, null);
+                            UsersEntity user = _entityBuilder.buildUserEntity(data.contactEmail, defaultPassword, 0,2, 1, companyRepId, DateTime.Now, otp, null);
                             if (_userRepo.SaveUser(user))
                             {
                                 //TODO: Send email
