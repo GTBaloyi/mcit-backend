@@ -27,6 +27,12 @@ namespace backend.DataAccess.Repositories
         public DbSet<ProductsEntity> products { get; set; }
         public DbSet<EmployeesEntity> employees { get; set; }
         public DbSet<EmployeesPositionEntity> employeesPosition { get; set; }
+        public DbSet<ProjectExpenditure> projectExpenditures { get; set; }
+        public DbSet<ProjectTODO> projectTODOs { get; set; }
+        public DbSet<ProjectProgress> projectProgresses { get; set; }
+        public DbSet<ProjectEntity> project { get; set; }
+
+
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 
