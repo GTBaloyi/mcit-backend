@@ -25,6 +25,8 @@ namespace backend.Models.Request
         public double Grand_total { get; set; }
         public string status { get; set; }
         public string reason { get; set; }
+        public string generatedBy { get; set; }
+        public string approvedBy { get; set; }
 
     }
 }

@@ -28,6 +28,8 @@ namespace backend.DataAccess.Database.Entities
         public string status { get; set; }
         public string reason { get; set; }
         public string description { get; set; }
+        public string generatedBy { get; set; }
+        public string approvedBy { get; set; }
 
     }
 }

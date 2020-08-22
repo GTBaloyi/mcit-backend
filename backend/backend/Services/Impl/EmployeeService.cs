@@ -38,7 +38,7 @@ namespace backend.Services.Impl
             {
                 int positionId = _employeesPositionRepository.GetByEmployeePositionByName(employee.position).id;
                 string employeeNumber = buildEmployeeNumber(employee);
-                EmployeesEntity employeesEntity = _entityBuilder.BuildEmployeesEntity(employeeNumber, employee.name, employee.surname, positionId, employee.email, employee.cell, employee.address, DateTime.Now);
+                EmployeesEntity employeesEntity = _entityBuilder.BuildEmployeesEntity(0,employeeNumber, employee.name, employee.surname, positionId, employee.email, employee.cell, employee.address, DateTime.Now);
                 _employeesRepository.Save(employeesEntity);
                 
                 UsersEntity user =  _entityBuilder.buildUserEntity(employeeNumber, commonMethods.passwordEncyption(commonMethods.generateCode(8)),0, 2, 2, 0, DateTime.Now, null, null);
@@ -149,7 +149,7 @@ namespace backend.Services.Impl
             try
             {
                 int position = _employeesPositionRepository.GetByEmployeePositionByName(employee.position).id;
-                EmployeesEntity employeesEntity = _entityBuilder.BuildEmployeesEntity(employee.employeeNumber, employee.name, employee.surname, position, employee.email, employee.cell, employee.address, new DateTime().Date);
+                EmployeesEntity employeesEntity = _entityBuilder.BuildEmployeesEntity(employee.id,employee.employeeNumber, employee.name, employee.surname, position, employee.email, employee.cell, employee.address, new DateTime().Date);
                 _employeesRepository.Update(employeesEntity);
 
                 return true;

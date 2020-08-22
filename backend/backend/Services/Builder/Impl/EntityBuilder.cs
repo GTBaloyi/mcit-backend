@@ -109,7 +109,7 @@ namespace backend.Services.Builder
             return InvoiceEntity;
         }
 
-        public QuotationEntity buildQuotationEntity(string Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string Company_Registration,string bill_address, string Phone_number, double Grand_total, string status, string description, string reason)
+        public QuotationEntity buildQuotationEntity(string Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string Company_Registration,string bill_address, string Phone_number, double Grand_total, string status, string description, string reason, string generatedBy, string approvedBy)
         {
             quotationEntity = new QuotationEntity();
             quotationEntity.Quote_reference = Quote_reference;
@@ -122,12 +122,15 @@ namespace backend.Services.Builder
             quotationEntity.Phone_Number = Phone_number;
             quotationEntity.Grand_total = Grand_total;
             quotationEntity.status = status;
+            quotationEntity.generatedBy = generatedBy;
+            quotationEntity.approvedBy = approvedBy;
             return quotationEntity;
         }
 
-        public EmployeesEntity BuildEmployeesEntity(string employeeNumber,string name, string surname, int positionId, string email, string cell, string address, DateTime createdOn)
+        public EmployeesEntity BuildEmployeesEntity(int id, string employeeNumber,string name, string surname, int positionId, string email, string cell, string address, DateTime createdOn)
         {
             employeesEntity = new EmployeesEntity();
+            employeesEntity.id = id;
             employeesEntity.employee_number = employeeNumber;
             employeesEntity.name = name;
             employeesEntity.surname = surname;

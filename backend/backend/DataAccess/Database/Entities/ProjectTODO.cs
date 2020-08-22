@@ -7,21 +7,20 @@ using System.Threading.Tasks;
 
 namespace backend.DataAccess.Database.Entities
 {
-    [Table("project")]
-    public class ProjectEntity
+    [Table("project_todo")]
+    public class ProjectTODO
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
-        [Index(IsUnique = true)]
         public string project_number { get; set; }
-        public string project_name { get; set; }
+        public int sequence { get; set; }
         public bool isSequential { get; set; }
-        public string project_description { get; set; }
-        public string invoice_reference { get; set; }
-        public string company_registration { get; set; }
-        public DateTime createdOn { get; set; }
+        public string focus_area { get; set; }
+        public string item { get; set; }
+        public DateTime date_started { get; set; }
+        public DateTime date_ended { get; set; }
 
     }
 }
