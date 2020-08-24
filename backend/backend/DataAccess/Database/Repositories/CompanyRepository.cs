@@ -86,7 +86,7 @@ namespace backend.DataAccess.Database.Repositories
             try
             {
                 List<CompanyEntity> queryResponse = _context.company.Where(x => x.registration_number == registration).ToList();
-                return queryResponse.First();
+                return queryResponse.FirstOrDefault();
 
             } 
             catch(Exception ex)

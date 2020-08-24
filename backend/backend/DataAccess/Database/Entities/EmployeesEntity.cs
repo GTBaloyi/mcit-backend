@@ -12,10 +12,12 @@ namespace backend.DataAccess.Database.Entities
     {
         [Key]
         public int id { get; set; }
+        [Index(IsUnique = true)]
         public string employee_number { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
         public int position_fk { get; set; }
+        [Index(IsUnique = true)]
         public string email { get; set; }
         public string cell { get; set; }
         public string address { get; set; }
