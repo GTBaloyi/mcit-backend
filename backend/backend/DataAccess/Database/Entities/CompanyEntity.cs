@@ -14,6 +14,7 @@ namespace backend.DataAccess.Entities
         [Key]
         public int id { get; set; }
         public string name { get; set; }
+        [Index(IsUnique = true)]
         public string registration_number { get; set; }
         public string company_profile { get; set; }
         public bool isCompanyPresent { get; set; }

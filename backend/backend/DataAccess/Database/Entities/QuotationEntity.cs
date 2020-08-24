@@ -12,6 +12,7 @@ namespace backend.DataAccess.Database.Entities
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Quote_id { get; set; }
+        [Index(IsUnique = true)]
         public string Quote_reference { get; set; }
         public DateTime Date_generated { get; set; }
         public DateTime Quote_expiryDate { get; set; }
