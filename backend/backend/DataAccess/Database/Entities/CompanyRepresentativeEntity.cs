@@ -17,6 +17,7 @@ namespace backend.DataAccess.Entities
         public string name { get; set; }
         public string surname { get; set; }
         public string gender { get; set; }
+        [Index(IsUnique =true)]
         public string email { get; set; }
         public string phone { get; set; }
         public int company_fk { get; set; }
