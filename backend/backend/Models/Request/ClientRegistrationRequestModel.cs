@@ -20,5 +20,8 @@ namespace backend.Models
         public string companyRegistrationNumber { get; set; }
         public bool isCompanyPresent { get; set; }
         public string companyProfile { get; set; }
+
+        public DateTime dateGenerated { get; set; }
+        public int userStatus { get; set; }
     }
 }

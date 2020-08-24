@@ -48,7 +48,13 @@ namespace backend.DataAccess.Repositories
         {
             try
             {
-                 _context.Entry(businessRepresentative).State = EntityState.Modified;
+                var local = _context.Set<CompanyRepresentativeEntity>().Local.FirstOrDefault(entry => entry.id.Equals(businessRepresentative.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
+                _context.Entry(businessRepresentative).State = EntityState.Modified;
                 _context.SaveChanges();
 
                 return true;
