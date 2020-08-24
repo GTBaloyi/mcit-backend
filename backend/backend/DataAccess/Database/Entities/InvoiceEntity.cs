@@ -12,9 +12,11 @@ namespace backend.DataAccess.Database.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
+        [Index(IsUnique = true)]
         public string reference { get; set; }
         public DateTime invoice_date { get; set; }
         public DateTime date_due { get; set; }
+        [Index(IsUnique = true)]
         public string quotation_reference { get; set; }
         public double vat_percentage { get; set; }
         public string bill_address { get; set; }

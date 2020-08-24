@@ -12,6 +12,7 @@ namespace backend.DataAccess.Database.Entities
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
+        [Index(IsUnique = true)]
         public string project_number { get; set; }
         public DateTime target_start_date { get; set; }
         public DateTime target_duration { get; set; }
