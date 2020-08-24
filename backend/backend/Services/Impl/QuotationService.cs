@@ -267,9 +267,9 @@ namespace backend.Services.Impl
                     ProductsEntity product = _productsRepo.GetByName(item.Item);
                     double totalTestMinutes = item.numberOfTests * product.time_study_per_test;
                     double ratePerMinute = product.rate_per_hour / 60;
-                    item.Unit_Price = totalTestMinutes * ratePerMinute;
+                    item.Unit_Price = Math.Round( (totalTestMinutes * ratePerMinute),2);
                     item.Total = item.Unit_Price * item.Quantity;
-                    quote.SubTotal += item.Total;
+                    quote.SubTotal += Math.Round(item.Total,2);
                     _quotationItemsRepo.Update(item);
                     quoteItem.Add(item);
 
@@ -277,8 +277,8 @@ namespace backend.Services.Impl
 
                 double calculateTotal =quote.SubTotal - (quote.SubTotal * quote.Discount);
                 quote.Vat = 0.15;
-                quote.Vat_Amount = calculateTotal * quote.Vat;
-                quote.Grand_total = calculateTotal + quote.Vat_Amount;
+                quote.Vat_Amount = Math.Round((calculateTotal * quote.Vat),2);
+                quote.Grand_total = Math.Round((calculateTotal + quote.Vat_Amount),2);
 
                 if (_quotationRepo.Update(quote))
                 {
