@@ -120,6 +120,12 @@ namespace backend.DataAccess.Database.Repositories
         {
             try
             {
+                var local = _context.Set<ProjectTODO>().Local.FirstOrDefault(entry => entry.id.Equals(projectTODO.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.Entry(projectTODO).State = EntityState.Modified;
                 _context.SaveChanges();
                 return true;

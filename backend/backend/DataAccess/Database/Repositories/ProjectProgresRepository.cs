@@ -1,5 +1,7 @@
 ﻿using backend.DataAccess.Database.Entities;
 using backend.DataAccess.Database.Repositories.Contracts;
+using backend.DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +12,39 @@ namespace backend.DataAccess.Database.Repositories
     public class ProjectProgresRepository : IProjectProgressRepository
     {
 
-        public ProjectProgresRepository()
-        {
+        private ApplicationDbContext _context;
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        public ProjectProgresRepository(ApplicationDbContext context)
+        {
+            _context = context;
         }
 
-        public bool Delete(ProjectProgress businessRepresentative)
+        public bool Delete(ProjectProgress projectProgress)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.projectProgresses.Remove(projectProgress);
+                return true;
+            }
+            catch (Exception e)
+            {
+                logger.Info(e);
+                return false;
+            }
         }
 
         public List<ProjectProgress> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _context.projectProgresses.ToList();
+            }
+            catch (Exception e)
+            {
+                logger.Info(e);
+                return null;
+            }
         }
 
         public List<ProjectProgress> GetByEndQuater(string endQuarter)
@@ -30,34 +52,86 @@ namespace backend.DataAccess.Database.Repositories
             throw new NotImplementedException();
         }
 
-        public ProjectEntity GetById(int id)
+        public ProjectProgress GetById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _context.projectProgresses.Find(id);
+            }
+            catch (Exception e)
+            {
+                logger.Info(e);
+                return null;
+            }
         }
 
-        public ProjectEntity GetByProjectNumber(string projectNumber)
+        public ProjectProgress GetByProjectNumber(string projectNumber)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _context.projectProgresses.Where(x => x.project_number == projectNumber).First();
+            }
+            catch (Exception e)
+            {
+                logger.Info(e);
+                return null;
+            }
         }
 
         public List<ProjectProgress> GetByProjectStatus(string projectStatus)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _context.projectProgresses.Where(x => x.project_status == projectStatus).ToList();
+            }
+            catch (Exception e)
+            {
+                logger.Info(e);
+                return null;
+            }
         }
 
         public List<ProjectProgress> GetByStartQuarter(string startQuarter)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _context.projectProgresses.Where(x => x.start_quarter == startQuarter).ToList();
+            }
+            catch (Exception e)
+            {
+                logger.Info(e);
+                return null;
+            }
         }
 
-        public bool Insert(ProjectProgress businessRepresentative)
+        public bool Insert(ProjectProgress projectProgress)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.projectProgresses.Add(projectProgress);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                logger.Info(e);
+                return true;
+            }
         }
 
-        public bool Update(ProjectProgress businessRepresentative)
+        public bool Update(ProjectProgress projectProgress)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Entry(projectProgress).State = EntityState.Modified;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                logger.Info(e);
+                return false;
+            }
         }
     }
 }

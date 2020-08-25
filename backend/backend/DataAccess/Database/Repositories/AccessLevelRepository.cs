@@ -48,6 +48,13 @@ namespace backend.DataAccess.Repositories
         {
             try
             {
+
+
+                var local = _context.Set<AccessLevelEntity>().Local.FirstOrDefault(entry => entry.id.Equals(accessLevel));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
                 _context.Entry(accessLevel).State = EntityState.Modified;
                 _context.SaveChanges();
 

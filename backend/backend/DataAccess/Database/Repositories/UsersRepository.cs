@@ -84,6 +84,12 @@ namespace backend.DataAccess.Repositories
         {
             try
             {
+                var local = _context.Set<UsersEntity>().Local.FirstOrDefault(entry => entry.username.Equals(user.username));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.Entry(user).State = EntityState.Modified;
                 _context.SaveChanges();
 

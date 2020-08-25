@@ -17,5 +17,6 @@ namespace backend.Services.Builder
         InvoiceEntity buildInvoiceEntity(int id, string reference, DateTime invoice_date, DateTime date_due, string quotation_reference, double vat_percentage, string bill_address,
         double vat, double discount ,double subtotal, double grand_total, string company_registration, string generatedBy, string approvedBy, double amount_due, double amount_payed);
         EmployeesEntity BuildEmployeesEntity(int id,string employeeNumber,string name, string surname, int positionId, string email, string cell, string address, DateTime createdOn);
+        ProjectEntity buildProjectEntity(int id, string projectNumber, string projectName, bool isSequential, string projectDescription, string invoiceReference, string companyRegistration, string assignedEmployees, DateTime createdOn);
     }
 }
