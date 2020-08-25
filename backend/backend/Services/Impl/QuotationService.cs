@@ -279,6 +279,7 @@ namespace backend.Services.Impl
                 quote.Vat = 0.15;
                 quote.Vat_Amount = Math.Round((calculateTotal * quote.Vat),2);
                 quote.Grand_total = Math.Round((calculateTotal + quote.Vat_Amount),2);
+                
 
                 if (_quotationRepo.Update(quote))
                 {

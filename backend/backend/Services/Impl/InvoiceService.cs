@@ -121,7 +121,7 @@ namespace backend.Services
             {
                 string invoice_reference = generateInvoiceReference();
                 InvoiceEntity invoice = _entityBuilder.buildInvoiceEntity(0, invoice_reference, DateTime.Now, DateTime.Now.AddDays(model.daysBeforeExpiry), model.quotation_Reference, model.vat_percentage, model.bill_address,
-                                                                            model.vat, model.discount, model.subtotal, model.grand_total, model.company_registration, model.generatedBy, model.approvedBy, model.amountDue, model.amountPayed);
+                                                                            model.vat, model.discount, model.subtotal, model.grand_total, model.company_registration, model.generatedBy, model.approvedBy, model.amountDue = model.grand_total, model.amountPayed);
                 if (_invoiceRepo.Save(invoice))
                 {
                     InvoiceEntity savedInvoice = _invoiceRepo.GetByReference(invoice_reference);

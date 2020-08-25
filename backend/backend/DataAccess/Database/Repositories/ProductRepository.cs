@@ -95,6 +95,13 @@ namespace backend.DataAccess.Database.Repositories
         {
             try
             {
+
+                var local = _context.Set<ProductsEntity>().Local.FirstOrDefault(entry => entry.id.Equals(product.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.Entry(product).State = EntityState.Modified;
                 _context.SaveChanges();
 

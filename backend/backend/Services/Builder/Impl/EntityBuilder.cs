@@ -15,6 +15,7 @@ namespace backend.Services.Builder
         private EnquiryEntity enquiryEntity;
         public QuotationEntity quotationEntity { get; set; }
         private EmployeesEntity employeesEntity;
+        private ProjectEntity projectEntity;
 
         public CompanyEntity buildCompanyEntity(int id,string name, string companyRegistration, string companyProfile, bool isCompanyPresent, string quarter)
         {
@@ -122,6 +123,8 @@ namespace backend.Services.Builder
             quotationEntity.Phone_Number = Phone_number;
             quotationEntity.Grand_total = Grand_total;
             quotationEntity.status = status;
+            quotationEntity.description = description;
+            quotationEntity.reason = reason;
             quotationEntity.generatedBy = generatedBy;
             quotationEntity.approvedBy = approvedBy;
             return quotationEntity;
@@ -140,6 +143,25 @@ namespace backend.Services.Builder
             employeesEntity.address = address;
             employeesEntity.created_on = createdOn;
             return employeesEntity;
+        }
+
+        public ProjectEntity buildProjectEntity(int id, string projectNumber, string projectName, bool isSequential, string projectDescription, string invoiceReference,
+                                                    string companyRegistration, string assignedEmployees, DateTime createdOn)
+        {
+            projectEntity = new ProjectEntity
+            {
+                id = id,
+                project_number = projectNumber,
+                project_name = projectName,
+                isSequential = isSequential,
+                project_description = projectDescription,
+                invoice_reference = invoiceReference,
+                company_registration = companyRegistration,
+                assigned_employees = assignedEmployees,
+                createdOn = createdOn
+            };
+
+            return projectEntity;
         }
     }
 }
