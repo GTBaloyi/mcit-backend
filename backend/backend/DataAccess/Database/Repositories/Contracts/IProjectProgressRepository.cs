@@ -9,13 +9,13 @@ namespace backend.DataAccess.Database.Repositories.Contracts
     public interface IProjectProgressRepository
     {
         List<ProjectProgress> GetAll();
-        ProjectEntity GetById(int id);
-        ProjectEntity GetByProjectNumber(string projectNumber);
+        ProjectProgress GetById(int id);
+        ProjectProgress GetByProjectNumber(string projectNumber);
         List<ProjectProgress> GetByProjectStatus(string projectStatus);
         List<ProjectProgress> GetByStartQuarter(string startQuarter);
         List<ProjectProgress> GetByEndQuater(string endQuarter);
-        bool Update(ProjectProgress businessRepresentative);
-        bool Delete(ProjectProgress businessRepresentative);
-        bool Insert(ProjectProgress businessRepresentative);
+        bool Update(ProjectProgress projectProgress);
+        bool Delete(ProjectProgress projectProgress);
+        bool Insert(ProjectProgress projectProgress);
     }
 }

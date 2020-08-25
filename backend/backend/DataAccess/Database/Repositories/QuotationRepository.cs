@@ -95,6 +95,12 @@ namespace backend.DataAccess.Database.Repositories
         {
             try
             {
+                var local = _context.Set<QuotationEntity>().Local.FirstOrDefault(entry => entry.Quote_id.Equals(quote.Quote_id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.Entry(quote).State = EntityState.Modified;
                 _context.SaveChanges();
 

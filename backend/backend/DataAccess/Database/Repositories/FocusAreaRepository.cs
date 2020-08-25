@@ -90,6 +90,12 @@ namespace backend.DataAccess.Database.Repositories
         {
             try
             {
+                var local = _context.Set<FocusAreaEntity>().Local.FirstOrDefault(entry => entry.id.Equals(focusArea.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.Entry(focusArea).State = EntityState.Modified;
                 _context.SaveChanges();
 

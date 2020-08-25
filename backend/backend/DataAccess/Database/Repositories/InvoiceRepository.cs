@@ -93,6 +93,12 @@ namespace backend.DataAccess.Database.Repositories
         {
             try
             {
+                var local = _context.Set<InvoiceEntity>().Local.FirstOrDefault(entry => entry.id.Equals(invoice.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.Entry(invoice).State = EntityState.Modified;
                 _context.SaveChanges();
 
