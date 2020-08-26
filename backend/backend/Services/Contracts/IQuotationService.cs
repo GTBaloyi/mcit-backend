@@ -9,7 +9,7 @@ namespace backend.Services.Contracts
 {
     public interface IQuotationService
     {
-        public bool NewQuotation(QuotationModel model);
+        public string NewQuotation(QuotationModel model);
         public QuotationResponseModel GenerateQuotation(QuotationModel quotation);
         public QuotationResponseModel GetById(int id);
         public QuotationResponseModel GetByReference(string quoteReference);

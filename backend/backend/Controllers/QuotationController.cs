@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.Exceptions;
 using backend.Models.Request;
 using backend.Models.Response;
 using backend.Services.Contracts;
@@ -25,14 +26,11 @@ namespace backend.Controllers
         {
             try
             {
-                if (_quotationService.NewQuotation(quote))
-                {
-                    return StatusCode(200, "Quotation Captured");
-                }
-                else
-                {
-                    return StatusCode(409, "Quotation not saved");
-                }
+                return StatusCode(200, _quotationService.NewQuotation(quote));
+            }
+            catch (McpCustomException e)
+            {
+                return StatusCode(407, e.Message);
             }
             catch (Exception)
             {

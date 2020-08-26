@@ -20,8 +20,8 @@ namespace backend.Models.Request
         public string description { get; set; }
         public List<QuotationItemEntity> Items { get; set; }// list of items in the quote
         public double SubTotal { get; set; }
-        public double GlobalDiscount { get; set; }
-        public double GlobalTax { get; set; }
+        public double discount { get; set; }
+        public double vatAmount { get; set; }
         public double Grand_total { get; set; }
         public string status { get; set; }
         public string reason { get; set; }
