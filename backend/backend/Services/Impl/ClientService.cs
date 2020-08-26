@@ -5,6 +5,7 @@ using backend.DataAccess.Entities;
 using backend.Exceptions;
 using backend.Models;
 using backend.Services.Builder;
+using backend.Services.Commons;
 using backend.Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -169,7 +170,11 @@ namespace backend.Services.Impl
                 
 
                 CompanyEntity comp = _entityBuilder.buildCompanyEntity(company.id, client.companyName, client.companyRegistrationNumber, client.companyProfile, client.isCompanyPresent, "");
-
+                UsersEntity user = _userRepo.GetUser(client.contactEmail);
+                user.user_status_fk = client.userStatus;
+                //TODO: client update status
+                //user.password;
+                _userRepo.UpdateUser(user);
 
                 return _companyRepo.Update(comp) && _companyRepRepo.Update(compRep);
             }

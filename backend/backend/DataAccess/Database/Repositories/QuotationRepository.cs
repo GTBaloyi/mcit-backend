@@ -127,5 +127,18 @@ namespace backend.DataAccess.Database.Repositories
                 return null;
             }
         }
+
+        public QuotationEntity GetByReference(string quoteReference)
+        {
+            try
+            {
+                return _context.quotation.Where(x => x.Quote_reference == quoteReference).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex);
+                return null;
+            }
+        }
     }
 }
