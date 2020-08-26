@@ -1,6 +1,7 @@
 ﻿using backend.DataAccess.Database.Entities;
 using backend.DataAccess.Database.Repositories;
 using backend.DataAccess.Database.Repositories.Contracts;
+using backend.Exceptions;
 using backend.Models.Request;
 using backend.Models.Response;
 using backend.Services.Builder;
@@ -136,7 +137,7 @@ namespace backend.Services.Impl
         {
             try
             {
-                QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name,model.Company_Registration, model.Bill_address, model.Phone_number, model.Grand_total, model.status, model.description, model.reason, model.generatedBy, model.approvedBy);
+                QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name,model.Company_Registration, model.Bill_address, model.Phone_number,model.SubTotal, 0.15, model.vatAmount, model.discount, model.Grand_total, model.status, model.description, model.reason, model.generatedBy, model.approvedBy);
                 quote.Quote_id = model.quote_id;
                 List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();
                 foreach (QuotationItemEntity item in model.Items)
@@ -206,7 +207,7 @@ namespace backend.Services.Impl
             commonServices.SendEmail("MCTS: Quotation Status Update", emailMessage, response.Email);
         }
 
-        public bool NewQuotation(QuotationModel model)
+        public string NewQuotation(QuotationModel model)
         {
             try
             {
@@ -214,7 +215,7 @@ namespace backend.Services.Impl
                 model.Quote_expiryDate = model.Date_generated.AddDays(30);
                 model.Quote_reference = generateQuotationReference();
 
-                QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name, model.Company_Registration, model.Bill_address, model.Phone_number, model.Grand_total, model.status, model.description, model.reason, model.generatedBy, model.approvedBy);
+                QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name, model.Company_Registration, model.Bill_address, model.Phone_number,0,0,0,0,0, model.status, model.description, model.reason, model.generatedBy, model.approvedBy);
                 if (_quotationRepo.Save(quote))
                 {
                     foreach (QuotationItemEntity item in model.Items)
@@ -223,11 +224,11 @@ namespace backend.Services.Impl
                         item.quote_reference = quotation.Quote_reference;
                         _quotationItemsRepo.Save(item);
                     }
-                    return true;
+                    return model.Quote_reference;
                 }
                 else
                 {
-                    return false;
+                    throw new McpCustomException("Could not create quotation");
                 }
             }
             catch (Exception e)
@@ -290,7 +291,7 @@ namespace backend.Services.Impl
             try
             {
 
-                QuotationEntity quote = _entityBuilder.buildQuotationEntity(quotation.Quote_reference, quotation.Quote_expiryDate, quotation.Date_generated, quotation.Email, quotation.Company_name, quotation.Company_Registration, quotation.Bill_address, quotation.Phone_number, quotation.Grand_total, quotation.status, quotation.description, quotation.reason, quotation.generatedBy, quotation.approvedBy);
+                QuotationEntity quote = _entityBuilder.buildQuotationEntity(quotation.Quote_reference, quotation.Quote_expiryDate, quotation.Date_generated, quotation.Email, quotation.Company_name, quotation.Company_Registration, quotation.Bill_address, quotation.Phone_number, 0,0, 0,0, quotation.Grand_total, quotation.status, quotation.description, quotation.reason, quotation.generatedBy, quotation.approvedBy);
                 quote.Quote_id = quotation.quote_id;
                 List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();
                 foreach (QuotationItemEntity item in quotation.Items)
@@ -306,7 +307,7 @@ namespace backend.Services.Impl
 
                 }
 
-                double calculateTotal =quote.SubTotal - (quote.SubTotal * quote.Discount);
+                double calculateTotal =quote.SubTotal - (quote.SubTotal * quotation.discount);
                 quote.Vat = 0.15;
                 quote.Vat_Amount = Math.Round((calculateTotal * quote.Vat),2);
                 quote.Grand_total = Math.Round((calculateTotal + quote.Vat_Amount),2);

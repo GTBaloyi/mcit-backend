@@ -110,7 +110,7 @@ namespace backend.Services.Builder
             return InvoiceEntity;
         }
 
-        public QuotationEntity buildQuotationEntity(string Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string Company_Registration,string bill_address, string Phone_number, double Grand_total, string status, string description, string reason, string generatedBy, string approvedBy)
+        public QuotationEntity buildQuotationEntity(string Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string Company_Registration,string bill_address, string Phone_number, double subTotal, double vat, double vatAmount, double discount, double Grand_total, string status, string description, string reason, string generatedBy, string approvedBy)
         {
             quotationEntity = new QuotationEntity();
             quotationEntity.Quote_reference = Quote_reference;
@@ -121,6 +121,10 @@ namespace backend.Services.Builder
             quotationEntity.Company_Registration = Company_Registration;
             quotationEntity.Bill_address = bill_address;
             quotationEntity.Phone_Number = Phone_number;
+            quotationEntity.SubTotal = subTotal;
+            quotationEntity.Vat = vat;
+            quotationEntity.Vat_Amount = vatAmount;
+            quotationEntity.Discount = discount;
             quotationEntity.Grand_total = Grand_total;
             quotationEntity.status = status;
             quotationEntity.description = description;
