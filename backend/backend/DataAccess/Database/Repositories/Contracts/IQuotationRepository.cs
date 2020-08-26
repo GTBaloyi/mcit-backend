@@ -14,5 +14,6 @@ namespace backend.DataAccess.Database.Repositories.Contracts
         public bool Save(QuotationEntity quote);
         public bool Update(QuotationEntity quote);
         public bool Delete(QuotationEntity quote);
+        QuotationEntity GetByReference(string quoteReference);
     }
 }

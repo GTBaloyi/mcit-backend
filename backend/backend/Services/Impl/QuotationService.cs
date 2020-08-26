@@ -101,6 +101,37 @@ namespace backend.Services.Impl
 
         }
 
+        public QuotationResponseModel GetByReference(string quoteReference)
+        {
+
+            try
+            {
+                QuotationEntity quote = _quotationRepo.GetByReference(quoteReference);
+
+                if (quote != null)
+                {
+
+                    List<QuotationItemEntity> items = _quotationItemsRepo.GetByQuote(quote.Quote_reference);
+                    List<QuotationItemEntity> quoteItems = new List<QuotationItemEntity>();
+                    foreach (QuotationItemEntity qItems in items)
+                    {
+                        quoteItems.Add(qItems);
+                    }
+                    return new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItems, quote.status, quote.reason, quote.description);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+
+        }
+
         public QuotationResponseModel Update(QuotationModel model)
         {
             try
