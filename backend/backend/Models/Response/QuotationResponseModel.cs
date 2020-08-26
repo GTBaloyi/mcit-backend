@@ -14,6 +14,7 @@ namespace backend.Models.Response
         public DateTime Quote_expiryDate { get; set; }
         public string Email { get; set; }
         public string Company_name { get; set; }
+        public string Company_registration { get; set; }
         public string Bill_address { get; set; }
         public string Phone_Number { get; set; }
         public double Sub_Total { get; set; }
@@ -26,7 +27,7 @@ namespace backend.Models.Response
         public string reason { get; set; }
         public string description { get; set; }
 
-        public QuotationResponseModel(int Quote_id, string Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string bill_address, string Phone_number,double subTotal, double vat, double vatAmount, double discount, double Grand_total, List<QuotationItemEntity> items, string status, string description, string reason)
+        public QuotationResponseModel(int Quote_id, string Quote_reference, DateTime Quote_expiryDate, DateTime Date_generated, string Email, string Company_name, string Company_registration, string bill_address, string Phone_number,double subTotal, double vat, double vatAmount, double discount, double Grand_total, List<QuotationItemEntity> items, string status, string description, string reason)
         {
             this.Quote_id = Quote_id;
             this.Quote_reference = Quote_reference;
@@ -34,6 +35,7 @@ namespace backend.Models.Response
             this.Quote_expiryDate = Quote_expiryDate;
             this.Email = Email;
             this.Company_name = Company_name;
+            this.Company_registration = Company_registration;
             this.Bill_address = bill_address;
             this.Phone_Number = Phone_number;
             this.Sub_Total = subTotal;

@@ -55,7 +55,7 @@ namespace backend.Services.Impl
                         List<QuotationItemEntity> quotationItems = _quotationItemsRepo.GetByQuote(q.Quote_reference);
                         foreach (QuotationEntity quote in entities)
                         {
-                            QuotationResponseModel model = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number,quote.SubTotal,quote.Vat,quote.Vat_Amount,quote.Discount, quote.Grand_total, quotationItems, quote.status, quote.reason, quote.description);
+                            QuotationResponseModel model = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name,quote.Company_Registration, quote.Bill_address, quote.Phone_Number,quote.SubTotal,quote.Vat,quote.Vat_Amount,quote.Discount, quote.Grand_total, quotationItems, quote.status, quote.reason, quote.description);
                             models.Add(model);
                         }
 
@@ -87,7 +87,7 @@ namespace backend.Services.Impl
                     {
                         quoteItems.Add(qItems);
                     }
-                    return new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItems, quote.status, quote.reason, quote.description);
+                    return new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Company_Registration, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItems, quote.status, quote.reason, quote.description);
                 }
                 else
                 {
@@ -118,7 +118,7 @@ namespace backend.Services.Impl
                     {
                         quoteItems.Add(qItems);
                     }
-                    return new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItems, quote.status, quote.reason, quote.description);
+                    return new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Company_Registration, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItems, quote.status, quote.reason, quote.description);
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace backend.Services.Impl
                 if (_quotationRepo.Update(quote))
                 {
 
-                    QuotationResponseModel response = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, model.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItem, quote.status, quote.reason, quote.description);
+                    QuotationResponseModel response = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, model.Email, quote.Company_name, quote.Company_Registration, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItem, quote.status, quote.reason, quote.description);
 
                     statusCheck(response);
                     return response;
@@ -271,7 +271,7 @@ namespace backend.Services.Impl
                             items.Add(qItems);
                         }
 
-                        QuotationResponseModel data = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, items, quote.status, quote.reason, quote.description);
+                        QuotationResponseModel data = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name, quote.Company_Registration, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, items, quote.status, quote.reason, quote.description);
                         results.Add(data);
                     }
 
@@ -315,7 +315,7 @@ namespace backend.Services.Impl
 
                 if (_quotationRepo.Update(quote))
                 {
-                    QuotationResponseModel response = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quotation.Email, quote.Company_name, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItem, quote.status, quote.reason, quote.description);
+                    QuotationResponseModel response = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quotation.Email, quote.Company_name, quote.Company_Registration, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItem, quote.status, quote.reason, quote.description);
                     statusCheck(response);
                     return response;
                 }
