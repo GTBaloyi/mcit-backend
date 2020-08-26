@@ -98,7 +98,7 @@ namespace backend
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Metal Casting Project API");
             });
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
 
             app.UseRouting();
 

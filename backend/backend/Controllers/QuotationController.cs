@@ -111,6 +111,29 @@ namespace backend.Controllers
 
         }
 
+        [HttpGet("quote-reference/{quoteReference}")]
+        public ActionResult<QuotationResponseModel> GetQuoteByReference(string quoteReference)
+        {
+            try
+            {
+                QuotationResponseModel response = _quotationService.GetByReference(quoteReference);
+                if (response != null)
+                {
+                    return StatusCode(200, response);
+                }
+                else
+                {
+                    return StatusCode(404, "Quotation not found");
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
+
+        }
+
         [HttpGet("quotes/{email}")]
         public ActionResult<List<QuotationResponseModel>> GetQuoteByCompany(string email)
         {
