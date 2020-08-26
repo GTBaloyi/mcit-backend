@@ -49,6 +49,19 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("by-company/{companyRegistration}")]
+        public ActionResult<List<ProjectInformationResponseModel>> GetByCompany(string companyRegistration)
+        {
+            try
+            {
+                return Ok(_projectService.getProjects(companyRegistration));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
         [HttpGet("by-invoice/{invoiceId}")]
         public ActionResult<ProjectInformationResponseModel> GetProjectByInvoice(string invoiceId)
         {
