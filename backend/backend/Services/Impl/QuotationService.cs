@@ -216,6 +216,7 @@ namespace backend.Services.Impl
                 QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name, model.Company_Registration, model.Bill_address, model.Phone_number,0,0,0,0,0, model.status, model.description, model.reason, model.generatedBy, model.approvedBy);
                 if (_quotationRepo.Save(quote))
                 {
+                   // if(model.Items)
                     foreach (QuotationItemEntity item in model.Items)
                     {
                         QuotationEntity quotation = _quotationRepo.GetAll().Last();
@@ -241,7 +242,7 @@ namespace backend.Services.Impl
             string date = DateTime.Now.Year+""+DateTime.Now.Month+""+DateTime.Now.Day+""+0;
             List<QuotationEntity> quotations = _quotationRepo.GetAll();
 
-            if (quotations != null)
+            if (quotations.Count != 0)
             {
                 return "mcts-q" + date + "" + quotations.Last().Quote_id + 1;
             }
@@ -292,6 +293,7 @@ namespace backend.Services.Impl
                 QuotationEntity quote = _entityBuilder.buildQuotationEntity(quotation.Quote_reference, quotation.Quote_expiryDate, quotation.Date_generated, quotation.Email, quotation.Company_name, quotation.Company_Registration, quotation.Bill_address, quotation.Phone_number, 0,0, 0,0, quotation.Grand_total, quotation.status, quotation.description, quotation.reason, quotation.generatedBy, quotation.approvedBy);
                 quote.Quote_id = quotation.quote_id;
                 List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();
+                quotation.Items = generateProductsList(quotation.Items, quotation.Quote_reference);
                 foreach (QuotationItemEntity item in quotation.Items)
                 {
                     ProductsEntity product = _productsRepo.GetByName(item.Item);
@@ -326,6 +328,41 @@ namespace backend.Services.Impl
             {
                 throw e;
             }
+        }
+
+        private List<QuotationItemEntity> generateProductsList(List<QuotationItemEntity> newList, string quotationReference)
+        {
+            List<QuotationItemEntity> results = new List<QuotationItemEntity>();
+
+            List<QuotationItemEntity> oldList = _quotationItemsRepo.GetByQuote(quotationReference);
+
+
+            foreach (QuotationItemEntity oldItem in oldList)
+            {
+                QuotationItemEntity itemExist = newList.Find(x => x.id == oldItem.id);
+                if(itemExist != null)
+                {
+                    _quotationItemsRepo.Update(itemExist);
+                    results.Add(itemExist);
+                }
+                else
+                {
+                    _quotationItemsRepo.Delete(oldItem);
+                }
+            }
+
+            foreach(QuotationItemEntity newItem in newList)
+            {
+                //Check new product Add it
+                QuotationItemEntity itemExist = oldList.Find(x => x.id == newItem.id);
+                if (itemExist == null)
+                {
+                    _quotationItemsRepo.Save(newItem);
+                    results.Add(itemExist);
+                }
+            }
+
+            return results;
         }
     }
 }
