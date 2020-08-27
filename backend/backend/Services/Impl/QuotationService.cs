@@ -53,11 +53,9 @@ namespace backend.Services.Impl
                     foreach (QuotationEntity q in entities)
                     {
                         List<QuotationItemEntity> quotationItems = _quotationItemsRepo.GetByQuote(q.Quote_reference);
-                        foreach (QuotationEntity quote in entities)
-                        {
-                            QuotationResponseModel model = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quote.Email, quote.Company_name,quote.Company_Registration, quote.Bill_address, quote.Phone_Number,quote.SubTotal,quote.Vat,quote.Vat_Amount,quote.Discount, quote.Grand_total, quotationItems, quote.status, quote.reason, quote.description);
-                            models.Add(model);
-                        }
+                        QuotationResponseModel model = new QuotationResponseModel(q.Quote_id, q.Quote_reference, q.Quote_expiryDate, q.Date_generated, q.Email, q.Company_name, q.Company_Registration, q.Bill_address, q.Phone_Number, q.SubTotal, q.Vat, q.Vat_Amount, q.Discount, q.Grand_total, quotationItems, q.status, q.reason, q.description);
+                        models.Add(model);
+                        
 
                     }
                 }
