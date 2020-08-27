@@ -358,7 +358,8 @@ namespace backend.Services.Impl
                 if (itemExist == null)
                 {
                     _quotationItemsRepo.Save(newItem);
-                    results.Add(itemExist);
+
+                    results.Add(newItem);
                 }
             }
 
