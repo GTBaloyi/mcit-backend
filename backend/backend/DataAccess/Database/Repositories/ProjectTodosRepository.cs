@@ -62,11 +62,11 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public ProjectTODO GetByProjectNumber(string projectNumber)
+        public List<ProjectTODO> GetByProjectNumber(string projectNumber)
         {
             try
             {
-                return _context.projectTODOs.Where(x => x.project_number == projectNumber).First();
+                return _context.projectTODOs.Where(x => x.project_number == projectNumber).ToList();
             }
             catch (Exception e)
             {
@@ -75,7 +75,7 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public List<ProjectTODO> GetByProjectStatus(string focusArea)
+        public List<ProjectTODO> GetByFocusArea(string focusArea)
         {
             try
             {
@@ -88,7 +88,7 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public List<ProjectTODO> GetByStartQuarter(string item)
+        public List<ProjectTODO> GetByItem(string item)
         {
             try
             {

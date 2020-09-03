@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "07DagOqnSUTpsDfwDmIJL/tTRpPTpRQh8R3tb2bN7ERrMNkXqTpcSUv8zBUbjL1W/3tr5k2i0MJh0ZzW6vdjOg==",
+  "dgSpecHash": "bWe/VZYxeUCv4xO1YJ45D8H0lfO4qgsg1Txxx8hBYTrg0ES8w7ZdJHwPqrWRhASl8of7MCH0kKV2inn8COZoIQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\themba.baloy\\Documents\\School\\mcit-backend\\backend\\backend\\backend.csproj",
   "expectedPackageFiles": [
@@ -69,6 +69,7 @@
     "C:\\Users\\themba.baloy\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\themba.baloy\\.nuget\\packages\\microsoft.openapi\\1.1.1\\microsoft.openapi.1.1.1.nupkg.sha512",
+    "C:\\Users\\themba.baloy\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512",
     "C:\\Users\\themba.baloy\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\3.1.3\\microsoft.visualstudio.web.codegeneration.3.1.3.nupkg.sha512",
     "C:\\Users\\themba.baloy\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.contracts\\3.1.3\\microsoft.visualstudio.web.codegeneration.contracts.3.1.3.nupkg.sha512",
     "C:\\Users\\themba.baloy\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.core\\3.1.3\\microsoft.visualstudio.web.codegeneration.core.3.1.3.nupkg.sha512",

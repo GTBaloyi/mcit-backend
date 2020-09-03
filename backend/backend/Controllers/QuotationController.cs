@@ -78,6 +78,10 @@ namespace backend.Controllers
                     return StatusCode(407, "Quotation Generated");
                 }
             }
+            catch(McpCustomException e)
+            {
+                return StatusCode(404, e.Message);
+            }
             catch (Exception)
             {
                 return StatusCode(500, "Internal Server Error");

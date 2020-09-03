@@ -116,7 +116,7 @@ namespace backend.Services
 
         public InvoiceResponseModel GenerateInvoice(InvoiceRequestModel model)
         {
-
+            
             if(_invoiceRepo.GetByQuotationReference(model.quotation_Reference) == null)
             {
                 string invoice_reference = generateInvoiceReference();
