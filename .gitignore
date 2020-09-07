@@ -17,3 +17,4 @@ backend/.vs/*
 _ReSharper.*
 ./backend/backend/bin/*
 ./backend/backend/packages/*
+./github/*
