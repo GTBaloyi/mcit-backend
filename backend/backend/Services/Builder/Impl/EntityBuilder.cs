@@ -15,8 +15,6 @@ namespace backend.Services.Builder
         private EnquiryEntity enquiryEntity;
         public QuotationEntity quotationEntity { get; set; }
         private EmployeesEntity employeesEntity;
-        private ProjectEntity projectEntity;
-
         public CompanyEntity buildCompanyEntity(int id,string name, string companyRegistration, string companyProfile, bool isCompanyPresent, string quarter)
         {
             companyEntity = new CompanyEntity();
@@ -152,7 +150,7 @@ namespace backend.Services.Builder
         public ProjectEntity buildProjectEntity(int id, string projectNumber, string projectName, bool isSequential, string projectDescription, string invoiceReference,
                                                     string companyRegistration, string assignedEmployees, DateTime createdOn)
         {
-            projectEntity = new ProjectEntity
+            return new ProjectEntity
             {
                 id = id,
                 project_number = projectNumber,
@@ -165,7 +163,54 @@ namespace backend.Services.Builder
                 createdOn = createdOn
             };
 
-            return projectEntity;
+        }
+
+        public ProjectProgress buildProjectProgressEntity(int id, string projectNumber, DateTime targetStartDate, int duration, DateTime actualStartDate, DateTime actualEndDate, string projectStatus, double ProjectStatusPercentage, string startQuarter, string currentQuarter, string targetEndQuarter)
+        {
+            return  new ProjectProgress
+            {
+                id = id,
+                project_number = projectNumber,
+                target_start_date = targetStartDate,
+                target_duration = duration,
+                actual_start_date = actualStartDate,
+                actual_end_date = actualEndDate,
+                project_status = projectStatus,
+                project_status_percentage = ProjectStatusPercentage,
+                start_quarter = startQuarter,
+                current_quarter = currentQuarter,
+                target_end_quarter = targetEndQuarter
+            };
+
+        }
+
+        public ProjectExpenditure buildProjectExpenditureEntity(int id, string projectNumber, string focusArea, string item, double actualCost, double targetCost)
+        {
+            return new ProjectExpenditure
+            {
+                id = id,
+                project_number = projectNumber,
+                focus_area = focusArea,
+                item = item,
+                actual_cost = actualCost,
+                target_cost = targetCost
+            };
+
+        }
+
+        public ProjectTODO buildProjectTODOEntity(int id, string projectNumber, int sequence, bool isSequential, string focusArea, string item, DateTime dateStarted, DateTime dateEnded)
+        {
+            return new ProjectTODO
+            {
+                id = id,
+                project_number = projectNumber,
+                sequence = sequence,
+                isSequential = isSequential,
+                focus_area = focusArea,
+                item = item,
+                date_started = dateStarted,
+                date_ended = dateEnded
+            };
         }
     }
 }

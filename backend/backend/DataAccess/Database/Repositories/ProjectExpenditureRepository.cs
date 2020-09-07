@@ -66,7 +66,7 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public List<ProjectExpenditure> GetByProjectStatus(string focusArea)
+        public List<ProjectExpenditure> GetByFocusArea(string focusArea)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public List<ProjectExpenditure> GetByStartQuarter(string item)
+        public List<ProjectExpenditure> GetByItem(string item)
         {
             try
             {

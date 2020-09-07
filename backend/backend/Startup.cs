@@ -83,6 +83,12 @@ namespace backend
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IProjectTodoRepository, ProjectTodosRepository>();
+            services.AddScoped<IProjectTodoService, ProjectTodoService>();
+            services.AddScoped<IProjectExpenditureRepository, ProjectExpenditureRepository>();
+            services.AddScoped<IProjectExpenditureService, ProjectExpenditureService>();
+            services.AddScoped<IProjectProgressRepository, ProjectProgresRepository>();
+            services.AddScoped<IProjectProgressService, ProjectProgressService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

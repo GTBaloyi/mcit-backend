@@ -135,27 +135,34 @@ namespace backend.Services.Impl
         {
             try
             {
-                QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name,model.Company_Registration, model.Bill_address, model.Phone_number,model.SubTotal, 0.15, model.vatAmount, model.discount, model.Grand_total, model.status, model.description, model.reason, model.generatedBy, model.approvedBy);
-                quote.Quote_id = model.quote_id;
-                List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();
-                foreach (QuotationItemEntity item in model.Items)
+                if(_quotationRepo.GetByReference(model.Quote_reference) != null)
                 {
+                    QuotationEntity quote = _entityBuilder.buildQuotationEntity(model.Quote_reference, model.Quote_expiryDate, model.Date_generated, model.Email, model.Company_name, model.Company_Registration, model.Bill_address, model.Phone_number, model.SubTotal, 0.15, model.vatAmount, model.discount, model.Grand_total, model.status, model.description, model.reason, model.generatedBy, model.approvedBy);
+                    quote.Quote_id = model.quote_id;
+                    List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();
+                    foreach (QuotationItemEntity item in model.Items)
+                    {
 
-                    _quotationItemsRepo.Update(item);
-                    quoteItem.Add(item);
-                }
+                        _quotationItemsRepo.Update(item);
+                        quoteItem.Add(item);
+                    }
 
-                if (_quotationRepo.Update(quote))
-                {
+                    if (_quotationRepo.Update(quote))
+                    {
 
-                    QuotationResponseModel response = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, model.Email, quote.Company_name, quote.Company_Registration, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItem, quote.status, quote.reason, quote.description);
+                        QuotationResponseModel response = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, model.Email, quote.Company_name, quote.Company_Registration, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItem, quote.status, quote.reason, quote.description);
 
-                    statusCheck(response);
-                    return response;
+                        statusCheck(response);
+                        return response;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
                 {
-                    return null;
+                    throw new McpCustomException("Quote " + model.Quote_reference + " doesnt exist");
                 }
             }
             catch(Exception e)
@@ -289,40 +296,47 @@ namespace backend.Services.Impl
            
             try
             {
-
-                QuotationEntity quote = _entityBuilder.buildQuotationEntity(quotation.Quote_reference, quotation.Quote_expiryDate, quotation.Date_generated, quotation.Email, quotation.Company_name, quotation.Company_Registration, quotation.Bill_address, quotation.Phone_number, 0,0, 0,0, quotation.Grand_total, quotation.status, quotation.description, quotation.reason, quotation.generatedBy, quotation.approvedBy);
-                quote.Quote_id = quotation.quote_id;
-                List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();
-                quotation.Items = generateProductsList(quotation.Items, quotation.Quote_reference);
-                foreach (QuotationItemEntity item in quotation.Items)
+                if (_quotationRepo.GetByReference(quotation.Quote_reference) != null)
                 {
-                    ProductsEntity product = _productsRepo.GetByName(item.Item);
-                    double totalTestMinutes = item.numberOfTests * product.time_study_per_test;
-                    double ratePerMinute = product.rate_per_hour / 60;
-                    item.Unit_Price = Math.Round( (totalTestMinutes * ratePerMinute),2);
-                    item.Total = item.Unit_Price * item.Quantity;
-                    quote.SubTotal += Math.Round(item.Total,2);
-                    _quotationItemsRepo.Update(item);
-                    quoteItem.Add(item);
+                    QuotationEntity quote = _entityBuilder.buildQuotationEntity(quotation.Quote_reference, quotation.Quote_expiryDate, quotation.Date_generated, quotation.Email, quotation.Company_name, quotation.Company_Registration, quotation.Bill_address, quotation.Phone_number, 0, 0, 0, 0, quotation.Grand_total, quotation.status, quotation.description, quotation.reason, quotation.generatedBy, quotation.approvedBy);
+                    quote.Quote_id = quotation.quote_id;
+                    List<QuotationItemEntity> quoteItem = new List<QuotationItemEntity>();
+                    quotation.Items = generateProductsList(quotation.Items, quotation.Quote_reference);
+                    foreach (QuotationItemEntity item in quotation.Items)
+                    {
+                        ProductsEntity product = _productsRepo.GetByName(item.Item);
+                        double totalTestMinutes = item.numberOfTests * product.time_study_per_test;
+                        double ratePerMinute = product.rate_per_hour / 60;
+                        item.Unit_Price = Math.Round((totalTestMinutes * ratePerMinute), 2);
+                        item.Total = item.Unit_Price * item.Quantity;
+                        quote.SubTotal += Math.Round(item.Total, 2);
+                        _quotationItemsRepo.Update(item);
+                        quoteItem.Add(item);
 
-                }
+                    }
 
-                double calculateTotal =quote.SubTotal - (quote.SubTotal * quotation.discount);
-                quote.Vat = 0.15;
-                quote.Vat_Amount = Math.Round((calculateTotal * quote.Vat),2);
-                quote.Grand_total = Math.Round((calculateTotal + quote.Vat_Amount),2);
-                
+                    double calculateTotal = quote.SubTotal - (quote.SubTotal * quotation.discount);
+                    quote.Vat = 0.15;
+                    quote.Vat_Amount = Math.Round((calculateTotal * quote.Vat), 2);
+                    quote.Grand_total = Math.Round((calculateTotal + quote.Vat_Amount), 2);
 
-                if (_quotationRepo.Update(quote))
-                {
-                    QuotationResponseModel response = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quotation.Email, quote.Company_name, quote.Company_Registration, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItem, quote.status, quote.reason, quote.description);
-                    statusCheck(response);
-                    return response;
+
+                    if (_quotationRepo.Update(quote))
+                    {
+                        QuotationResponseModel response = new QuotationResponseModel(quote.Quote_id, quote.Quote_reference, quote.Quote_expiryDate, quote.Date_generated, quotation.Email, quote.Company_name, quote.Company_Registration, quote.Bill_address, quote.Phone_Number, quote.SubTotal, quote.Vat, quote.Vat_Amount, quote.Discount, quote.Grand_total, quoteItem, quote.status, quote.description, quote.reason);
+                        statusCheck(response);
+                        return response;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
                 {
-                    return null;
+                    throw new McpCustomException("Quote " + quotation.Quote_reference + " doesnt exist");
                 }
+                
             }
             catch (Exception e)
             {

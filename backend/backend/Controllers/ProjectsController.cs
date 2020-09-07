@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.Exceptions;
 using backend.Models.Request;
 using backend.Models.Response;
 using backend.Services.Contracts;
@@ -66,8 +67,17 @@ namespace backend.Controllers
         public ActionResult<ProjectInformationResponseModel> GetProjectByInvoice(string invoiceId)
         {
             try
-            {
-                return Ok(_projectService.getProjectByInvoice(invoiceId));
+            { 
+            
+                if(_projectService.getProjectByInvoice(invoiceId) != null)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound("Project with invoice "+invoiceId+ " not found" );
+                }
+
             }
             catch (Exception)
             {
@@ -80,12 +90,20 @@ namespace backend.Controllers
         {
             try
             {
-                return Ok(_projectService.getProjectByProjectNumber(projectNumber));
+                if (_projectService.getProjectByProjectNumber(projectNumber) != null)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound("Project with project number " + projectNumber + " not found");
+                }
             }
-            catch (Exception)
+            catch(Exception)
             {
                 return StatusCode(500, "Internal Server Error");
             }
+           
         }
 
 
@@ -103,6 +121,10 @@ namespace backend.Controllers
                 {
                     return StatusCode(400, "Could not save Update");
                 }
+            }
+            catch(McpCustomException e)
+            {
+                return StatusCode(404, e.Message);
             }
             catch (Exception)
             {
@@ -124,7 +146,11 @@ namespace backend.Controllers
                     return StatusCode(400, "Could not save project");
                 }
             }
-            catch(Exception)
+            catch (McpCustomException e)
+            {
+                return StatusCode(404, e.Message);
+            }
+            catch (Exception)
             {
                 return StatusCode(500, "Internal Server Error");
             }
