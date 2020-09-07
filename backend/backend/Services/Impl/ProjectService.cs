@@ -93,41 +93,54 @@ namespace backend.Services.Impl
         public ProjectInformationResponseModel getProjectByInvoice(string invoiceId)
         {
             ProjectEntity projectEntities = _projectRepository.GetByInvoice(invoiceId);
-            string[] employees = projectEntities.assigned_employees.Split(",");
-            
-
-            return new ProjectInformationResponseModel
+            if(projectEntities != null)
             {
-                id = projectEntities.id,
-                projectNumber = projectEntities.project_number,
-                projectName = projectEntities.project_name,
-                isSequential = projectEntities.isSequential,
-                projectDescription = projectEntities.project_description,
-                invoiceReferenceNumber = projectEntities.invoice_reference,
-                companyRegistrationNumber = projectEntities.company_registration,
-                assignedEmployees = employees,
-                createdOn = projectEntities.createdOn
-            };
+                string[] employees = projectEntities.assigned_employees.Split(",");
+
+
+                return new ProjectInformationResponseModel
+                {
+                    id = projectEntities.id,
+                    projectNumber = projectEntities.project_number,
+                    projectName = projectEntities.project_name,
+                    isSequential = projectEntities.isSequential,
+                    projectDescription = projectEntities.project_description,
+                    invoiceReferenceNumber = projectEntities.invoice_reference,
+                    companyRegistrationNumber = projectEntities.company_registration,
+                    assignedEmployees = employees,
+                    createdOn = projectEntities.createdOn
+                };
+            }
+            else
+            {
+                return null;
+            }
+           
         }
 
         public ProjectInformationResponseModel getProjectByProjectNumber(string projectNumber)
         {
             ProjectEntity projectEntities = _projectRepository.GetByProjectNumber(projectNumber);
-            string[] employees = projectEntities.assigned_employees.Split(",");
 
-
-            return new ProjectInformationResponseModel
+            if (projectEntities != null)
             {
-                id = projectEntities.id,
-                projectNumber = projectEntities.project_number,
-                projectName = projectEntities.project_name,
-                isSequential = projectEntities.isSequential,
-                projectDescription = projectEntities.project_description,
-                invoiceReferenceNumber = projectEntities.invoice_reference,
-                companyRegistrationNumber = projectEntities.company_registration,
-                assignedEmployees = employees,
-                createdOn = projectEntities.createdOn
-            };
+                string[] employees = projectEntities.assigned_employees.Split(",");
+
+
+                return new ProjectInformationResponseModel
+                {
+                    id = projectEntities.id,
+                    projectNumber = projectEntities.project_number,
+                    projectName = projectEntities.project_name,
+                    isSequential = projectEntities.isSequential,
+                    projectDescription = projectEntities.project_description,
+                    invoiceReferenceNumber = projectEntities.invoice_reference,
+                    companyRegistrationNumber = projectEntities.company_registration,
+                    assignedEmployees = employees,
+                    createdOn = projectEntities.createdOn
+                };
+            }
+            return null;
         }
 
         public List<ProjectInformationResponseModel> getProjects(string companyRegistrationNumber)
@@ -207,7 +220,7 @@ namespace backend.Services.Impl
                 return _projectRepository.Update(updateProject);
             }
 
-            return false;
+            throw new McpCustomException("Project reference " + project.projectNumber + "does not exist");
             
         }
 

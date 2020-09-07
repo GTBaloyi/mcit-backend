@@ -13,10 +13,10 @@ namespace backend.DataAccess.Database.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
-
         public string project_number { get; set; }
         public string focus_area { get; set; }
         public string item { get; set; }
         public double actual_cost { get; set; }
+        public double target_cost { get; set; }
     }
 }
