@@ -26,7 +26,7 @@ jobs:
     - name: Test
       run: cd backend && dotnet test --no-restore --verbosity normal
     - name: dotnet publish
-      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      run: cd backend && dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
