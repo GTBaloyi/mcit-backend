@@ -42,11 +42,12 @@ namespace backend.Controllers
                     }
                     catch(Exception)
                     {
-                        return StatusCode(StatusCodes.Status403Forbidden, "There was a problem sending an email. Please make sure you submit a valid email.");
                         if (System.IO.File.Exists(path))
                         {
                             System.IO.File.Delete(path);
                         }
+                        return StatusCode(StatusCodes.Status403Forbidden, "There was a problem sending an email. Please make sure you submit a valid email.");
+                       
                     }
 
                     if (System.IO.File.Exists(path))

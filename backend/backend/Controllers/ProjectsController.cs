@@ -99,7 +99,7 @@ namespace backend.Controllers
                     return NotFound("Project with project number " + projectNumber + " not found");
                 }
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return StatusCode(500, "Internal Server Error");
             }
