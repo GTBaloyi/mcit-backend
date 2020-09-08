@@ -147,7 +147,7 @@ namespace backend.Services.Builder
             return employeesEntity;
         }
 
-        public ProjectEntity buildProjectEntity(int id, string projectNumber, string projectName, bool isSequential, string projectDescription, string invoiceReference,
+        public ProjectEntity buildProjectEntity(int id, string projectNumber, string projectName, string projectDescription, string invoiceReference,
                                                     string companyRegistration, string assignedEmployees, DateTime createdOn)
         {
             return new ProjectEntity
@@ -155,7 +155,6 @@ namespace backend.Services.Builder
                 id = id,
                 project_number = projectNumber,
                 project_name = projectName,
-                isSequential = isSequential,
                 project_description = projectDescription,
                 invoice_reference = invoiceReference,
                 company_registration = companyRegistration,
@@ -198,7 +197,7 @@ namespace backend.Services.Builder
 
         }
 
-        public ProjectTODO buildProjectTODOEntity(int id, string projectNumber, int sequence, bool isSequential, string focusArea, string item, DateTime dateStarted, DateTime dateEnded)
+        public ProjectTODO buildProjectTODOEntity(int id, string projectNumber, int sequence, bool isSequential, string focusArea, string item, string status,DateTime dateStarted, DateTime dateEnded)
         {
             return new ProjectTODO
             {
@@ -208,6 +207,7 @@ namespace backend.Services.Builder
                 isSequential = isSequential,
                 focus_area = focusArea,
                 item = item,
+                status = status,
                 date_started = dateStarted,
                 date_ended = dateEnded
             };

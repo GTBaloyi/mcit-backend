@@ -27,7 +27,7 @@ namespace backend.Services.Impl
         {
             string projectNumber = createProjectNumber();
             string employeesAssigned = assignedEmployees(project.assignedEmployees);
-            ProjectEntity newProject = _entityBuilder.buildProjectEntity(0, projectNumber, project.projectName, project.isSequential, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned, DateTime.Now.Date);
+            ProjectEntity newProject = _entityBuilder.buildProjectEntity(0, projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned, DateTime.Now.Date);
             return _projectRepository.Insert(newProject);
         }
 
@@ -76,7 +76,6 @@ namespace backend.Services.Impl
                         id = projectEntities[i].id,
                         projectNumber = projectEntities[i].project_number,
                         projectName = projectEntities[i].project_name,
-                        isSequential = projectEntities[i].isSequential,
                         projectDescription = projectEntities[i].project_description,
                         invoiceReferenceNumber = projectEntities[i].invoice_reference,
                         companyRegistrationNumber = projectEntities[i].company_registration,
@@ -103,7 +102,6 @@ namespace backend.Services.Impl
                     id = projectEntities.id,
                     projectNumber = projectEntities.project_number,
                     projectName = projectEntities.project_name,
-                    isSequential = projectEntities.isSequential,
                     projectDescription = projectEntities.project_description,
                     invoiceReferenceNumber = projectEntities.invoice_reference,
                     companyRegistrationNumber = projectEntities.company_registration,
@@ -132,7 +130,6 @@ namespace backend.Services.Impl
                     id = projectEntities.id,
                     projectNumber = projectEntities.project_number,
                     projectName = projectEntities.project_name,
-                    isSequential = projectEntities.isSequential,
                     projectDescription = projectEntities.project_description,
                     invoiceReferenceNumber = projectEntities.invoice_reference,
                     companyRegistrationNumber = projectEntities.company_registration,
@@ -158,7 +155,6 @@ namespace backend.Services.Impl
                         id = projectEntities[i].id,
                         projectNumber = projectEntities[i].project_number,
                         projectName = projectEntities[i].project_name,
-                        isSequential = projectEntities[i].isSequential,
                         projectDescription = projectEntities[i].project_description,
                         invoiceReferenceNumber = projectEntities[i].invoice_reference,
                         companyRegistrationNumber = projectEntities[i].company_registration,
@@ -193,7 +189,6 @@ namespace backend.Services.Impl
                                 id = projectEntities[i].id,
                                 projectNumber = projectEntities[i].project_number,
                                 projectName = projectEntities[i].project_name,
-                                isSequential = projectEntities[i].isSequential,
                                 projectDescription = projectEntities[i].project_description,
                                 invoiceReferenceNumber = projectEntities[i].invoice_reference,
                                 companyRegistrationNumber = projectEntities[i].company_registration,
@@ -216,7 +211,7 @@ namespace backend.Services.Impl
             if(existingRecord != null)
             {
                 string employeesAssigned = assignedEmployees(project.assignedEmployees);
-                ProjectEntity updateProject = _entityBuilder.buildProjectEntity(existingRecord.id,project.projectNumber, project.projectName, project.isSequential, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned,project.createdOn);
+                ProjectEntity updateProject = _entityBuilder.buildProjectEntity(existingRecord.id,project.projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned,project.createdOn);
                 return _projectRepository.Update(updateProject);
             }
 
