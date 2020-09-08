@@ -19,6 +19,7 @@ namespace backend.DataAccess.Database.Entities
         public bool isSequential { get; set; }
         public string focus_area { get; set; }
         public string item { get; set; }
+        public string status { get; set; }
         public DateTime date_started { get; set; }
         public DateTime date_ended { get; set; }
 

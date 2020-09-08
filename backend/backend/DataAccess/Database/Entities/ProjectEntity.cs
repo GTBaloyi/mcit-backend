@@ -17,7 +17,6 @@ namespace backend.DataAccess.Database.Entities
         [Index(IsUnique = true)]
         public string project_number { get; set; }
         public string project_name { get; set; }
-        public bool isSequential { get; set; }
         public string project_description { get; set; }
         public string invoice_reference { get; set; }
         public string company_registration { get; set; }
