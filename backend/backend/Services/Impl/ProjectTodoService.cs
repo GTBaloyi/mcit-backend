@@ -26,13 +26,13 @@ namespace backend.Services.Impl
 
         public bool createProjectTodo(ProjectTodosRequestModel projectTODO)
         {
-            ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(0, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.dateStarted, projectTODO.dateEnded);
+            ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(0, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status,projectTODO.dateStarted, projectTODO.dateEnded);
             return _todoRepository.Insert(todo);
         }
 
         public bool deleteProject(ProjectTodosRequestModel projectTODO)
         {
-            ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.dateStarted, projectTODO.dateEnded);
+            ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status, projectTODO.dateStarted, projectTODO.dateEnded);
             if(_todoRepository.GetById(todo.id) != null)
             {
                 return _todoRepository.Delete(todo);
@@ -165,7 +165,7 @@ namespace backend.Services.Impl
             
             if(_todoRepository.GetById(projectTODO.id) != null)
             {
-                ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.dateStarted, projectTODO.dateEnded);
+                ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status, projectTODO.dateStarted, projectTODO.dateEnded);
                 return _todoRepository.Update(todo);
             }
 

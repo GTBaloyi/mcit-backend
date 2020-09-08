@@ -10,7 +10,6 @@ namespace backend.Models.Response
         public int id { get; set; }
         public string projectNumber { get; set; }
         public string projectName { get; set; }
-        public bool isSequential { get; set; }
         public string projectDescription { get; set; }
         public string invoiceReferenceNumber { get; set; }
         public string companyRegistrationNumber { get; set; }
