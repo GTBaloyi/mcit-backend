@@ -148,7 +148,7 @@ namespace backend.Services.Builder
         }
 
         public ProjectEntity buildProjectEntity(int id, string projectNumber, string projectName, string projectDescription, string invoiceReference,
-                                                    string companyRegistration, string assignedEmployees, DateTime createdOn)
+                                                    string companyRegistration, string assignedEmployees,double projectSatisfaction, DateTime createdOn)
         {
             return new ProjectEntity
             {
@@ -159,6 +159,7 @@ namespace backend.Services.Builder
                 invoice_reference = invoiceReference,
                 company_registration = companyRegistration,
                 assigned_employees = assignedEmployees,
+                project_satisfaction = projectSatisfaction,
                 createdOn = createdOn
             };
 

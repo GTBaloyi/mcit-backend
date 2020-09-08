@@ -17,7 +17,7 @@ namespace backend.Services.Builder
         InvoiceEntity buildInvoiceEntity(int id, string reference, DateTime invoice_date, DateTime date_due, string quotation_reference, double vat_percentage, string bill_address,
         double vat, double discount ,double subtotal, double grand_total, string company_registration, string generatedBy, string approvedBy, double amount_due, double amount_payed);
         EmployeesEntity BuildEmployeesEntity(int id,string employeeNumber,string name, string surname, int positionId, string email, string cell, string address, DateTime createdOn);
-        ProjectEntity buildProjectEntity(int id, string projectNumber, string projectName, string projectDescription, string invoiceReference, string companyRegistration, string assignedEmployees, DateTime createdOn);
+        ProjectEntity buildProjectEntity(int id, string projectNumber, string projectName, string projectDescription, string invoiceReference, string companyRegistration, string assignedEmployees, double projectSatisfaction, DateTime createdOn);
         ProjectProgress buildProjectProgressEntity(int id, string projectNumber, DateTime targetStartDate, int duration, DateTime actualStartDate, DateTime actualEndDate, string projectStatus, double ProjectStatusPercentage, string startQuarter, string currentQuarter, string targetEndQuarter);
         ProjectExpenditure buildProjectExpenditureEntity(int id, string projectNumber, string focusArea, string item, double actualCost, double targetCost);
         ProjectTODO buildProjectTODOEntity(int id, string projectNumber, int sequence, bool isSequential, string focusArea, string item,string status,DateTime dateStarted, DateTime dateEnded);

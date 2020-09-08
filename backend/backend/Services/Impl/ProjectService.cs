@@ -27,7 +27,7 @@ namespace backend.Services.Impl
         {
             string projectNumber = createProjectNumber();
             string employeesAssigned = assignedEmployees(project.assignedEmployees);
-            ProjectEntity newProject = _entityBuilder.buildProjectEntity(0, projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned, DateTime.Now.Date);
+            ProjectEntity newProject = _entityBuilder.buildProjectEntity(0, projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned,project.projectSatisfaction, DateTime.Now.Date);
             return _projectRepository.Insert(newProject);
         }
 
@@ -80,6 +80,7 @@ namespace backend.Services.Impl
                         invoiceReferenceNumber = projectEntities[i].invoice_reference,
                         companyRegistrationNumber = projectEntities[i].company_registration,
                         assignedEmployees = employees,
+                        projectSatisfaction = projectEntities[i].project_satisfaction,
                         createdOn = projectEntities[i].createdOn
                     });
                 }
@@ -106,6 +107,7 @@ namespace backend.Services.Impl
                     invoiceReferenceNumber = projectEntities.invoice_reference,
                     companyRegistrationNumber = projectEntities.company_registration,
                     assignedEmployees = employees,
+                    projectSatisfaction = projectEntities.project_satisfaction,
                     createdOn = projectEntities.createdOn
                 };
             }
@@ -134,6 +136,7 @@ namespace backend.Services.Impl
                     invoiceReferenceNumber = projectEntities.invoice_reference,
                     companyRegistrationNumber = projectEntities.company_registration,
                     assignedEmployees = employees,
+                    projectSatisfaction = projectEntities.project_satisfaction,
                     createdOn = projectEntities.createdOn
                 };
             }
@@ -159,6 +162,7 @@ namespace backend.Services.Impl
                         invoiceReferenceNumber = projectEntities[i].invoice_reference,
                         companyRegistrationNumber = projectEntities[i].company_registration,
                         assignedEmployees = employees,
+                        projectSatisfaction = projectEntities[i].project_satisfaction,
                         createdOn = projectEntities[i].createdOn
                     });
                 }
@@ -193,6 +197,7 @@ namespace backend.Services.Impl
                                 invoiceReferenceNumber = projectEntities[i].invoice_reference,
                                 companyRegistrationNumber = projectEntities[i].company_registration,
                                 assignedEmployees = employees,
+                                projectSatisfaction = projectEntities[i].project_satisfaction,
                                 createdOn = projectEntities[i].createdOn
                             });
                         }
@@ -211,7 +216,7 @@ namespace backend.Services.Impl
             if(existingRecord != null)
             {
                 string employeesAssigned = assignedEmployees(project.assignedEmployees);
-                ProjectEntity updateProject = _entityBuilder.buildProjectEntity(existingRecord.id,project.projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned,project.createdOn);
+                ProjectEntity updateProject = _entityBuilder.buildProjectEntity(existingRecord.id,project.projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned, project.projectSatisfaction, project.createdOn);
                 return _projectRepository.Update(updateProject);
             }
 
