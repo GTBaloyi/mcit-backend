@@ -12,6 +12,7 @@ namespace backend.Services.Contracts
     {
         InvoiceResponseModel GenerateInvoice(InvoiceRequestModel model);
         List<InvoiceResponseModel> GetById(string companyRegistration);
+        InvoiceResponseModel GetByInvoiceReference(string invoiceReference);
         List<InvoiceResponseModel> GetAll();
         void Delete(string reference);
         InvoiceResponseModel Update(InvoiceRequestModel model);

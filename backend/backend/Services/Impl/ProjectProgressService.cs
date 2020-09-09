@@ -16,25 +16,54 @@ namespace backend.Services.Impl
     public class ProjectProgressService : IProjectProgressService
     {
         private readonly IProjectProgressRepository _projectProgressRepo;
+        private readonly IQuarterService quarterService;
         private readonly IEntityBuilder _entityBuilder;
-        public ProjectProgressService(IProjectProgressRepository projectProgressRepo, IEntityBuilder entityBuilder)
+        public ProjectProgressService(IProjectProgressRepository projectProgressRepo, IEntityBuilder entityBuilder,IQuarterService quarterService)
         {
             this._projectProgressRepo = projectProgressRepo;
             this._entityBuilder = entityBuilder;
+            this.quarterService = quarterService;
         }
 
         public bool createProjectProgress(ProjectProgressRequestModel projectProgress)
         {
             if(this._projectProgressRepo.GetByProjectNumber(projectProgress.projectNumber) == null)
             {
+                Dictionary<string, string> quarters = GetQuarters(projectProgress.targetStartDate, projectProgress.targetEndDate);
                 int duration =(int) (projectProgress.targetStartDate - projectProgress.targetEndDate).TotalDays;
-                ProjectProgress projectProgresEntity = _entityBuilder.buildProjectProgressEntity(0, projectProgress.projectNumber, projectProgress.targetStartDate, duration, projectProgress.ActualStartDate, projectProgress.ActualEndDate, projectProgress.projectStatus, projectProgress.progressUpdatePercentage, projectProgress.startedQuarter, projectProgress.currentQuarter, projectProgress.endingQuarter);
+                ProjectProgress projectProgresEntity = _entityBuilder.buildProjectProgressEntity(0, projectProgress.projectNumber, projectProgress.targetStartDate, duration, projectProgress.ActualStartDate, projectProgress.ActualEndDate, projectProgress.projectStatus, projectProgress.progressUpdatePercentage, quarters.GetValueOrDefault("StartQuarter"), quarters.GetValueOrDefault("CurrentQuarter"), quarters.GetValueOrDefault("EndQuarter"));
                 return _projectProgressRepo.Insert(projectProgresEntity);
             }
             else
             {
                 throw new McpCustomException("Project progress for project number '" + projectProgress.projectNumber + "' already exist");
             }
+        }
+
+        private Dictionary<string, string> GetQuarters(DateTime startDate, DateTime endDate)
+        {
+            List<QuarterModel> quarters = quarterService.GetAll();
+            Dictionary<string, string> results = new Dictionary<string, string>();
+            foreach (QuarterModel q in quarters)
+            {
+                if(q.startDate.Date <= startDate.Date && q.endDate.Date >= startDate.Date )
+                {
+                    results.Add("StartQuarter", q.quarter);
+                }
+
+                if (q.startDate.Date <= DateTime.Now.Date && q.endDate.Date >= DateTime.Now.Date)
+                {
+                    results.Add("CurrentQuarter", q.quarter);
+                }
+
+                if (q.startDate.Date <= endDate.Date && q.endDate.Date >= endDate.Date)
+                {
+                    results.Add("EndQuarter", q.quarter);
+                }
+
+            }
+
+            return results;
         }
 
         public bool deleteProject(string projectNumber)

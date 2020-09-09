@@ -21,6 +21,6 @@ namespace backend.Services.Builder
         ProjectProgress buildProjectProgressEntity(int id, string projectNumber, DateTime targetStartDate, int duration, DateTime actualStartDate, DateTime actualEndDate, string projectStatus, double ProjectStatusPercentage, string startQuarter, string currentQuarter, string targetEndQuarter);
         ProjectExpenditure buildProjectExpenditureEntity(int id, string projectNumber, string focusArea, string item, double actualCost, double targetCost);
         ProjectTODO buildProjectTODOEntity(int id, string projectNumber, int sequence, bool isSequential, string focusArea, string item,string status,DateTime dateStarted, DateTime dateEnded);
-
+        QuarterEntity buildQuarterEntity(int id, string quarter, DateTime startDate, DateTime endDate);
     }
 }

@@ -26,6 +26,7 @@ namespace backend.DataAccess.Database.Repositories
             {
 
                 _context.projectExpenditures.Remove(projectExpenditure);
+                _context.SaveChanges();
                 return true;
             }
             catch(Exception e)

@@ -96,6 +96,25 @@ namespace backend.Controllers
 
         }
 
+        [HttpGet("invoice/by-reference/{invoiceReference}")]
+        public ActionResult<InvoiceResponseModel> GetInvoiceByReference(string invoiceReference)
+        {
+            try
+            {
+                return _invoiceService.GetByInvoiceReference(invoiceReference);
+            }
+            catch (McpCustomException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
+
+        }
+
         [HttpGet("invoice")]
         public ActionResult<List<InvoiceResponseModel>> GetAllInvoices()
         {

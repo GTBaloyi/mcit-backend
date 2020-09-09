@@ -213,5 +213,16 @@ namespace backend.Services.Builder
                 date_ended = dateEnded
             };
         }
+
+        public QuarterEntity buildQuarterEntity(int id, string quarter, DateTime startDate, DateTime endDate)
+        {
+            return new QuarterEntity
+            {
+                id = id,
+                quarter = quarter,
+                start_date = startDate,
+                end_date = endDate
+            };
+        }
     }
 }

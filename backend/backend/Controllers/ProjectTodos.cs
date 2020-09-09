@@ -125,7 +125,7 @@ namespace backend.Controllers
                 }
                 else
                 {
-                    return StatusCode(401, "Could not create project todo");
+                    return StatusCode(401, "Could not update project todo");
                 }
             }
             catch(McpCustomException e)

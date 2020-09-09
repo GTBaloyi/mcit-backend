@@ -31,6 +31,7 @@ namespace backend.DataAccess.Repositories
         public DbSet<ProjectTODO> projectTODOs { get; set; }
         public DbSet<ProjectProgress> projectProgresses { get; set; }
         public DbSet<ProjectEntity> project { get; set; }
+        public DbSet<QuarterEntity> quarter { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions options) : base(options)

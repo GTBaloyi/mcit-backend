@@ -24,6 +24,7 @@ namespace backend.DataAccess.Database.Repositories
             try
             {
                 _context.project.Remove(project);
+                _context.SaveChanges();
                 return true;
             }
             catch (Exception e)
