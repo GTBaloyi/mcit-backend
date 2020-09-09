@@ -15,6 +15,9 @@ namespace backend.Models.Response
         public string companyRegistrationNumber { get; set; }
         public string[] assignedEmployees { get; set; }
         public double projectSatisfaction { get; set; }
+        public ProjectExpenditureResponseModel projectExpenditure { get; set; }
+        public List<ProjectTodoResponseModel> projectTodo { get; set; }
+        public ProjectProgressResponseModel projectProgress { get; set; }
         public DateTime createdOn { get; set; }
 
 
