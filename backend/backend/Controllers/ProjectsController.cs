@@ -67,11 +67,11 @@ namespace backend.Controllers
         public ActionResult<ProjectInformationResponseModel> GetProjectByInvoice(string invoiceId)
         {
             try
-            { 
-            
-                if(_projectService.getProjectByInvoice(invoiceId) != null)
+            {
+                ProjectInformationResponseModel data = _projectService.getProjectByInvoice(invoiceId);
+                if (data != null)
                 {
-                    return Ok();
+                    return Ok(data);
                 }
                 else
                 {
