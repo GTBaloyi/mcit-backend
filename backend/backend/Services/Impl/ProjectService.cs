@@ -253,6 +253,7 @@ namespace backend.Services.Impl
 
         public bool updateProject(ProjectInformationRequestModel project)
         {
+
             ProjectEntity existingRecord = _projectRepository.GetByProjectNumber(project.projectNumber);
             if(existingRecord != null)
             {

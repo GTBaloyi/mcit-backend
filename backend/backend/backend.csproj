@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <Folder Include="DataAccess\API\" />
-    <Folder Include="Models\General\" />
     <Folder Include="wwwroot\pdf\" />
   </ItemGroup>
 
