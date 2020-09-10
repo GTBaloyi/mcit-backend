@@ -24,6 +24,12 @@ namespace backend.DataAccess.Database.Repositories
         {
             try
             {
+                var local = _context.Set<ProjectProgress>().Local.FirstOrDefault(entry => entry.id.Equals(projectProgress.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.projectProgresses.Remove(projectProgress);
                 _context.SaveChanges();
                 return true;
@@ -124,6 +130,12 @@ namespace backend.DataAccess.Database.Repositories
         {
             try
             {
+                var local = _context.Set<ProjectProgress>().Local.FirstOrDefault(entry => entry.id.Equals(projectProgress.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.Entry(projectProgress).State = EntityState.Modified;
                 _context.SaveChanges();
                 return true;

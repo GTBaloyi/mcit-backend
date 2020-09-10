@@ -172,8 +172,9 @@ namespace backend.Services.Impl
             ProjectProgress project = this._projectProgressRepo.GetByProjectNumber(projectProgress.projectNumber);
             if (project != null)
             {
+                Dictionary<string, string> quarters = GetQuarters(projectProgress.ActualStartDate, projectProgress.ActualEndDate);
                 int duration = (int)(projectProgress.targetStartDate - projectProgress.targetEndDate).TotalDays;
-                ProjectProgress projectProgresEntity = _entityBuilder.buildProjectProgressEntity(project.id, projectProgress.projectNumber, projectProgress.targetStartDate, duration, projectProgress.ActualStartDate, projectProgress.ActualEndDate, projectProgress.projectStatus, projectProgress.progressUpdatePercentage, projectProgress.startedQuarter, projectProgress.currentQuarter, projectProgress.endingQuarter);
+                ProjectProgress projectProgresEntity = _entityBuilder.buildProjectProgressEntity(project.id, projectProgress.projectNumber, projectProgress.targetStartDate, duration, projectProgress.ActualStartDate, projectProgress.ActualEndDate, projectProgress.projectStatus, projectProgress.progressUpdatePercentage, quarters.GetValueOrDefault("StartQuarter"), quarters.GetValueOrDefault("CurrentQuarter"), quarters.GetValueOrDefault("EndQuarter"));
                 return _projectProgressRepo.Update(projectProgresEntity);
             }
             else
