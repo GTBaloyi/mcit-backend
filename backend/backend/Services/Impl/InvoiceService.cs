@@ -156,6 +156,24 @@ namespace backend.Services
             }
         }
 
+        public InvoiceResponseModel GetByInvoiceReference(string invoiceReference)
+        {
+            try
+            {
+                InvoiceEntity entity = _invoiceRepo.GetByReference(invoiceReference);
+                if(entity != null)
+                {
+                    List<QuotationItemEntity> quotationItems = _quotationItemsRepository.GetByQuote(entity.quotation_reference);
+                    return new InvoiceResponseModel(entity.id, entity.reference, entity.invoice_date, entity.date_due, quotationItems, entity.vat_percentage, entity.bill_address, entity.vat, entity.subtotal, entity.grand_total, entity.company_registration, entity.generatedBy, entity.approvedBy, entity.amount_due, entity.amount_payed);
+                }
+
+                throw new McpCustomException("Quotation with reference " + invoiceReference + " doesn't exist");
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 
 }

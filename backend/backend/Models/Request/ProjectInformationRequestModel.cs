@@ -15,6 +15,7 @@ namespace backend.Models.Request
         public string invoiceReferenceNumber { get; set; }
         public string companyRegistrationNumber { get; set; }
         public string[] assignedEmployees { get; set; }
+        public double projectSatisfaction { get; set; }
         public DateTime createdOn { get; set; }
     }
 }

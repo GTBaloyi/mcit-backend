@@ -23,7 +23,14 @@ namespace backend.DataAccess.Database.Repositories
         {
             try
             {
+                var local = _context.Set<ProjectEntity>().Local.FirstOrDefault(entry => entry.id.Equals(project.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.project.Remove(project);
+                _context.SaveChanges();
                 return true;
             }
             catch (Exception e)

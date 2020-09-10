@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.DataAccess.Repositories;
 
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200908181530_mcts-db-v2.3")]
+    partial class mctsdbv23
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4596,26 +4598,6 @@ namespace backend.Migrations
                     b.HasKey("id");
 
                     b.ToTable("project_todo");
-                });
-
-            modelBuilder.Entity("backend.DataAccess.Database.Entities.QuarterEntity", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("end_date")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("quarter")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("start_date")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("quarter");
                 });
 
             modelBuilder.Entity("backend.DataAccess.Database.Entities.QuotationEntity", b =>

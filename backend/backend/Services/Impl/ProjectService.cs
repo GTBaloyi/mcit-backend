@@ -16,18 +16,24 @@ namespace backend.Services.Impl
     {
         private readonly IProjectRepository _projectRepository;
         private readonly IEntityBuilder _entityBuilder;
+        private readonly IProjectExpenditureRepository _projectExpenditureRepository;
+        private readonly IProjectTodoRepository _projectTodoRepository;
+        private readonly IProjectProgressRepository _projectProgressRepository;
 
-        public ProjectService(IProjectRepository projectRepository, IEntityBuilder entityBuilder)
+        public ProjectService(IProjectRepository projectRepository, IEntityBuilder entityBuilder, IProjectExpenditureRepository _projectExpenditureRepository, IProjectTodoRepository _projectTodoRepository, IProjectProgressRepository _projectProgressRepository)
         {
             _entityBuilder = entityBuilder;
             _projectRepository = projectRepository;
+            this._projectExpenditureRepository = _projectExpenditureRepository;
+            this._projectProgressRepository = _projectProgressRepository;
+            this._projectTodoRepository = _projectTodoRepository;
         }
 
         public bool createProject(ProjectInformationRequestModel project)
         {
             string projectNumber = createProjectNumber();
             string employeesAssigned = assignedEmployees(project.assignedEmployees);
-            ProjectEntity newProject = _entityBuilder.buildProjectEntity(0, projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned, DateTime.Now.Date);
+            ProjectEntity newProject = _entityBuilder.buildProjectEntity(0, projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned,project.projectSatisfaction, DateTime.Now.Date);
             return _projectRepository.Insert(newProject);
         }
 
@@ -58,7 +64,27 @@ namespace backend.Services.Impl
 
         public bool deleteProject(string projectNumber)
         {
-            throw new NotImplementedException();
+            ProjectEntity project = _projectRepository.GetByProjectNumber(projectNumber);
+            if(project != null)
+            {
+                ProjectExpenditure pe = _projectExpenditureRepository.GetByProjectNumber(projectNumber);
+                List<ProjectTODO> pt = _projectTodoRepository.GetByProjectNumber(projectNumber);
+                ProjectProgress pp = _projectProgressRepository.GetByProjectNumber(projectNumber);
+
+                bool peResults = pe != null ? _projectExpenditureRepository.Delete(pe) : false;
+
+                foreach(ProjectTODO projTodo in pt)
+                {
+                    _projectTodoRepository.Delete(projTodo);
+                }
+
+                bool ppResults = pp != null ? _projectProgressRepository.Delete(pp) : false;
+
+                return _projectRepository.Delete(project);
+            }
+
+            throw new McpCustomException("Project with project number " + projectNumber + " does not exist");
+
         }
 
         public List<ProjectInformationResponseModel> getAllProjects()
@@ -80,6 +106,10 @@ namespace backend.Services.Impl
                         invoiceReferenceNumber = projectEntities[i].invoice_reference,
                         companyRegistrationNumber = projectEntities[i].company_registration,
                         assignedEmployees = employees,
+                        projectSatisfaction = projectEntities[i].project_satisfaction,
+                        projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities[i].project_number)),
+                        projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number)),
+                        projectTodo = this.buildProjectProjectTodo(_projectTodoRepository.GetByProjectNumber(projectEntities[i].project_number)),
                         createdOn = projectEntities[i].createdOn
                     });
                 }
@@ -106,6 +136,10 @@ namespace backend.Services.Impl
                     invoiceReferenceNumber = projectEntities.invoice_reference,
                     companyRegistrationNumber = projectEntities.company_registration,
                     assignedEmployees = employees,
+                    projectSatisfaction = projectEntities.project_satisfaction,
+                    projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities.project_number)),
+                    projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities.project_number)),
+                    projectTodo = this.buildProjectProjectTodo(_projectTodoRepository.GetByProjectNumber(projectEntities.project_number)),
                     createdOn = projectEntities.createdOn
                 };
             }
@@ -134,6 +168,10 @@ namespace backend.Services.Impl
                     invoiceReferenceNumber = projectEntities.invoice_reference,
                     companyRegistrationNumber = projectEntities.company_registration,
                     assignedEmployees = employees,
+                    projectSatisfaction = projectEntities.project_satisfaction,
+                    projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities.project_number)),
+                    projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities.project_number)),
+                    projectTodo = this.buildProjectProjectTodo(_projectTodoRepository.GetByProjectNumber(projectEntities.project_number)),
                     createdOn = projectEntities.createdOn
                 };
             }
@@ -159,6 +197,10 @@ namespace backend.Services.Impl
                         invoiceReferenceNumber = projectEntities[i].invoice_reference,
                         companyRegistrationNumber = projectEntities[i].company_registration,
                         assignedEmployees = employees,
+                        projectSatisfaction = projectEntities[i].project_satisfaction,
+                        projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities[i].project_number)),
+                        projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number)),
+                        projectTodo = this.buildProjectProjectTodo(_projectTodoRepository.GetByProjectNumber(projectEntities[i].project_number)),
                         createdOn = projectEntities[i].createdOn
                     });
                 }
@@ -193,6 +235,10 @@ namespace backend.Services.Impl
                                 invoiceReferenceNumber = projectEntities[i].invoice_reference,
                                 companyRegistrationNumber = projectEntities[i].company_registration,
                                 assignedEmployees = employees,
+                                projectSatisfaction = projectEntities[i].project_satisfaction,
+                                projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities[i].project_number)),
+                                projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number)),
+                                projectTodo = this.buildProjectProjectTodo(_projectTodoRepository.GetByProjectNumber(projectEntities[i].project_number)),
                                 createdOn = projectEntities[i].createdOn
                             });
                         }
@@ -207,11 +253,12 @@ namespace backend.Services.Impl
 
         public bool updateProject(ProjectInformationRequestModel project)
         {
+
             ProjectEntity existingRecord = _projectRepository.GetByProjectNumber(project.projectNumber);
             if(existingRecord != null)
             {
                 string employeesAssigned = assignedEmployees(project.assignedEmployees);
-                ProjectEntity updateProject = _entityBuilder.buildProjectEntity(existingRecord.id,project.projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned,project.createdOn);
+                ProjectEntity updateProject = _entityBuilder.buildProjectEntity(existingRecord.id,project.projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned, project.projectSatisfaction, project.createdOn);
                 return _projectRepository.Update(updateProject);
             }
 
@@ -219,6 +266,71 @@ namespace backend.Services.Impl
             
         }
 
-       
+        private ProjectExpenditureResponseModel buildProjectExpenditure(ProjectExpenditure projectExpenditure)
+        {
+            if(projectExpenditure != null)
+            {
+                return new ProjectExpenditureResponseModel
+                {
+                    id = projectExpenditure.id,
+                    projectNumber = projectExpenditure.project_number,
+                    focusArea = projectExpenditure.focus_area,
+                    item = projectExpenditure.item,
+                    actualCost = projectExpenditure.actual_cost,
+                    targetCost = projectExpenditure.target_cost
+                };
+            }
+            else
+            {
+                return null; 
+            }
+            
+        }
+
+        private List<ProjectTodoResponseModel> buildProjectProjectTodo(List<ProjectTODO> projectTodo)
+        {
+            List<ProjectTodoResponseModel> result = new List<ProjectTodoResponseModel>();
+            foreach(ProjectTODO p in projectTodo)
+            {
+                result.Add(new ProjectTodoResponseModel
+                {
+                    id = p.id,
+                    projectNumber = p.project_number,
+                    sequenceNumber = p.sequence,
+                    isSequential = p.isSequential,
+                    focusArea = p.focus_area,
+                    item = p.item,
+                    dateStarted = p.date_started,
+                    dateEnded = p.date_ended
+                });
+            }
+            return result;
+        }
+
+        private ProjectProgressResponseModel buildProjectProgress(ProjectProgress projectProgress)
+        {
+            if(projectProgress != null)
+            {
+                return new ProjectProgressResponseModel
+                {
+                    projectNumber = projectProgress.project_number,
+                    targetStartDate = projectProgress.target_start_date,
+                    targetEndDate = projectProgress.target_start_date.AddDays(projectProgress.target_duration),
+                    ActualStartDate = projectProgress.actual_start_date,
+                    ActualEndDate = projectProgress.actual_end_date,
+                    projectStatus = projectProgress.project_status,
+                    progressUpdatePercentage = projectProgress.project_status_percentage,
+                    startedQuarter = projectProgress.start_quarter,
+                    currentQuarter = projectProgress.current_quarter,
+                    endingQuarter = projectProgress.target_end_quarter,
+                    projectDuration = projectProgress.target_duration
+                };
+            }
+            else
+            {
+                return null;
+            }
+            
+        }
     }
 }

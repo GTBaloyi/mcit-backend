@@ -2,7 +2,6 @@
 using backend.DataAccess.Database.Repositories.Contracts;
 using backend.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
-using NHibernate.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +9,30 @@ using System.Threading.Tasks;
 
 namespace backend.DataAccess.Database.Repositories
 {
-    public class ProjectTodosRepository : IProjectTodoRepository
+    public class QuarterRepository : IQuarterRepository
     {
 
         private ApplicationDbContext _context;
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public ProjectTodosRepository(ApplicationDbContext context)
+        public QuarterRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
 
-        public bool Delete(ProjectTODO projectTODO)
+        public bool Delete(QuarterEntity quarter)
         {
             try
             {
-                _context.projectTODOs.Remove(projectTODO);
+
+                var local = _context.Set<QuarterEntity>().Local.FirstOrDefault(entry => entry.id.Equals(quarter.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
+                _context.quarter.Remove(quarter);
                 _context.SaveChanges();
                 return true;
             }
@@ -37,11 +43,11 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public List<ProjectTODO> GetAll()
+        public List<QuarterEntity> GetAll()
         {
             try
             {
-                return _context.projectTODOs.ToList();
+                return _context.quarter.ToList();
             }
             catch (Exception e)
             {
@@ -50,11 +56,11 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public ProjectTODO GetById(int id)
+        public QuarterEntity GetById(int id)
         {
             try
             {
-                return _context.projectTODOs.Find(id);
+                return _context.quarter.Find(id);
             }
             catch (Exception e)
             {
@@ -63,11 +69,11 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public List<ProjectTODO> GetByProjectNumber(string projectNumber)
+        public QuarterEntity GetByQuarter(string quarter)
         {
             try
             {
-                return _context.projectTODOs.Where(x => x.project_number == projectNumber).ToList();
+                return _context.quarter.Where(x => x.quarter == quarter).ToList().FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -76,37 +82,11 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public List<ProjectTODO> GetByFocusArea(string focusArea)
+        public bool Insert(QuarterEntity quarter)
         {
             try
             {
-                return _context.projectTODOs.Where(x => x.focus_area == focusArea).ToList();
-            }
-            catch (Exception e)
-            {
-                logger.Info(e);
-                return null;
-            }
-        }
-
-        public List<ProjectTODO> GetByItem(string item)
-        {
-            try
-            {
-                return _context.projectTODOs.Where(x => x.item == item).ToList();
-            }
-            catch (Exception e)
-            {
-                logger.Info(e);
-                return null;
-            }
-        }
-
-        public bool Insert(ProjectTODO projectTODO)
-        {
-            try
-            {
-                _context.projectTODOs.Add(projectTODO);
+                _context.quarter.Add(quarter);
                 _context.SaveChanges();
                 return true;
             }
@@ -117,17 +97,17 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public bool Update(ProjectTODO projectTODO)
+        public bool Update(QuarterEntity quarter)
         {
             try
             {
-                var local = _context.Set<ProjectTODO>().Local.FirstOrDefault(entry => entry.id.Equals(projectTODO.id));
+                var local = _context.Set<QuarterEntity>().Local.FirstOrDefault(entry => entry.id.Equals(quarter.id));
                 if (local != null)
                 {
                     _context.Entry(local).State = EntityState.Detached;
                 }
 
-                _context.Entry(projectTODO).State = EntityState.Modified;
+                _context.Entry(quarter).State = EntityState.Modified;
                 _context.SaveChanges();
                 return true;
             }

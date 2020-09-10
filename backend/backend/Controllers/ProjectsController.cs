@@ -90,9 +90,10 @@ namespace backend.Controllers
         {
             try
             {
-                if (_projectService.getProjectByProjectNumber(projectNumber) != null)
+                ProjectInformationResponseModel result = _projectService.getProjectByProjectNumber(projectNumber);
+                if (result != null)
                 {
-                    return Ok();
+                    return Ok(result);
                 }
                 else
                 {
@@ -154,6 +155,31 @@ namespace backend.Controllers
             {
                 return StatusCode(500, "Internal Server Error");
             }
+        }
+
+        [HttpDelete("{projectNumber}")]
+        public ActionResult Delete(string projectNumber)
+        {
+            try
+            {
+                if (_projectService.deleteProject(projectNumber))
+                {
+                    return StatusCode(StatusCodes.Status200OK);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status304NotModified);
+                }
+            }
+            catch (McpCustomException e)
+            {
+                return StatusCode(404, e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
         }
 
     }
