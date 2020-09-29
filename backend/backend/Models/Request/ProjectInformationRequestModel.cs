@@ -17,5 +17,6 @@ namespace backend.Models.Request
         public string[] assignedEmployees { get; set; }
         public double projectSatisfaction { get; set; }
         public DateTime createdOn { get; set; }
+        public string projectLeaderId { get; set; }
     }
 }

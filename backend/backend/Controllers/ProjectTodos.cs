@@ -100,7 +100,7 @@ namespace backend.Controllers
             {
                 if(_projectTodoService.createProjectTodo(projectTodo))
                 {
-                    return Ok();
+                    return StatusCode(200,"Project Todo Created Successfully");
                 }
                 else
                 {

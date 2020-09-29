@@ -3710,6 +3710,35 @@ namespace backend.Migrations
                     b.ToTable("invoice");
                 });
 
+            modelBuilder.Entity("backend.DataAccess.Database.Entities.PaymentEntity", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<double>("amount")
+                        .HasColumnType("double");
+
+                    b.Property<string>("companyRegistration")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("date_of_payment")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("invoice_reference")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("paymentType")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("pop_attachment_path")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("id");
+
+                    b.ToTable("payments");
+                });
+
             modelBuilder.Entity("backend.DataAccess.Database.Entities.ProductExpectation", b =>
                 {
                     b.Property<int>("id")
@@ -4477,21 +4506,30 @@ namespace backend.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("invoice_reference")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("project_description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("project_leader")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("project_name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("project_number")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<double>("project_satisfaction")
                         .HasColumnType("double");
 
                     b.HasKey("id");
+
+                    b.HasIndex("invoice_reference")
+                        .IsUnique();
+
+                    b.HasIndex("project_number")
+                        .IsUnique();
 
                     b.ToTable("project");
                 });

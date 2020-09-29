@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "bWe/VZYxeUCv4xO1YJ45D8H0lfO4qgsg1Txxx8hBYTrg0ES8w7ZdJHwPqrWRhASl8of7MCH0kKV2inn8COZoIQ==",
+  "dgSpecHash": "1l+QxEe8GZkeqBLSgBHEau9jBkwabl8cpEj2QUxPm5jBcJdgc3iEDzIL23sqBmDi2w0Qn/8OCRr40cfK7WMIAg==",
   "success": true,
   "projectFilePath": "C:\\Users\\themba.baloy\\Documents\\School\\mcit-backend\\backend\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\themba.baloy\\.nuget\\packages\\antlr3.runtime\\3.5.1\\antlr3.runtime.3.5.1.nupkg.sha512",
+    "C:\\Users\\themba.baloy\\.nuget\\packages\\awssdk.core\\3.5.1.16\\awssdk.core.3.5.1.16.nupkg.sha512",
+    "C:\\Users\\themba.baloy\\.nuget\\packages\\awssdk.s3\\3.5.1.7\\awssdk.s3.3.5.1.7.nupkg.sha512",
     "C:\\Users\\themba.baloy\\.nuget\\packages\\bouncycastle.netcore\\1.8.3\\bouncycastle.netcore.1.8.3.nupkg.sha512",
     "C:\\Users\\themba.baloy\\.nuget\\packages\\elasticsearch.net\\7.6.1\\elasticsearch.net.7.6.1.nupkg.sha512",
     "C:\\Users\\themba.baloy\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",

@@ -313,6 +313,8 @@ C:\Users\themba.baloy\Documents\School\mcit-backend\backend\backend\obj\Debug\ne
 C:\Users\themba.baloy\Documents\School\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.dll
 C:\Users\themba.baloy\Documents\School\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.pdb
 C:\Users\themba.baloy\Documents\School\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.genruntimeconfig.cache
+C:\Users\themba.baloy\Documents\School\mcit-backend\backend\backend\bin\Debug\netcoreapp3.1\AWSSDK.Core.dll
+C:\Users\themba.baloy\Documents\School\mcit-backend\backend\backend\bin\Debug\netcoreapp3.1\AWSSDK.S3.dll
 C:\Users\themba.baloy\Documents\School\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.csproj.CoreCompileInputs.cache
 C:\Users\themba.baloy\Documents\School\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\themba.baloy\Documents\School\mcit-backend\backend\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cache

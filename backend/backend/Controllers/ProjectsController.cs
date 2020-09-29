@@ -140,7 +140,7 @@ namespace backend.Controllers
             {
                 if (_projectService.createProject(project))
                 {
-                    return Ok("Project Created Successfully");
+                    return StatusCode(200, "Project Created Successfully");
                 }
                 else
                 {

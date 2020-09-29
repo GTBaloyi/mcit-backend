@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v3.1": {
       "backend/1.0.0": {
         "dependencies": {
+          "AWSSDK.S3": "3.5.1.7",
           "EntityFramework": "6.4.4",
           "FluentNHibernate": "2.1.2",
           "Microsoft.EntityFrameworkCore": "3.1.2",
@@ -327,6 +328,31 @@
         },
         "compile": {
           "lib/netstandard1.1/Antlr3.Runtime.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.5.1.16": {
+        "runtime": {
+          "lib/netcoreapp3.1/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.5.1.16"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/AWSSDK.Core.dll": {}
+        }
+      },
+      "AWSSDK.S3/3.5.1.7": {
+        "dependencies": {
+          "AWSSDK.Core": "3.5.1.16"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/AWSSDK.S3.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.5.1.7"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/AWSSDK.S3.dll": {}
         }
       },
       "BouncyCastle.NetCore/1.8.3": {
@@ -4351,6 +4377,20 @@
       "sha512": "sha512-ZwCEpLCLZXkjzf1lYEixp9hgVlYYk33ACHn6xjFyVhGRi2BpoYQez0qtatbetdylASWYTG+cGz0CGR4z66JM4w==",
       "path": "antlr3.runtime/3.5.1",
       "hashPath": "antlr3.runtime.3.5.1.nupkg.sha512"
+    },
+    "AWSSDK.Core/3.5.1.16": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5MHGHRLssZz+2cQ9bkhkTXp8W/UHMmz/vaNmkuGcPvyIkqCUFlOpXV89qAXVti6/Q57Wc7BEaVvFP5lclZgsBw==",
+      "path": "awssdk.core/3.5.1.16",
+      "hashPath": "awssdk.core.3.5.1.16.nupkg.sha512"
+    },
+    "AWSSDK.S3/3.5.1.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ecaEnhyjOpHYBwOolY/RUmFaV+IJev1KlHMEjpX5d22dyZFBF5bBTXxFbHvlyfPazDnQdjlRKbYEPzCHHiV7ag==",
+      "path": "awssdk.s3/3.5.1.7",
+      "hashPath": "awssdk.s3.3.5.1.7.nupkg.sha512"
     },
     "BouncyCastle.NetCore/1.8.3": {
       "type": "package",

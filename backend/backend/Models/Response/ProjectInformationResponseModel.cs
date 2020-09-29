@@ -19,7 +19,8 @@ namespace backend.Models.Response
         public List<ProjectTodoResponseModel> projectTodo { get; set; }
         public ProjectProgressResponseModel projectProgress { get; set; }
         public DateTime createdOn { get; set; }
-
+        public string projectLeaderId { get; set; }
+        public string projectLeaderNames { get; set; }
 
     }
 }
