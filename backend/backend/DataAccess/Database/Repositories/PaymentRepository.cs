@@ -70,7 +70,7 @@ namespace backend.DataAccess.Database.Repositories
         {
             try
             {
-                return _context.payments.Where(x => x.date_of_payment >= startDate && x.date_of_payment < endDate).ToList();
+                return _context.payments.Where(x => x.date_of_payment >= startDate && x.date_of_payment <= endDate).ToList();
             }
             catch (Exception e)
             {

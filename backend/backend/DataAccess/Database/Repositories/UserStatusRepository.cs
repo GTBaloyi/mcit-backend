@@ -37,7 +37,13 @@ namespace backend.DataAccess.Repositories
         {
             try
             {
-                 _context.userStatus.Remove(user);
+                var local = _context.Set<UserStatusEntity>().Local.FirstOrDefault(entry => entry.id.Equals(user.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
+                _context.userStatus.Remove(user);
                 _context.SaveChanges();
 
                 return true;
@@ -83,7 +89,13 @@ namespace backend.DataAccess.Repositories
         {
             try
             {
-                 _context.Entry(user).State = EntityState.Modified;
+                var local = _context.Set<UserStatusEntity>().Local.FirstOrDefault(entry => entry.id.Equals(user.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
+                _context.Entry(user).State = EntityState.Modified;
                 _context.SaveChanges();
 
                 return true;

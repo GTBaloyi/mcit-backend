@@ -15,6 +15,6 @@ namespace backend.Models.Response
         public string item { get; set; }
         public DateTime dateStarted { get; set; }
         public DateTime dateEnded { get; set; }
-
+        public string[] responsibleEmployees { get; set; }
     }
 }

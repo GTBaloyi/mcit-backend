@@ -199,7 +199,7 @@ namespace backend.Services.Builder
 
         }
 
-        public ProjectTODO buildProjectTODOEntity(int id, string projectNumber, int sequence, bool isSequential, string focusArea, string item, string status,DateTime dateStarted, DateTime dateEnded)
+        public ProjectTODO buildProjectTODOEntity(int id, string projectNumber, int sequence, bool isSequential, string focusArea, string item, string status,DateTime dateStarted, DateTime dateEnded, string responsibleEmployees)
         {
             return new ProjectTODO
             {
@@ -211,7 +211,8 @@ namespace backend.Services.Builder
                 item = item,
                 status = status,
                 date_started = dateStarted,
-                date_ended = dateEnded
+                date_ended = dateEnded,
+                responsible_employees = responsibleEmployees
             };
         }
 

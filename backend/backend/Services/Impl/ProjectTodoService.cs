@@ -26,13 +26,15 @@ namespace backend.Services.Impl
 
         public bool createProjectTodo(ProjectTodosRequestModel projectTODO)
         {
-            ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(0, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status,projectTODO.dateStarted, projectTODO.dateEnded);
+            string employeesResponsible = string.Join(",", projectTODO.responsibleEmployees);
+            ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(0, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status,projectTODO.dateStarted, projectTODO.dateEnded, employeesResponsible);
             return _todoRepository.Insert(todo);
         }
 
         public bool deleteProject(ProjectTodosRequestModel projectTODO)
         {
-            ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status, projectTODO.dateStarted, projectTODO.dateEnded);
+            string employeesResponsible = string.Join(",", projectTODO.responsibleEmployees);
+            ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status, projectTODO.dateStarted, projectTODO.dateEnded, employeesResponsible);
             if(_todoRepository.GetById(todo.id) != null)
             {
                 return _todoRepository.Delete(todo);
@@ -57,7 +59,8 @@ namespace backend.Services.Impl
                     focusArea = todo.focus_area,
                     item = todo.item,
                     dateStarted = todo.date_started,
-                    dateEnded = todo.date_ended
+                    dateEnded = todo.date_ended,
+                    responsibleEmployees = todo.responsible_employees.Split(',')
                 });
             }
 
@@ -82,7 +85,8 @@ namespace backend.Services.Impl
                         focusArea = todo.focus_area,
                         item = todo.item,
                         dateStarted = todo.date_started,
-                        dateEnded = todo.date_ended
+                        dateEnded = todo.date_ended,
+                        responsibleEmployees = todo.responsible_employees.Split(',')
                     });
                 }
                 
@@ -107,7 +111,8 @@ namespace backend.Services.Impl
                         focusArea = todo.focus_area,
                         item = todo.item,
                         dateStarted = todo.date_started,
-                        dateEnded = todo.date_ended
+                        dateEnded = todo.date_ended,
+                        responsibleEmployees = todo.responsible_employees.Split(',')
                     });
             }
 
@@ -130,7 +135,8 @@ namespace backend.Services.Impl
                     focusArea = todo.focus_area,
                     item = todo.item,
                     dateStarted = todo.date_started,
-                    dateEnded = todo.date_ended
+                    dateEnded = todo.date_ended,
+                    responsibleEmployees = todo.responsible_employees.Split(',')
                 });
             }
 
@@ -153,7 +159,8 @@ namespace backend.Services.Impl
                     focusArea = todo.focus_area,
                     item = todo.item,
                     dateStarted = todo.date_started,
-                    dateEnded = todo.date_ended
+                    dateEnded = todo.date_ended,
+                    responsibleEmployees = todo.responsible_employees.Split(',')
                 });
             }
 
@@ -162,10 +169,10 @@ namespace backend.Services.Impl
 
         public bool updateProjectTodo(ProjectTodosRequestModel projectTODO)
         {
-            
-            if(_todoRepository.GetById(projectTODO.id) != null)
+            string employeesResponsible = string.Join(",", projectTODO.responsibleEmployees);
+            if (_todoRepository.GetById(projectTODO.id) != null)
             {
-                ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status, projectTODO.dateStarted, projectTODO.dateEnded);
+                ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status, projectTODO.dateStarted, projectTODO.dateEnded, employeesResponsible);
                 return _todoRepository.Update(todo);
             }
 

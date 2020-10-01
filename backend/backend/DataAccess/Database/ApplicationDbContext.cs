@@ -50,6 +50,43 @@ namespace backend.DataAccess.Repositories
                 .HasIndex(p => p.project_number)
                 .IsUnique();
 
+            modelBuilder.Entity<CompanyEntity>()
+                .HasIndex(p => p.registration_number)
+                .IsUnique();
+
+            modelBuilder.Entity<EmployeesEntity>()
+                .HasIndex(p => p.employee_number)
+                .IsUnique();
+
+            modelBuilder.Entity<EmployeesEntity>()
+               .HasIndex(p => p.email)
+               .IsUnique();
+
+            modelBuilder.Entity<CompanyRepresentativeEntity>()
+                .HasIndex(p => p.email)
+                .IsUnique();
+
+            modelBuilder.Entity<InvoiceEntity>()
+               .HasIndex(p => p.reference)
+               .IsUnique();
+
+
+            modelBuilder.Entity<InvoiceEntity>()
+               .HasIndex(p => p.quotation_reference)
+               .IsUnique();
+
+            modelBuilder.Entity<ProjectProgress>()
+               .HasIndex(p => p.project_number)
+               .IsUnique();
+
+            modelBuilder.Entity<QuarterEntity>()
+               .HasIndex(p => p.quarter)
+               .IsUnique();
+
+            modelBuilder.Entity<QuotationEntity>()
+               .HasIndex(p => p.Quote_reference)
+               .IsUnique();
+
             modelBuilder.Entity<UserStatusEntity>().HasData(
                     new UserStatusEntity() {id =1, status = "Active"},
                     new UserStatusEntity() {id = 2, status = "InActive"},

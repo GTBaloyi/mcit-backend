@@ -30,6 +30,12 @@ namespace backend.DataAccess.Database.Repositories
 
             try
             {
+                var local = _context.Set<EmailTemplateEntity>().Local.FirstOrDefault(entry => entry.id.Equals(emailTemplate.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.emailTemplate.Remove(emailTemplate);
                 _context.SaveChanges();
 
@@ -92,6 +98,12 @@ namespace backend.DataAccess.Database.Repositories
         {
             try
             {
+                var local = _context.Set<EmailTemplateEntity>().Local.FirstOrDefault(entry => entry.id.Equals(emailTemplate.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.Entry(emailTemplate).State = EntityState.Modified;
                 _context.SaveChanges();
 

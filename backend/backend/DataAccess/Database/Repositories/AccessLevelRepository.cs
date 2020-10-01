@@ -85,8 +85,16 @@ namespace backend.DataAccess.Repositories
 
         public bool DeleteAccessLevel(AccessLevelEntity accessLevel)
         {
+            
+
             try
             {
+                var local = _context.Set<AccessLevelEntity>().Local.FirstOrDefault(entry => entry.id.Equals(accessLevel));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.accessLevel.Remove(accessLevel);
                 _context.SaveChanges();
 

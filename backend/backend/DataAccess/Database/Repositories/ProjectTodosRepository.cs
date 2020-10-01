@@ -24,8 +24,16 @@ namespace backend.DataAccess.Database.Repositories
 
         public bool Delete(ProjectTODO projectTODO)
         {
+            
+
             try
             {
+                var local = _context.Set<ProjectTODO>().Local.FirstOrDefault(entry => entry.id.Equals(projectTODO.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 _context.projectTODOs.Remove(projectTODO);
                 _context.SaveChanges();
                 return true;
