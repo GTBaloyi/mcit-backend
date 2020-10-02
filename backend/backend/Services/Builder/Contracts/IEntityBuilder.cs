@@ -22,6 +22,6 @@ namespace backend.Services.Builder
         ProjectExpenditure buildProjectExpenditureEntity(int id, string projectNumber, string focusArea, string item, double actualCost, double targetCost);
         ProjectTODO buildProjectTODOEntity(int id, string projectNumber, int sequence, bool isSequential, string focusArea, string item,string status,DateTime dateStarted, DateTime dateEnded, string responsibleEmployees);
         QuarterEntity buildQuarterEntity(int id, string quarter, DateTime startDate, DateTime endDate);
-        PaymentEntity buildPaymentEntity(int id, string invoiceReference, DateTime paymentDate, string proofOfPayment, string paymentType, string companyRegistration, double amount);
+        PaymentEntity buildPaymentEntity(int id, string invoiceReference, DateTime paymentDate, string proofOfPayment, string paymentType, string companyRegistration, double amount, string status, string approvedBy);
     }
 }
