@@ -16,5 +16,6 @@ namespace backend.Models.Request
         public string status { get; set; }
         public DateTime dateStarted { get; set; }
         public DateTime dateEnded { get; set; }
+        public string[] responsibleEmployees { get; set; }
     }
 }

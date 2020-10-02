@@ -23,6 +23,6 @@ namespace backend.DataAccess.Database.Entities
         public string assigned_employees { get; set; }
         public double project_satisfaction { get; set; }
         public DateTime createdOn { get; set; }
-
+        public string project_leader { get; set; }
     }
 }

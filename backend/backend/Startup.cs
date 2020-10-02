@@ -52,12 +52,18 @@ namespace backend
                     Description = "This API serves the frontend with data from databases and other external services."
                 });
             });
+
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));
+
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddControllers();
             services.AddScoped<IUsersService, UserService>();
             services.AddScoped<IEnquiryService, EnquiryService>();
@@ -92,6 +98,8 @@ namespace backend
             services.AddScoped<IQuarterRepository, QuarterRepository>();
             services.AddScoped<IQuarterService, QuarterService>();
             services.AddScoped<IReportsServices, ReportsServices>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IPaymentService, PaymentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

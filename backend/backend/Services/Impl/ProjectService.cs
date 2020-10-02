@@ -19,11 +19,13 @@ namespace backend.Services.Impl
         private readonly IProjectExpenditureRepository _projectExpenditureRepository;
         private readonly IProjectTodoRepository _projectTodoRepository;
         private readonly IProjectProgressRepository _projectProgressRepository;
+        private readonly IEmployeesRepository _employeesRepository;
 
-        public ProjectService(IProjectRepository projectRepository, IEntityBuilder entityBuilder, IProjectExpenditureRepository _projectExpenditureRepository, IProjectTodoRepository _projectTodoRepository, IProjectProgressRepository _projectProgressRepository)
+        public ProjectService(IEmployeesRepository employeesRepository,IProjectRepository projectRepository, IEntityBuilder entityBuilder, IProjectExpenditureRepository _projectExpenditureRepository, IProjectTodoRepository _projectTodoRepository, IProjectProgressRepository _projectProgressRepository)
         {
             _entityBuilder = entityBuilder;
             _projectRepository = projectRepository;
+            _employeesRepository = employeesRepository;
             this._projectExpenditureRepository = _projectExpenditureRepository;
             this._projectProgressRepository = _projectProgressRepository;
             this._projectTodoRepository = _projectTodoRepository;
@@ -33,7 +35,7 @@ namespace backend.Services.Impl
         {
             string projectNumber = createProjectNumber();
             string employeesAssigned = assignedEmployees(project.assignedEmployees);
-            ProjectEntity newProject = _entityBuilder.buildProjectEntity(0, projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned,project.projectSatisfaction, DateTime.Now.Date);
+            ProjectEntity newProject = _entityBuilder.buildProjectEntity(0, projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned,project.projectSatisfaction, DateTime.Now.Date, project.projectLeaderId);
             return _projectRepository.Insert(newProject);
         }
 
@@ -97,6 +99,7 @@ namespace backend.Services.Impl
                 for (int i = 0; i < projectEntities.Count; i++)
                 {
                     string[] employees = projectEntities[i].assigned_employees.Split(",");
+                    EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities[i].project_leader);
                     projects.Add(new ProjectInformationResponseModel
                     {
                         id = projectEntities[i].id,
@@ -110,7 +113,9 @@ namespace backend.Services.Impl
                         projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities[i].project_number)),
                         projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number)),
                         projectTodo = this.buildProjectProjectTodo(_projectTodoRepository.GetByProjectNumber(projectEntities[i].project_number)),
-                        createdOn = projectEntities[i].createdOn
+                        createdOn = projectEntities[i].createdOn,
+                        projectLeaderId = projectEntities[i].project_leader,
+                        projectLeaderNames = employee.name + " "+employee.surname
                     });
                 }
             }
@@ -125,7 +130,7 @@ namespace backend.Services.Impl
             if(projectEntities != null)
             {
                 string[] employees = projectEntities.assigned_employees.Split(",");
-
+                EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities.project_leader);
 
                 return new ProjectInformationResponseModel
                 {
@@ -140,7 +145,9 @@ namespace backend.Services.Impl
                     projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities.project_number)),
                     projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities.project_number)),
                     projectTodo = this.buildProjectProjectTodo(_projectTodoRepository.GetByProjectNumber(projectEntities.project_number)),
-                    createdOn = projectEntities.createdOn
+                    createdOn = projectEntities.createdOn,
+                    projectLeaderId = projectEntities.project_leader,
+                    projectLeaderNames = employee.name + " " + employee.surname
                 };
             }
             else
@@ -157,7 +164,7 @@ namespace backend.Services.Impl
             if (projectEntities != null)
             {
                 string[] employees = projectEntities.assigned_employees.Split(",");
-
+                EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities.project_leader);
 
                 return new ProjectInformationResponseModel
                 {
@@ -172,7 +179,9 @@ namespace backend.Services.Impl
                     projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities.project_number)),
                     projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities.project_number)),
                     projectTodo = this.buildProjectProjectTodo(_projectTodoRepository.GetByProjectNumber(projectEntities.project_number)),
-                    createdOn = projectEntities.createdOn
+                    createdOn = projectEntities.createdOn,
+                    projectLeaderId = projectEntities.project_leader,
+                    projectLeaderNames = employee.name + " " + employee.surname
                 };
             }
             return null;
@@ -188,6 +197,7 @@ namespace backend.Services.Impl
                 for (int i = 0; i < projectEntities.Count; i++)
                 {
                     string[] employees = projectEntities[i].assigned_employees.Split(",");
+                    EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities[i].project_leader);
                     projects.Add(new ProjectInformationResponseModel
                     {
                         id = projectEntities[i].id,
@@ -201,7 +211,9 @@ namespace backend.Services.Impl
                         projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities[i].project_number)),
                         projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number)),
                         projectTodo = this.buildProjectProjectTodo(_projectTodoRepository.GetByProjectNumber(projectEntities[i].project_number)),
-                        createdOn = projectEntities[i].createdOn
+                        createdOn = projectEntities[i].createdOn,
+                        projectLeaderId = projectEntities[i].project_leader,
+                        projectLeaderNames = employee.name + " "+ employee.surname
                     });
                 }
             }
@@ -222,6 +234,7 @@ namespace backend.Services.Impl
                 for (int i = 0; i < projectEntities.Count; i++)
                 {
                     string[] employees = projectEntities[i].assigned_employees.Split(",");
+                    EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities[i].project_leader);
                     for (int k = 0; k < employees.Length; k++)
                     {
                         if (employees[k] == employeeIDs)
@@ -239,7 +252,10 @@ namespace backend.Services.Impl
                                 projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities[i].project_number)),
                                 projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number)),
                                 projectTodo = this.buildProjectProjectTodo(_projectTodoRepository.GetByProjectNumber(projectEntities[i].project_number)),
-                                createdOn = projectEntities[i].createdOn
+                                createdOn = projectEntities[i].createdOn,
+                                projectLeaderId = projectEntities[i].project_leader,
+                                projectLeaderNames = employee.name + " "+ employee.surname
+                               
                             });
                         }
                     }
@@ -258,7 +274,7 @@ namespace backend.Services.Impl
             if(existingRecord != null)
             {
                 string employeesAssigned = assignedEmployees(project.assignedEmployees);
-                ProjectEntity updateProject = _entityBuilder.buildProjectEntity(existingRecord.id,project.projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned, project.projectSatisfaction, project.createdOn);
+                ProjectEntity updateProject = _entityBuilder.buildProjectEntity(existingRecord.id,project.projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned, project.projectSatisfaction, project.createdOn, project.projectLeaderId);
                 return _projectRepository.Update(updateProject);
             }
 

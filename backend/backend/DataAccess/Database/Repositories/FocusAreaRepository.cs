@@ -24,6 +24,12 @@ namespace backend.DataAccess.Database.Repositories
         {
             try
             {
+                var local = _context.Set<FocusAreaEntity>().Local.FirstOrDefault(entry => entry.id.Equals(id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+
                 FocusAreaEntity focusArea =  this.GetById(id);
                 _context.focusAreas.Remove(focusArea);
                 _context.SaveChanges();

@@ -23,6 +23,13 @@ namespace backend.DataAccess.Database.Repositories
         {
             try
             {
+                var local = _context.Set<QuotationItemEntity>().Local.FirstOrDefault(entry => entry.id.Equals(item.id));
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+
+                }
+
                 _context.quotationItem.Remove(item);
                 _context.SaveChanges();
 

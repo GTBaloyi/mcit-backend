@@ -3495,10 +3495,10 @@ namespace backend.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("email")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("employee_number")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -3510,6 +3510,12 @@ namespace backend.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("id");
+
+                    b.HasIndex("email")
+                        .IsUnique();
+
+                    b.HasIndex("employee_number")
+                        .IsUnique();
 
                     b.ToTable("employees");
                 });
@@ -3691,10 +3697,10 @@ namespace backend.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("quotation_reference")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("reference")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<double>("subtotal")
                         .HasColumnType("double");
@@ -3707,7 +3713,42 @@ namespace backend.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("quotation_reference")
+                        .IsUnique();
+
+                    b.HasIndex("reference")
+                        .IsUnique();
+
                     b.ToTable("invoice");
+                });
+
+            modelBuilder.Entity("backend.DataAccess.Database.Entities.PaymentEntity", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<double>("amount")
+                        .HasColumnType("double");
+
+                    b.Property<string>("companyRegistration")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("date_of_payment")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("invoice_reference")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("paymentType")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("pop_attachment_path")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("id");
+
+                    b.ToTable("payments");
                 });
 
             modelBuilder.Entity("backend.DataAccess.Database.Entities.ProductExpectation", b =>
@@ -4477,21 +4518,30 @@ namespace backend.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("invoice_reference")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("project_description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("project_leader")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("project_name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("project_number")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<double>("project_satisfaction")
                         .HasColumnType("double");
 
                     b.HasKey("id");
+
+                    b.HasIndex("invoice_reference")
+                        .IsUnique();
+
+                    b.HasIndex("project_number")
+                        .IsUnique();
 
                     b.ToTable("project");
                 });
@@ -4538,7 +4588,7 @@ namespace backend.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("project_number")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("project_status")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -4559,6 +4609,9 @@ namespace backend.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("project_number")
+                        .IsUnique();
 
                     b.ToTable("project_progress");
                 });
@@ -4587,6 +4640,9 @@ namespace backend.Migrations
                     b.Property<string>("project_number")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("responsible_employees")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<int>("sequence")
                         .HasColumnType("int");
 
@@ -4608,12 +4664,15 @@ namespace backend.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("quarter")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("start_date")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("quarter")
+                        .IsUnique();
 
                     b.ToTable("quarter");
                 });
@@ -4652,7 +4711,7 @@ namespace backend.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Quote_reference")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<double>("SubTotal")
                         .HasColumnType("double");
@@ -4679,6 +4738,9 @@ namespace backend.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Quote_id");
+
+                    b.HasIndex("Quote_reference")
+                        .IsUnique();
 
                     b.ToTable("quotation");
                 });
@@ -4894,9 +4956,12 @@ namespace backend.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("registration_number")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.HasKey("id");
+
+                    b.HasIndex("registration_number")
+                        .IsUnique();
 
                     b.ToTable("Company");
                 });
@@ -4917,7 +4982,7 @@ namespace backend.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("email")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("gender")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -4935,6 +5000,9 @@ namespace backend.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("id");
+
+                    b.HasIndex("email")
+                        .IsUnique();
 
                     b.ToTable("company_representative");
                 });

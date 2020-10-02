@@ -22,6 +22,7 @@ namespace backend.DataAccess.Database.Entities
         public string status { get; set; }
         public DateTime date_started { get; set; }
         public DateTime date_ended { get; set; }
+        public string responsible_employees { get; set; }
 
     }
 }

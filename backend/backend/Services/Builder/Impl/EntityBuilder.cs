@@ -148,7 +148,7 @@ namespace backend.Services.Builder
         }
 
         public ProjectEntity buildProjectEntity(int id, string projectNumber, string projectName, string projectDescription, string invoiceReference,
-                                                    string companyRegistration, string assignedEmployees,double projectSatisfaction, DateTime createdOn)
+                                                    string companyRegistration, string assignedEmployees,double projectSatisfaction, DateTime createdOn, string projectLeader)
         {
             return new ProjectEntity
             {
@@ -160,7 +160,8 @@ namespace backend.Services.Builder
                 company_registration = companyRegistration,
                 assigned_employees = assignedEmployees,
                 project_satisfaction = projectSatisfaction,
-                createdOn = createdOn
+                createdOn = createdOn,
+                project_leader = projectLeader
             };
 
         }
@@ -198,7 +199,7 @@ namespace backend.Services.Builder
 
         }
 
-        public ProjectTODO buildProjectTODOEntity(int id, string projectNumber, int sequence, bool isSequential, string focusArea, string item, string status,DateTime dateStarted, DateTime dateEnded)
+        public ProjectTODO buildProjectTODOEntity(int id, string projectNumber, int sequence, bool isSequential, string focusArea, string item, string status,DateTime dateStarted, DateTime dateEnded, string responsibleEmployees)
         {
             return new ProjectTODO
             {
@@ -210,7 +211,8 @@ namespace backend.Services.Builder
                 item = item,
                 status = status,
                 date_started = dateStarted,
-                date_ended = dateEnded
+                date_ended = dateEnded,
+                responsible_employees = responsibleEmployees
             };
         }
 
@@ -222,6 +224,20 @@ namespace backend.Services.Builder
                 quarter = quarter,
                 start_date = startDate,
                 end_date = endDate
+            };
+        }
+
+        public PaymentEntity buildPaymentEntity(int id, string invoiceReference, DateTime paymentDate, string proofOfPayment, string paymentType, string companyRegistration, double amount)
+        {
+            return new PaymentEntity
+            {
+                id = id,
+                invoice_reference = invoiceReference,
+                paymentType = paymentType,
+                date_of_payment = paymentDate,
+                amount = amount,
+                companyRegistration = companyRegistration,
+                pop_attachment_path = proofOfPayment
             };
         }
     }

@@ -67,11 +67,11 @@ namespace backend.Controllers
         public ActionResult<ProjectInformationResponseModel> GetProjectByInvoice(string invoiceId)
         {
             try
-            { 
-            
-                if(_projectService.getProjectByInvoice(invoiceId) != null)
+            {
+                ProjectInformationResponseModel data = _projectService.getProjectByInvoice(invoiceId);
+                if (data != null)
                 {
-                    return Ok();
+                    return Ok(data);
                 }
                 else
                 {
@@ -140,7 +140,7 @@ namespace backend.Controllers
             {
                 if (_projectService.createProject(project))
                 {
-                    return Ok("Project Created Successfully");
+                    return StatusCode(200, "Project Created Successfully");
                 }
                 else
                 {
