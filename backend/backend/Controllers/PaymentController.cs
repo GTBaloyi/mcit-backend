@@ -65,7 +65,7 @@ namespace backend.Controllers
         {
             try
             {
-                return StatusCode(StatusCodes.Status200OK, _paymentService.CreatePaymentAsync(payment));
+                return StatusCode(StatusCodes.Status200OK, _paymentService.CreatePayment(payment));
             }
             catch (Exception)
             {
@@ -80,6 +80,46 @@ namespace backend.Controllers
             {
                 _paymentService.UploadProofOfPaymentAsync(proofOfPayment.FormFile);
                 return StatusCode(StatusCodes.Status200OK, "Proof of payment uploaded successfully");
+            }
+            catch(McpCustomException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
+
+        [HttpPut("update")]
+        public ActionResult UpdatePayment([FromBody] PaymentRequestModel proofOfPayment)
+        {
+            try
+            {
+                _paymentService.UpdatePayment(proofOfPayment);
+                return StatusCode(StatusCodes.Status200OK, "Payment updated successfully");
+            }
+            catch (McpCustomException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
+
+        [HttpPut("delete")]
+        public ActionResult DeletePayment([FromBody] PaymentRequestModel proofOfPayment)
+        {
+            try
+            {
+                _paymentService.DeletePayment(proofOfPayment);
+                return StatusCode(StatusCodes.Status200OK, "Payment deleted successfully");
+            }
+            catch (McpCustomException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
             }
             catch (Exception)
             {

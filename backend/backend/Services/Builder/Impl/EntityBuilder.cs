@@ -227,7 +227,7 @@ namespace backend.Services.Builder
             };
         }
 
-        public PaymentEntity buildPaymentEntity(int id, string invoiceReference, DateTime paymentDate, string proofOfPayment, string paymentType, string companyRegistration, double amount)
+        public PaymentEntity buildPaymentEntity(int id, string invoiceReference, DateTime paymentDate, string proofOfPayment, string paymentType, string companyRegistration, double amount, string status, string approvedBy)
         {
             return new PaymentEntity
             {
@@ -237,7 +237,9 @@ namespace backend.Services.Builder
                 date_of_payment = paymentDate,
                 amount = amount,
                 companyRegistration = companyRegistration,
-                pop_attachment_path = proofOfPayment
+                pop_attachment_path = proofOfPayment,
+                approved_by = approvedBy,
+                status = status
             };
         }
     }

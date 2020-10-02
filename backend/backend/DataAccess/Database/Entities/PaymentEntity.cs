@@ -18,5 +18,7 @@ namespace backend.DataAccess.Database.Entities
         public string pop_attachment_path { get; set; }
         public string companyRegistration { get; set; }
         public double amount { get; set; }
+        public string status { get; set; }
+        public string approved_by { get; set; }
     }
 }

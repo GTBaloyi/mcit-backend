@@ -14,5 +14,7 @@ namespace backend.Models.Request
         public string paymentType { get; set; }
         public string companyRegistration { get; set; }
         public double amount { get; set; }
+        public string status { get; set; }
+        public string approvedBy { get; set; }
     }
 }
