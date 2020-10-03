@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace backend.Services.Contracts
 {
-    public interface IReportsServices
+    public interface IEmployeeReportsServices
     {
         ClientsGeneralReportsModel GetClientsGeneralReports();
         InvoiceGeneralReportsModel GetInvoiceGeneralReports();
