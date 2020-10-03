@@ -11,12 +11,12 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReportsController : ControllerBase
+    public class EmployeesReportsController : ControllerBase
     {
 
-        private readonly IReportsServices reportsServices;
+        private readonly IEmployeeReportsServices reportsServices;
 
-        public ReportsController(IReportsServices reportsServices)
+        public EmployeesReportsController(IEmployeeReportsServices reportsServices)
         {
             this.reportsServices = reportsServices;
         }
@@ -48,5 +48,7 @@ namespace backend.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        
     }
 }

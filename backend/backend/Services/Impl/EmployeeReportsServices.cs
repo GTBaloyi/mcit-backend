@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace backend.Services.Impl
 {
-    public class ReportsServices : IReportsServices
+    public class EmployeeReportsServices : IEmployeeReportsServices
     {
         private readonly IInvoiceRepository _invoiceRepo;
         private readonly IClientServices clientServices;
         private readonly IProjectRepository _projectRepository;
-        public ReportsServices(IInvoiceRepository invoiceRepo, IClientServices clientServices, IProjectRepository projectRepository)
+        public EmployeeReportsServices(IInvoiceRepository invoiceRepo, IClientServices clientServices, IProjectRepository projectRepository)
         {
             _invoiceRepo = invoiceRepo;
             this.clientServices = clientServices;

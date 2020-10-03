@@ -11,6 +11,7 @@ namespace backend.Services.Contracts
 {
     public interface IPaymentService
     {
+        List<PaymentResponseModel> GetAllPayments();
         bool CreatePayment(PaymentRequestModel payment);
         bool UpdatePayment(PaymentRequestModel payment);
         List<PaymentResponseModel> GetByInvoice(string invoice);

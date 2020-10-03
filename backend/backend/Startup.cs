@@ -97,7 +97,7 @@ namespace backend
             services.AddScoped<IProjectProgressService, ProjectProgressService>();
             services.AddScoped<IQuarterRepository, QuarterRepository>();
             services.AddScoped<IQuarterService, QuarterService>();
-            services.AddScoped<IReportsServices, ReportsServices>();
+            services.AddScoped<IEmployeeReportsServices, EmployeeReportsServices>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IPaymentService, PaymentService>();
         }

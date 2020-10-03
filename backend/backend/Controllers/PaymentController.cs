@@ -60,8 +60,21 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("all")]
+        public ActionResult<List<PaymentResponseModel>> GetAll()
+        {
+            try
+            {
+                return StatusCode(StatusCodes.Status200OK, _paymentService.GetAllPayments());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
+
         [HttpPost("create")]
-        public ActionResult<List<PaymentResponseModel>> GetByDates([FromBody] PaymentRequestModel payment)
+        public ActionResult<List<PaymentResponseModel>> CreatePayment([FromBody] PaymentRequestModel payment)
         {
             try
             {

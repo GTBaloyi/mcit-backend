@@ -126,6 +126,7 @@ namespace backend.Services.Impl
                     paymentId = payment.id,
                     paymentType = payment.paymentType,
                     amount = payment.amount,
+                    proofOfPaymentURL = payment.pop_attachment_path,
                     dateOfPayment = payment.date_of_payment,
                     companyRegistration = payment.companyRegistration,
                     invoiceReference = payment.invoice_reference,
@@ -150,6 +151,7 @@ namespace backend.Services.Impl
                     paymentId = payment.id,
                     paymentType = payment.paymentType,
                     amount = payment.amount,
+                    proofOfPaymentURL = payment.pop_attachment_path,
                     dateOfPayment = payment.date_of_payment,
                     companyRegistration = payment.companyRegistration,
                     invoiceReference = payment.invoice_reference,
@@ -174,6 +176,7 @@ namespace backend.Services.Impl
                     paymentId = payment.id,
                     paymentType = payment.paymentType,
                     amount = payment.amount,
+                    proofOfPaymentURL = payment.pop_attachment_path,
                     dateOfPayment = payment.date_of_payment,
                     companyRegistration = payment.companyRegistration,
                     invoiceReference = payment.invoice_reference,
@@ -241,5 +244,29 @@ namespace backend.Services.Impl
             }
         }
 
+        public List<PaymentResponseModel> GetAllPayments()
+        {
+            List<PaymentEntity> payments = _paymentRepo.GetAll();
+            List<PaymentResponseModel> results = new List<PaymentResponseModel>();
+
+            foreach (PaymentEntity payment in payments)
+            {
+                results.Add(new PaymentResponseModel
+                {
+                    paymentId = payment.id,
+                    paymentType = payment.paymentType,
+                    amount = payment.amount,
+                    proofOfPaymentURL = payment.pop_attachment_path,
+                    dateOfPayment = payment.date_of_payment,
+                    companyRegistration = payment.companyRegistration,
+                    invoiceReference = payment.invoice_reference,
+                    approvedBy = payment.approved_by,
+                    status = payment.status
+
+                });
+            }
+
+            return results;
+        }
     }
 }
