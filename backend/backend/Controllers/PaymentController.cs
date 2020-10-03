@@ -78,7 +78,7 @@ namespace backend.Controllers
         {
             try
             {
-                _paymentService.UploadProofOfPaymentAsync(proofOfPayment.FormFile);
+                _paymentService.UploadProofOfPaymentAsync(proofOfPayment.FormFile, proofOfPayment.FileName);
                 return StatusCode(StatusCodes.Status200OK, "Proof of payment uploaded successfully");
             }
             catch(McpCustomException e)

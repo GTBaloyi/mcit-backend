@@ -16,7 +16,7 @@ namespace backend.Services.Contracts
         List<PaymentResponseModel> GetByInvoice(string invoice);
         List<PaymentResponseModel> GetByCompanyRegistration(string companyRegistration);
         List<PaymentResponseModel> GetByDates(DateTime startDate, DateTime endDate);
-        Task<bool> UploadProofOfPaymentAsync(IFormFile proofOfPayment);
+        Task<bool> UploadProofOfPaymentAsync(IFormFile proofOfPayment, string fileName);
         bool DeletePayment(PaymentRequestModel payment);
 
 
