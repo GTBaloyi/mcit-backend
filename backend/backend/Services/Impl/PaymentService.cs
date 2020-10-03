@@ -209,7 +209,7 @@ namespace backend.Services.Impl
             }
         }
 
-        public async Task<bool> UploadProofOfPaymentAsync(IFormFile proofOfPayment)
+        public async Task<bool> UploadProofOfPaymentAsync(IFormFile proofOfPayment, string fileName)
         {
             try
             {
@@ -226,7 +226,7 @@ namespace backend.Services.Impl
                 var uploadRequest = new TransferUtilityUploadRequest
                 {
                     InputStream = newMemoryStream,
-                    Key = "proof-of-payment/" + proofOfPayment.FileName,
+                    Key = "proof-of-payment/" + fileName,
                     BucketName = "mcts-storage",
                     CannedACL = S3CannedACL.PublicRead
                 };
