@@ -148,7 +148,7 @@ namespace backend.Services.Builder
         }
 
         public ProjectEntity buildProjectEntity(int id, string projectNumber, string projectName, string projectDescription, string invoiceReference,
-                                                    string companyRegistration, string assignedEmployees,double projectSatisfaction, DateTime createdOn, string projectLeader)
+                                                    string companyRegistration,double projectSatisfaction, DateTime createdOn, string projectLeader)
         {
             return new ProjectEntity
             {
@@ -158,7 +158,6 @@ namespace backend.Services.Builder
                 project_description = projectDescription,
                 invoice_reference = invoiceReference,
                 company_registration = companyRegistration,
-                assigned_employees = assignedEmployees,
                 project_satisfaction = projectSatisfaction,
                 createdOn = createdOn,
                 project_leader = projectLeader
@@ -240,6 +239,18 @@ namespace backend.Services.Builder
                 pop_attachment_path = proofOfPayment,
                 approved_by = approvedBy,
                 status = status
+            };
+        }
+
+        public ProductsEntity buildProductEntity(int id, string name, double timeStudyPerTest, double ratePerHour, int focusArea)
+        {
+            return new ProductsEntity
+            {
+                id = id,
+                focus_area_fk = focusArea,
+                name = name,
+                rate_per_hour = ratePerHour,
+                time_study_per_test = timeStudyPerTest
             };
         }
     }

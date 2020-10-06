@@ -34,8 +34,7 @@ namespace backend.Services.Impl
         public bool createProject(ProjectInformationRequestModel project)
         {
             string projectNumber = createProjectNumber();
-            string employeesAssigned = assignedEmployees(project.assignedEmployees);
-            ProjectEntity newProject = _entityBuilder.buildProjectEntity(0, projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned,project.projectSatisfaction, DateTime.Now.Date, project.projectLeaderId);
+            ProjectEntity newProject = _entityBuilder.buildProjectEntity(0, projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber,project.projectSatisfaction, DateTime.Now.Date, project.projectLeaderId);
             return _projectRepository.Insert(newProject);
         }
 
@@ -273,8 +272,7 @@ namespace backend.Services.Impl
             ProjectEntity existingRecord = _projectRepository.GetByProjectNumber(project.projectNumber);
             if(existingRecord != null)
             {
-                string employeesAssigned = assignedEmployees(project.assignedEmployees);
-                ProjectEntity updateProject = _entityBuilder.buildProjectEntity(existingRecord.id,project.projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, employeesAssigned, project.projectSatisfaction, project.createdOn, project.projectLeaderId);
+                ProjectEntity updateProject = _entityBuilder.buildProjectEntity(existingRecord.id,project.projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber, project.projectSatisfaction, project.createdOn, project.projectLeaderId);
                 return _projectRepository.Update(updateProject);
             }
 

@@ -1,7 +1,9 @@
 ﻿using backend.DataAccess.Database.Entities;
 using backend.DataAccess.Database.Repositories.Contracts;
 using backend.Exceptions;
+using backend.Models.Request;
 using backend.Models.Response;
+using backend.Services.Builder;
 using backend.Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -14,10 +16,52 @@ namespace backend.Services.Impl
     {
         private readonly IFocusAreaRepository _focusAreaRepo;
         private readonly IProductRepository _productRepo;
-        public ProductService(IFocusAreaRepository focusAreaRepo, IProductRepository productRepository)
+        private readonly IEntityBuilder _entityBuilder;
+        public ProductService(IFocusAreaRepository focusAreaRepo, IProductRepository productRepository, IEntityBuilder entityBuilder)
         {
             _focusAreaRepo = focusAreaRepo;
             _productRepo = productRepository;
+            _entityBuilder = entityBuilder;
+        }
+
+        public bool createFocusArea(string focusArea)
+        {
+            FocusAreaEntity fa = new FocusAreaEntity();
+            fa.name = focusArea;
+            return _focusAreaRepo.Save(fa);
+            
+        }
+
+        public bool createProduct(ProductRequestModel product)
+        {
+            ProductsEntity p = _entityBuilder.buildProductEntity(0, product.name, product.timeStudyPerTest, product.ratePerHour, product.focusArea);
+            return _productRepo.Save(p);
+        }
+
+        public bool deleteFocusArea(string name)
+        {
+            FocusAreaEntity fa = _focusAreaRepo.GetByName(name);
+            if (fa!=null)
+            {
+                return _focusAreaRepo.Delete(fa.id);
+            }
+            else
+            {
+                throw new McpCustomException("Focus area does not exist");
+            }
+        }
+
+        public bool deleteProduct(ProductRequestModel product)
+        {
+            if(_productRepo.GetById(product.id)!= null)
+            {
+                ProductsEntity p = _entityBuilder.buildProductEntity(product.id, product.name, product.timeStudyPerTest, product.ratePerHour, product.focusArea);
+                return _productRepo.Delete(p);
+            } 
+            else
+            {
+                throw new McpCustomException("This product doesn't exist");
+            }
         }
 
         public List<FocusAreaModel> getAllFocusAreas()
@@ -64,6 +108,44 @@ namespace backend.Services.Impl
             }
         }
 
+        public FocusAreaModel getFocusArea(string name)
+        {
+            FocusAreaEntity fa = _focusAreaRepo.GetByName(name);
+            if (fa != null)
+            {
+                return new FocusAreaModel 
+                { 
+                    id = fa.id,
+                    name = fa.name
+                };
+            }
+            else
+            {
+                throw new McpCustomException("This focus area doesn't exist");
+            }
+        }
+
+        public AllProductsResponseModel getProductByName(string name)
+        {
+            
+            ProductsEntity product = _productRepo.GetByName(name);
+            if (product != null)
+            {
+                return new AllProductsResponseModel
+                {
+                   focusAreaId = product.focus_area_fk,
+                   item = product.name,
+                   productId = product.id,
+                   ratePerHour = product.rate_per_hour,
+                   timeStudyPerTest = product.time_study_per_test
+                };
+            }
+            else
+            {
+                throw new McpCustomException("This product doesn't exist");
+            }
+        }
+
         public List<AllProductsResponseModel> getProductsByFocusArea(string focusArea)
         {
             try
@@ -93,6 +175,19 @@ namespace backend.Services.Impl
             catch (Exception e)
             {
                 throw e;
+            }
+        }
+
+        public bool updateProduct(ProductRequestModel product)
+        {
+            if (_productRepo.GetById(product.id) != null)
+            {
+                ProductsEntity p = _entityBuilder.buildProductEntity(product.id, product.name, product.timeStudyPerTest, product.ratePerHour, product.focusArea);
+                return _productRepo.Update(p);
+            }
+            else
+            {
+                throw new McpCustomException("This product doesn't exist");
             }
         }
     }
