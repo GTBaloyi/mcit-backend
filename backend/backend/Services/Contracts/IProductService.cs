@@ -1,4 +1,6 @@
-﻿using backend.Models.Response;
+﻿using backend.DataAccess.Database.Entities;
+using backend.Models.Request;
+using backend.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +13,12 @@ namespace backend.Services.Contracts
         List<AllProductsResponseModel> getAllProducts();
         List<AllProductsResponseModel> getProductsByFocusArea(string focusArea);
         List<FocusAreaModel> getAllFocusAreas();
+        AllProductsResponseModel getProductByName(string name);
+        FocusAreaModel getFocusArea(string name);
+        bool createProduct(ProductRequestModel product);
+        bool createFocusArea(string focusArea);
+        bool updateProduct(ProductRequestModel product);
+        bool deleteProduct(ProductRequestModel product);
+        bool deleteFocusArea(string name);
     }
 }
