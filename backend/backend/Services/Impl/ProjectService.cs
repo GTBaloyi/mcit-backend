@@ -97,7 +97,7 @@ namespace backend.Services.Impl
             {
                 for (int i = 0; i < projectEntities.Count; i++)
                 {
-                    string[] employees = projectEntities[i].assigned_employees.Split(",");
+                   
                     EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities[i].project_leader);
                     projects.Add(new ProjectInformationResponseModel
                     {
@@ -107,7 +107,6 @@ namespace backend.Services.Impl
                         projectDescription = projectEntities[i].project_description,
                         invoiceReferenceNumber = projectEntities[i].invoice_reference,
                         companyRegistrationNumber = projectEntities[i].company_registration,
-                        assignedEmployees = employees,
                         projectSatisfaction = projectEntities[i].project_satisfaction,
                         projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities[i].project_number)),
                         projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number)),
@@ -128,7 +127,6 @@ namespace backend.Services.Impl
             ProjectEntity projectEntities = _projectRepository.GetByInvoice(invoiceId);
             if(projectEntities != null)
             {
-                string[] employees = projectEntities.assigned_employees.Split(",");
                 EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities.project_leader);
 
                 return new ProjectInformationResponseModel
@@ -139,7 +137,6 @@ namespace backend.Services.Impl
                     projectDescription = projectEntities.project_description,
                     invoiceReferenceNumber = projectEntities.invoice_reference,
                     companyRegistrationNumber = projectEntities.company_registration,
-                    assignedEmployees = employees,
                     projectSatisfaction = projectEntities.project_satisfaction,
                     projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities.project_number)),
                     projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities.project_number)),
@@ -162,7 +159,6 @@ namespace backend.Services.Impl
 
             if (projectEntities != null)
             {
-                string[] employees = projectEntities.assigned_employees.Split(",");
                 EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities.project_leader);
 
                 return new ProjectInformationResponseModel
@@ -173,7 +169,6 @@ namespace backend.Services.Impl
                     projectDescription = projectEntities.project_description,
                     invoiceReferenceNumber = projectEntities.invoice_reference,
                     companyRegistrationNumber = projectEntities.company_registration,
-                    assignedEmployees = employees,
                     projectSatisfaction = projectEntities.project_satisfaction,
                     projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities.project_number)),
                     projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities.project_number)),
@@ -195,7 +190,6 @@ namespace backend.Services.Impl
             {
                 for (int i = 0; i < projectEntities.Count; i++)
                 {
-                    string[] employees = projectEntities[i].assigned_employees.Split(",");
                     EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities[i].project_leader);
                     projects.Add(new ProjectInformationResponseModel
                     {
@@ -205,7 +199,6 @@ namespace backend.Services.Impl
                         projectDescription = projectEntities[i].project_description,
                         invoiceReferenceNumber = projectEntities[i].invoice_reference,
                         companyRegistrationNumber = projectEntities[i].company_registration,
-                        assignedEmployees = employees,
                         projectSatisfaction = projectEntities[i].project_satisfaction,
                         projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities[i].project_number)),
                         projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number)),
@@ -223,7 +216,7 @@ namespace backend.Services.Impl
 
         public List<ProjectInformationResponseModel> getProjectsByAssignedEmployees(string employeeIDs)
         {
-            List<ProjectInformationResponseModel> projects = new List<ProjectInformationResponseModel>();
+            /*List<ProjectInformationResponseModel> projects = new List<ProjectInformationResponseModel>();
             List<ProjectEntity> projectEntities = _projectRepository.GetAll();
 
             
@@ -232,7 +225,6 @@ namespace backend.Services.Impl
 
                 for (int i = 0; i < projectEntities.Count; i++)
                 {
-                    string[] employees = projectEntities[i].assigned_employees.Split(",");
                     EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities[i].project_leader);
                     for (int k = 0; k < employees.Length; k++)
                     {
@@ -246,7 +238,6 @@ namespace backend.Services.Impl
                                 projectDescription = projectEntities[i].project_description,
                                 invoiceReferenceNumber = projectEntities[i].invoice_reference,
                                 companyRegistrationNumber = projectEntities[i].company_registration,
-                                assignedEmployees = employees,
                                 projectSatisfaction = projectEntities[i].project_satisfaction,
                                 projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities[i].project_number)),
                                 projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number)),
@@ -263,7 +254,8 @@ namespace backend.Services.Impl
             }
 
 
-            return projects;
+            return projects;*/
+            return null;
         }
 
         public bool updateProject(ProjectInformationRequestModel project)

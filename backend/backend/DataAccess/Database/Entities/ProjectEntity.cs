@@ -20,7 +20,6 @@ namespace backend.DataAccess.Database.Entities
         public string project_description { get; set; }
         public string invoice_reference { get; set; }
         public string company_registration { get; set; }
-        public string assigned_employees { get; set; }
         public double project_satisfaction { get; set; }
         public DateTime createdOn { get; set; }
         public string project_leader { get; set; }
