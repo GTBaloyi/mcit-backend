@@ -2,6 +2,7 @@
 using backend.DataAccess.Database.Repositories.Contracts;
 using backend.Models;
 using backend.Models.General;
+using backend.Models.Response;
 using backend.Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,14 @@ namespace backend.Services.Impl
         private readonly IInvoiceRepository _invoiceRepo;
         private readonly IClientServices clientServices;
         private readonly IProjectRepository _projectRepository;
-        public EmployeeReportsServices(IInvoiceRepository invoiceRepo, IClientServices clientServices, IProjectRepository projectRepository)
+        private readonly IQuotationRepository _quotationRepo;
+
+        public EmployeeReportsServices(IInvoiceRepository invoiceRepo, IClientServices clientServices, IProjectRepository projectRepository, IQuotationRepository quotationRepo)
         {
             _invoiceRepo = invoiceRepo;
             this.clientServices = clientServices;
             _projectRepository = projectRepository;
+            _quotationRepo = quotationRepo;
         }
 
         public ClientsGeneralReportsModel GetClientsGeneralReports()
@@ -94,7 +98,6 @@ namespace backend.Services.Impl
                 {
                     invoiceOverdue++;
                 }
-
             }
 
             return new InvoiceGeneralReportsModel
@@ -104,6 +107,44 @@ namespace backend.Services.Impl
                 totalOverdueInvoice = invoiceOverdue,
                 totalUnpaidInvoice = invoiceUnpaid
             };
+        }
+
+        public QuotationGeneralReportModel GetQuotationGeneralReport()
+        {
+            List<QuotationEntity> quotationEntities = _quotationRepo.GetAll();
+            QuotationGeneralReportModel result = new QuotationGeneralReportModel();
+
+            foreach(QuotationEntity quotation in quotationEntities)
+            {
+                if(quotation.status == "Accepted")
+                {
+                    result.totalAccepted++;
+                }
+
+                if (quotation.status == "Pending Client Approval")
+                {
+                    result.totalPendingCustomerApproval++;
+                }
+
+                if (quotation.status == "Pending Manager Approval")
+                {
+                    result.totalPendingManagerApproval++;
+                }
+
+                if (quotation.status == "Pending")
+                {
+                    result.totalPendingEmployeeAttention++;
+                }
+
+                if (quotation.status == "rejected")
+                {
+                    result.totalRejected++;
+                }
+
+                result.totalQuotationsRequested++;
+            }
+
+            return result;
         }
     }
 }
