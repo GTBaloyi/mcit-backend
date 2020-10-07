@@ -17,11 +17,13 @@ namespace backend.Services.Impl
     {
         private readonly IProjectTodoRepository _todoRepository;
         private readonly IEntityBuilder _entityBuilder;
+        private readonly IEmployeesRepository _employeesRepository;
 
-        public ProjectTodoService(IProjectTodoRepository todoRepository, IEntityBuilder entityBuilder)
+        public ProjectTodoService(IProjectTodoRepository todoRepository, IEntityBuilder entityBuilder, IEmployeesRepository employeesRepository)
         {
             _entityBuilder = entityBuilder;
             _todoRepository = todoRepository;
+            _employeesRepository = employeesRepository;
         }
 
         public bool createProjectTodo(ProjectTodosRequestModel projectTODO)
@@ -43,6 +45,29 @@ namespace backend.Services.Impl
             throw new McpCustomException("There is no project todo associated with the ID: " + todo.id);
         }
 
+        private List<ResponsibleEmployees> GetResponsibleEmployees(string[] employeesId)
+        {
+            
+            List<ResponsibleEmployees> responsibleEmployees = new List<ResponsibleEmployees>();
+            foreach (string emp in employeesId)
+            {
+                
+                    EmployeesEntity e = _employeesRepository.GetByEmployeeNumber(emp);
+                    if (e != null )
+                    {
+                        responsibleEmployees.Add(new ResponsibleEmployees
+                        {
+                            name = e.name,
+                            employeeNumber = e.employee_number,
+                            surname = e.surname
+                        });
+                    }
+                
+            }
+
+            return responsibleEmployees;
+        }
+
         public List<ProjectTodoResponseModel> getAllProjectTodos()
         {
             List<ProjectTODO> todos = _todoRepository.GetAll();
@@ -50,6 +75,7 @@ namespace backend.Services.Impl
 
             foreach(ProjectTODO todo in todos)
             {
+                string[] employeees = todo.responsible_employees.Split(',');
                 results.Add(new ProjectTodoResponseModel
                 {
                     id = todo.id,
@@ -61,7 +87,7 @@ namespace backend.Services.Impl
                     status= todo.status,
                     dateStarted = todo.date_started,
                     dateEnded = todo.date_ended,
-                    responsibleEmployees = todo.responsible_employees.Split(',')
+                    responsibleEmployees = GetResponsibleEmployees(employeees)
                 });
             }
 
@@ -77,6 +103,8 @@ namespace backend.Services.Impl
             {
                 if(todo.date_started >= startDate && todo.date_ended <= endDate)
                 {
+                    string[] employeees = todo.responsible_employees.Split(',');
+
                     results.Add(new ProjectTodoResponseModel
                     {
                         id = todo.id,
@@ -88,7 +116,7 @@ namespace backend.Services.Impl
                         status = todo.status,
                         dateStarted = todo.date_started,
                         dateEnded = todo.date_ended,
-                        responsibleEmployees = todo.responsible_employees.Split(',')
+                        responsibleEmployees = GetResponsibleEmployees(employeees)
                     });
                 }
                 
@@ -104,7 +132,8 @@ namespace backend.Services.Impl
 
             foreach (ProjectTODO todo in todos)
             {
-                    results.Add(new ProjectTodoResponseModel
+                string[] employeees = todo.responsible_employees.Split(',');
+                results.Add(new ProjectTodoResponseModel
                     {
                         id = todo.id,
                         projectNumber = todo.project_number,
@@ -115,7 +144,7 @@ namespace backend.Services.Impl
                         status = todo.status,
                         dateStarted = todo.date_started,
                         dateEnded = todo.date_ended,
-                        responsibleEmployees = todo.responsible_employees.Split(',')
+                        responsibleEmployees = GetResponsibleEmployees(employeees)
                     });
             }
 
@@ -129,6 +158,7 @@ namespace backend.Services.Impl
 
             foreach (ProjectTODO todo in todos)
             {
+                string[] employeees = todo.responsible_employees.Split(',');
                 results.Add(new ProjectTodoResponseModel
                 {
                     id = todo.id,
@@ -140,7 +170,7 @@ namespace backend.Services.Impl
                     status = todo.status,
                     dateStarted = todo.date_started,
                     dateEnded = todo.date_ended,
-                    responsibleEmployees = todo.responsible_employees.Split(',')
+                    responsibleEmployees = GetResponsibleEmployees(employeees)
                 });
             }
 
@@ -154,6 +184,7 @@ namespace backend.Services.Impl
 
             foreach (ProjectTODO todo in todos)
             {
+                string[] employeees = todo.responsible_employees.Split(',');
                 results.Add(new ProjectTodoResponseModel
                 {
                     id = todo.id,
@@ -165,7 +196,7 @@ namespace backend.Services.Impl
                     status = todo.status,
                     dateStarted = todo.date_started,
                     dateEnded = todo.date_ended,
-                    responsibleEmployees = todo.responsible_employees.Split(',')
+                    responsibleEmployees = GetResponsibleEmployees(employeees)
                 });
             }
 

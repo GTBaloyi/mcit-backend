@@ -293,11 +293,34 @@ namespace backend.Services.Impl
             
         }
 
+        private List<ResponsibleEmployees> GetResponsibleEmployees(string []employeesId)
+        {
+
+            List<ResponsibleEmployees> responsibleEmployees = new List<ResponsibleEmployees>();
+            foreach (string emp in employeesId)
+            {
+                EmployeesEntity e = _employeesRepository.GetByEmployeeNumber(emp);
+                if(e != null)
+                {
+                    responsibleEmployees.Add(new ResponsibleEmployees
+                    {
+                        name = e.name,
+                        employeeNumber = e.employee_number,
+                        surname = e.surname
+                    });
+                }
+                
+            }
+
+            return responsibleEmployees;
+        }
         private List<ProjectTodoResponseModel> buildProjectProjectTodo(List<ProjectTODO> projectTodo)
         {
             List<ProjectTodoResponseModel> result = new List<ProjectTodoResponseModel>();
             foreach(ProjectTODO p in projectTodo)
             {
+                string[] employeees = p.responsible_employees.Split(',');
+                
                 result.Add(new ProjectTodoResponseModel
                 {
                     id = p.id,
@@ -308,7 +331,8 @@ namespace backend.Services.Impl
                     item = p.item,
                     status =p.status,
                     dateStarted = p.date_started,
-                    dateEnded = p.date_ended
+                    dateEnded = p.date_ended,
+                    responsibleEmployees = GetResponsibleEmployees(employeees)
                 });
             }
             return result;
