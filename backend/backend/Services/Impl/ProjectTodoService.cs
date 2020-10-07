@@ -35,16 +35,24 @@ namespace backend.Services.Impl
         {
             string employeesResponsible = string.Join(",", projectTODO.responsibleEmployees);
             ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(0, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status,projectTODO.dateStarted, projectTODO.dateEnded, employeesResponsible);
-            return _todoRepository.Insert(todo);
+            if (_todoRepository.Insert(todo))
+            {
+                return updateProjectStatus(projectTODO.projectNumber);
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         public bool deleteProject(ProjectTodosRequestModel projectTODO)
         {
             string employeesResponsible = string.Join(",", projectTODO.responsibleEmployees);
             ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status, projectTODO.dateStarted, projectTODO.dateEnded, employeesResponsible);
-            if(_todoRepository.GetById(todo.id) != null)
+            if(_todoRepository.GetById(todo.id) != null && _todoRepository.Delete(todo))
             {
-                return _todoRepository.Delete(todo);
+                return updateProjectStatus(projectTODO.projectNumber);
             }
 
             throw new McpCustomException("There is no project todo associated with the ID: " + todo.id);
