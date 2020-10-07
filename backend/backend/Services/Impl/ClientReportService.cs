@@ -12,21 +12,39 @@ namespace backend.Services.Impl
     public class ClientReportService : IClientsReportsService
     {
         private readonly IClientServices _clientService;
-        private readonly IInvoiceService _invoiceService;
         private readonly IInvoiceRepository _invoiceRepo;
 
 
-        public ClientReportService(IClientServices clientService,IInvoiceService invoiceService, IInvoiceRepository _invoiceRepo)
+        public ClientReportService(IClientServices clientService, IInvoiceRepository _invoiceRepo)
         {
             _clientService = clientService;
-            _invoiceService = invoiceService;
             this._invoiceRepo = _invoiceRepo;
         }
 
         public ClientInvoiceSummary clientInvoiceSummary(string companyRegistration)
         {
             List<InvoiceEntity> invoice = _invoiceRepo.GetById(companyRegistration);
-            return null;
+            ClientInvoiceSummary clientInvoiceSummary = new ClientInvoiceSummary();
+            foreach(InvoiceEntity i in invoice)
+            {
+                if(i.grand_total >= i.amount_payed && i.amount_due == 0)
+                {
+                    clientInvoiceSummary.paidInvoices++;
+                }
+
+                if(i.amount_due > 0 && i.date_due <= DateTime.Now)
+                {
+                    clientInvoiceSummary.unpaidInvoices++;
+                }
+
+                if (i.amount_due > 0 && i.date_due > DateTime.Now)
+                {
+                    clientInvoiceSummary.overdueInvoices++;
+                }
+            }
+
+
+            return clientInvoiceSummary;
         }
 
 

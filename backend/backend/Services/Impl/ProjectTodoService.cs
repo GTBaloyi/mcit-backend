@@ -58,6 +58,7 @@ namespace backend.Services.Impl
                     isSequential = todo.isSequential,
                     focusArea = todo.focus_area,
                     item = todo.item,
+                    status= todo.status,
                     dateStarted = todo.date_started,
                     dateEnded = todo.date_ended,
                     responsibleEmployees = todo.responsible_employees.Split(',')
@@ -84,6 +85,7 @@ namespace backend.Services.Impl
                         isSequential = todo.isSequential,
                         focusArea = todo.focus_area,
                         item = todo.item,
+                        status = todo.status,
                         dateStarted = todo.date_started,
                         dateEnded = todo.date_ended,
                         responsibleEmployees = todo.responsible_employees.Split(',')
@@ -110,6 +112,7 @@ namespace backend.Services.Impl
                         isSequential = todo.isSequential,
                         focusArea = todo.focus_area,
                         item = todo.item,
+                        status = todo.status,
                         dateStarted = todo.date_started,
                         dateEnded = todo.date_ended,
                         responsibleEmployees = todo.responsible_employees.Split(',')
@@ -134,6 +137,7 @@ namespace backend.Services.Impl
                     isSequential = todo.isSequential,
                     focusArea = todo.focus_area,
                     item = todo.item,
+                    status = todo.status,
                     dateStarted = todo.date_started,
                     dateEnded = todo.date_ended,
                     responsibleEmployees = todo.responsible_employees.Split(',')
@@ -158,6 +162,7 @@ namespace backend.Services.Impl
                     isSequential = todo.isSequential,
                     focusArea = todo.focus_area,
                     item = todo.item,
+                    status = todo.status,
                     dateStarted = todo.date_started,
                     dateEnded = todo.date_ended,
                     responsibleEmployees = todo.responsible_employees.Split(',')

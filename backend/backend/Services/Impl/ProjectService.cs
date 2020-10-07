@@ -306,6 +306,7 @@ namespace backend.Services.Impl
                     isSequential = p.isSequential,
                     focusArea = p.focus_area,
                     item = p.item,
+                    status =p.status,
                     dateStarted = p.date_started,
                     dateEnded = p.date_ended
                 });
