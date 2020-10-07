@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backend.Models.General;
+using backend.Models.Response;
 using backend.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -49,6 +50,20 @@ namespace backend.Controllers
             }
         }
 
-        
+        [HttpGet("quotation-general-report")]
+        public ActionResult<QuotationGeneralReportModel> GetQuotationGeneralReport()
+        {
+            try
+            {
+                return Ok(reportsServices.GetQuotationGeneralReport());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+
+
     }
 }

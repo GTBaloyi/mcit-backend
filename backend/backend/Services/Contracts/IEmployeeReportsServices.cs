@@ -1,4 +1,5 @@
 ﻿using backend.Models.General;
+using backend.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace backend.Services.Contracts
     {
         ClientsGeneralReportsModel GetClientsGeneralReports();
         InvoiceGeneralReportsModel GetInvoiceGeneralReports();
+        QuotationGeneralReportModel GetQuotationGeneralReport();
     }
 }

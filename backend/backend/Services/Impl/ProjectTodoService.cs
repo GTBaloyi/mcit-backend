@@ -18,12 +18,17 @@ namespace backend.Services.Impl
         private readonly IProjectTodoRepository _todoRepository;
         private readonly IEntityBuilder _entityBuilder;
         private readonly IEmployeesRepository _employeesRepository;
+        private readonly IProjectRepository _projectRepository;
+        private readonly IProjectProgressRepository _projectProgressRepo;
 
-        public ProjectTodoService(IProjectTodoRepository todoRepository, IEntityBuilder entityBuilder, IEmployeesRepository employeesRepository)
+        public ProjectTodoService(IProjectProgressRepository projectProgressRepo, IProjectRepository projectRepositor,IProjectTodoRepository todoRepository, IEntityBuilder entityBuilder, IEmployeesRepository employeesRepository)
         {
             _entityBuilder = entityBuilder;
             _todoRepository = todoRepository;
             _employeesRepository = employeesRepository;
+            _projectRepository = projectRepositor;
+            _projectProgressRepo = projectProgressRepo;
+            
         }
 
         public bool createProjectTodo(ProjectTodosRequestModel projectTODO)
@@ -205,14 +210,46 @@ namespace backend.Services.Impl
 
         public bool updateProjectTodo(ProjectTodosRequestModel projectTODO)
         {
-            string employeesResponsible = string.Join(",", projectTODO.responsibleEmployees);
-            if (_todoRepository.GetById(projectTODO.id) != null)
+            if (updateProjectStatus(projectTODO.projectNumber))
             {
-                ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status, projectTODO.dateStarted, projectTODO.dateEnded, employeesResponsible);
-                return _todoRepository.Update(todo);
-            }
+                string employeesResponsible = string.Join(",", projectTODO.responsibleEmployees);
+                if (_todoRepository.GetById(projectTODO.id) != null)
+                {
+                    ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status, projectTODO.dateStarted, projectTODO.dateEnded, employeesResponsible);
+                    return _todoRepository.Update(todo);
+                }
 
-            throw new McpCustomException("Project Todo with id " + projectTODO.id + " does not exist");
+                throw new McpCustomException("Project Todo with id " + projectTODO.id + " does not exist");
+            }
+            else
+            {
+                throw new McpCustomException("Could not Update the project progress");
+            }
+            
+        }
+
+        private bool updateProjectStatus(string projectNumber)
+        {
+            ProjectProgress project = _projectProgressRepo.GetByProjectNumber(projectNumber);
+            int total = 0;
+            int completed = 0;
+
+            if(project != null)
+            {
+                List<ProjectTODO> projectTODOs = _todoRepository.GetByProjectNumber(projectNumber);
+                foreach(ProjectTODO todo in projectTODOs)
+                {
+                    if(todo.status.ToLower() =="completed")
+                    {
+                        completed++;
+                    }
+                    total++;
+                }
+
+                project.project_status_percentage = (completed * 100) / total;
+                return _projectProgressRepo.Update(project);
+            }
+            throw new McpCustomException("Could not Update the project progress");
         }
     }
 }
