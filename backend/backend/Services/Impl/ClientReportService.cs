@@ -21,6 +21,32 @@ namespace backend.Services.Impl
             this._invoiceRepo = _invoiceRepo;
         }
 
+        public ClientInvoiceSummary clientInvoiceSummaries()
+        {
+            List<InvoiceEntity> invoice = _invoiceRepo.GetAll();
+            ClientInvoiceSummary clientInvoiceSummary = new ClientInvoiceSummary();
+            foreach(InvoiceEntity i in invoice)
+            {
+                if(i.grand_total >= i.amount_payed && i.amount_due == 0)
+                {
+                    clientInvoiceSummary.paidInvoices++;
+                }
+
+                if(i.amount_due > 0 && i.date_due <= DateTime.Now)
+                {
+                    clientInvoiceSummary.unpaidInvoices++;
+                }
+
+                if (i.amount_due > 0 && i.date_due > DateTime.Now)
+                {
+                    clientInvoiceSummary.overdueInvoices++;
+                }
+            }
+
+            return clientInvoiceSummary;
+
+        }
+
         public ClientInvoiceSummary clientInvoiceSummary(string companyRegistration)
         {
             List<InvoiceEntity> invoice = _invoiceRepo.GetById(companyRegistration);

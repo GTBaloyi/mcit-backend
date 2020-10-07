@@ -9,5 +9,6 @@ namespace backend.Services.Contracts
     public interface IClientsReportsService
     {
         ClientInvoiceSummary clientInvoiceSummary(string companyRegistration);
+        ClientInvoiceSummary clientInvoiceSummaries();
     }
 }
