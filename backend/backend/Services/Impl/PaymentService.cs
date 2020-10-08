@@ -198,13 +198,14 @@ namespace backend.Services.Impl
                 
                 if (payment.status == "Approved" && _paymentRepo.Update(paymentEntity))
                 {
-                    _invoiceRepository.Update(updateInvoice(payment.invoiceReference, payment.amount));
+                   return  _invoiceRepository.Update(updateInvoice(payment.invoiceReference, payment.amount));
                 }
                 else
                 {
-                    throw new McpCustomException("Could not update invoice balance");
+                    return _paymentRepo.Update(paymentEntity);
                 }
-                return true;
+
+                return false;
             }
             else
             {
