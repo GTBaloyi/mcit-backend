@@ -20,8 +20,9 @@ namespace backend.Services.Impl
         private readonly IProjectTodoRepository _projectTodoRepository;
         private readonly IProjectProgressRepository _projectProgressRepository;
         private readonly IEmployeesRepository _employeesRepository;
+        private readonly IInvoiceRepository _invoiceRepo;
 
-        public ProjectService(IEmployeesRepository employeesRepository,IProjectRepository projectRepository, IEntityBuilder entityBuilder, IProjectExpenditureRepository _projectExpenditureRepository, IProjectTodoRepository _projectTodoRepository, IProjectProgressRepository _projectProgressRepository)
+        public ProjectService(IInvoiceRepository invoiceRepo,IEmployeesRepository employeesRepository,IProjectRepository projectRepository, IEntityBuilder entityBuilder, IProjectExpenditureRepository _projectExpenditureRepository, IProjectTodoRepository _projectTodoRepository, IProjectProgressRepository _projectProgressRepository)
         {
             _entityBuilder = entityBuilder;
             _projectRepository = projectRepository;
@@ -29,13 +30,23 @@ namespace backend.Services.Impl
             this._projectExpenditureRepository = _projectExpenditureRepository;
             this._projectProgressRepository = _projectProgressRepository;
             this._projectTodoRepository = _projectTodoRepository;
+            this._invoiceRepo = invoiceRepo;
         }
 
         public bool createProject(ProjectInformationRequestModel project)
         {
             string projectNumber = createProjectNumber();
             ProjectEntity newProject = _entityBuilder.buildProjectEntity(0, projectNumber, project.projectName, project.projectDescription, project.invoiceReferenceNumber, project.companyRegistrationNumber,project.projectSatisfaction, DateTime.Now.Date, project.projectLeaderId);
-            return _projectRepository.Insert(newProject);
+            ProjectExpenditure projectExpense = _entityBuilder.buildProjectExpenditureEntity(0, projectNumber, "", "", 0, _invoiceRepo.GetByReference(project.invoiceReferenceNumber).grand_total);
+            if(_projectExpenditureRepository.Insert(projectExpense))
+            {
+                return _projectRepository.Insert(newProject);
+            }
+            else
+            {
+                throw new McpCustomException("Could not create project expense");
+            }
+            
         }
 
         private string assignedEmployees(string[] assignedEmployees)
