@@ -11,6 +11,7 @@ namespace backend.DataAccess.Database.Repositories.Contracts
         List<QuarterEntity> GetAll();
         QuarterEntity GetById(int id);
         QuarterEntity GetByQuarter(string quarter);
+        QuarterEntity GetByDate(DateTime date);
         bool Update(QuarterEntity quarter);
         bool Delete(QuarterEntity quarter);
         bool Insert(QuarterEntity quarter);

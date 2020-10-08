@@ -101,6 +101,8 @@ namespace backend
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IClientsReportsService, ClientReportService>();
+            services.AddScoped<IMctsKpiReports, MctsKpiReports>();
+            services.AddScoped<ITargetSettingRepository, TargetSettingRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

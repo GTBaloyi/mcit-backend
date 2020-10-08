@@ -9,30 +9,29 @@ using System.Threading.Tasks;
 
 namespace backend.DataAccess.Database.Repositories
 {
-    public class QuarterRepository : IQuarterRepository
+    public class TargetSettingRepository : ITargetSettingRepository
     {
+
 
         private ApplicationDbContext _context;
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public QuarterRepository(ApplicationDbContext context)
+        public TargetSettingRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-
-        public bool Delete(QuarterEntity quarter)
+        public bool Delete(TargetSettingsEntity targetSettings)
         {
             try
             {
-
-                var local = _context.Set<QuarterEntity>().Local.FirstOrDefault(entry => entry.id.Equals(quarter.id));
+                var local = _context.Set<TargetSettingsEntity>().Local.FirstOrDefault(entry => entry.id.Equals(targetSettings.id));
                 if (local != null)
                 {
                     _context.Entry(local).State = EntityState.Detached;
                 }
 
-                _context.quarter.Remove(quarter);
+                _context.targetSettings.Remove(targetSettings);
                 _context.SaveChanges();
                 return true;
             }
@@ -43,11 +42,11 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public List<QuarterEntity> GetAll()
+        public List<TargetSettingsEntity> GetAll()
         {
             try
             {
-                return _context.quarter.ToList();
+                return _context.targetSettings.ToList();
             }
             catch (Exception e)
             {
@@ -56,11 +55,25 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public QuarterEntity GetById(int id)
+        public TargetSettingsEntity GetById(int id)
         {
             try
             {
-                return _context.quarter.Find(id);
+                return _context.targetSettings.Find(id);
+            }
+            catch (Exception e)
+            {
+                logger.Info(e);
+                return null;
+            }
+        }
+    
+
+        public List<TargetSettingsEntity> GetByTitle(string title)
+        {
+             try
+            {
+                return _context.targetSettings.Where(x => x.title == title).ToList();
             }
             catch (Exception e)
             {
@@ -69,24 +82,11 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public QuarterEntity GetByQuarter(string quarter)
+        public bool Save(TargetSettingsEntity targetSettings)
         {
             try
             {
-                return _context.quarter.Where(x => x.quarter == quarter).ToList().FirstOrDefault();
-            }
-            catch (Exception e)
-            {
-                logger.Info(e);
-                return null;
-            }
-        }
-
-        public bool Insert(QuarterEntity quarter)
-        {
-            try
-            {
-                _context.quarter.Add(quarter);
+                _context.targetSettings.Add(targetSettings);
                 _context.SaveChanges();
                 return true;
             }
@@ -97,17 +97,17 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public bool Update(QuarterEntity quarter)
+        public bool Update(TargetSettingsEntity targetSettings)
         {
             try
             {
-                var local = _context.Set<QuarterEntity>().Local.FirstOrDefault(entry => entry.id.Equals(quarter.id));
+                var local = _context.Set<TargetSettingsEntity>().Local.FirstOrDefault(entry => entry.id.Equals(targetSettings.id));
                 if (local != null)
                 {
                     _context.Entry(local).State = EntityState.Detached;
                 }
 
-                _context.Entry(quarter).State = EntityState.Modified;
+                _context.Entry(targetSettings).State = EntityState.Modified;
                 _context.SaveChanges();
                 return true;
             }
@@ -115,19 +115,6 @@ namespace backend.DataAccess.Database.Repositories
             {
                 logger.Info(e);
                 return false;
-            }
-        }
-
-        public QuarterEntity GetByDate(DateTime date)
-        {
-            try
-            {
-                return _context.quarter.Where( x => x.start_date >= date && date <= x.end_date).FirstOrDefault();
-            }
-            catch (Exception e)
-            {
-                logger.Info(e);
-                return null;
             }
         }
     }
