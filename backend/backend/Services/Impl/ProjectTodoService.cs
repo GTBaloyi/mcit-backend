@@ -257,6 +257,9 @@ namespace backend.Services.Impl
                 if(project.project_status_percentage >= 100)
                 {
                     project.project_status = "Completed";
+                }else
+                {
+                    project.project_status = "Ongoing";
                 }
                 return _projectProgressRepo.Update(project);
             }
