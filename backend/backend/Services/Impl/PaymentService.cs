@@ -193,7 +193,7 @@ namespace backend.Services.Impl
         {
             if (_paymentRepo.GetById(payment.paymentId) != null)
             {
-                PaymentEntity paymentEntity = _entityBuilder.buildPaymentEntity(0, payment.invoiceReference, payment.dateOfPayment, payment.proofOfPaymentURL, payment.paymentType, payment.companyRegistration, payment.amount, payment.status, payment.approvedBy);
+                PaymentEntity paymentEntity = _entityBuilder.buildPaymentEntity(payment.paymentId, payment.invoiceReference, payment.dateOfPayment, payment.proofOfPaymentURL, payment.paymentType, payment.companyRegistration, payment.amount, payment.status, payment.approvedBy);
                 
                 
                 if (payment.status == "Approved" && _paymentRepo.Update(paymentEntity))
@@ -205,7 +205,6 @@ namespace backend.Services.Impl
                     return _paymentRepo.Update(paymentEntity);
                 }
 
-                return false;
             }
             else
             {
