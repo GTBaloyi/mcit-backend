@@ -5167,6 +5167,35 @@ namespace backend.Migrations
                         });
                 });
 
+            modelBuilder.Entity("backend.DataAccess.Database.Entities.TargetSettingsEntity", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<double>("overallTarget")
+                        .HasColumnType("double");
+
+                    b.Property<double>("q1_target")
+                        .HasColumnType("double");
+
+                    b.Property<double>("q2_target")
+                        .HasColumnType("double");
+
+                    b.Property<double>("q3_target")
+                        .HasColumnType("double");
+
+                    b.Property<double>("q4_target")
+                        .HasColumnType("double");
+
+                    b.Property<string>("title")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("id");
+
+                    b.ToTable("target_settings");
+                });
+
             modelBuilder.Entity("backend.DataAccess.Database.Entities.TechStationServiceEntity", b =>
                 {
                     b.Property<int>("id")
