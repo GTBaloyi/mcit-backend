@@ -17,6 +17,6 @@ namespace backend.Services.Contracts
         List<ProjectTodoResponseModel> getProjectTodoByItem(string item);
         List<ProjectTodoResponseModel> getProjectTodoByDateRange(DateTime startDate, DateTime endDate);
         List<ProjectTodoResponseModel> getProjectTodoByProjectNumber(string projectNumber);
-        bool deleteProject(ProjectTodosRequestModel projectTODO);
+        bool deleteProject(int projectNumber);
     }
 }
