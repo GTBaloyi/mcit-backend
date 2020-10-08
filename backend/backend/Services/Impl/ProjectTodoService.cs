@@ -46,16 +46,15 @@ namespace backend.Services.Impl
 
         }
 
-        public bool deleteProject(ProjectTodosRequestModel projectTODO)
+        public bool deleteProject(int id)
         {
-            string employeesResponsible = string.Join(",", projectTODO.responsibleEmployees);
-            ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status, projectTODO.dateStarted, projectTODO.dateEnded, employeesResponsible);
-            if(_todoRepository.GetById(todo.id) != null && _todoRepository.Delete(todo))
+            ProjectTODO projectTODO = _todoRepository.GetById(id);
+            if(projectTODO != null && _todoRepository.Delete(projectTODO))
             {
-                return updateProjectStatus(projectTODO.projectNumber);
+                return updateProjectStatus(projectTODO.project_number);
             }
 
-            throw new McpCustomException("There is no project todo associated with the ID: " + todo.id);
+            throw new McpCustomException("There is no project todo associated with the ID: " + id);
         }
 
         private List<ResponsibleEmployees> GetResponsibleEmployees(string[] employeesId)
@@ -255,6 +254,10 @@ namespace backend.Services.Impl
                 }
 
                 project.project_status_percentage = (completed * 100) / total;
+                if(project.project_status_percentage >= 100)
+                {
+                    project.project_status = "Completed";
+                }
                 return _projectProgressRepo.Update(project);
             }
             throw new McpCustomException("Could not Update the project progress");

@@ -139,12 +139,12 @@ namespace backend.Controllers
         }
 
         // DELETE api/<ProjectTodos>/5
-        [HttpDelete("delete")]
-        public ActionResult Delete([FromBody] ProjectTodosRequestModel projectTodo)
+        [HttpDelete("delete/{id}")]
+        public ActionResult Delete(int id)
         {
             try
             {
-                if (_projectTodoService.deleteProject(projectTodo))
+                if (_projectTodoService.deleteProject(id))
                 {
                     return Ok();
                 }
