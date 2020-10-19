@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.Exceptions;
 using backend.Models.Reports;
 using backend.Services.Contracts;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +28,23 @@ namespace backend.Controllers
                 return StatusCode(StatusCodes.Status200OK,_mctsKpiReports.GetSummaryTileInfo());
             }
             catch(Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
+
+        [HttpGet("mcts-kpi-project-inBudget")]
+        public ActionResult<MctsKpiSummaryTile> mctsKpiProjectInBudget()
+        {
+            try
+            {
+                return StatusCode(StatusCodes.Status200OK, _mctsKpiReports.GetProjectInBudgetReport());
+            }
+            catch(McpCustomException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            } 
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
             }

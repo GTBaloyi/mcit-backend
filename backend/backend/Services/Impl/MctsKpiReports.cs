@@ -1,5 +1,6 @@
 ﻿using backend.DataAccess.Database.Entities;
 using backend.DataAccess.Database.Repositories.Contracts;
+using backend.Exceptions;
 using backend.Models.Reports;
 using backend.Services.Builder;
 using backend.Services.Contracts;
@@ -36,6 +37,11 @@ namespace backend.Services.Impl
             this._targetSettingRepository = targetSettingRepository;
         }
 
+        public bool GenerateMctsKpiTarget(TargetSettingModel targets)
+        {
+            return false;
+        }
+
         public MctsKpiAllSummaryInfo GetAllSummaryInfo()
         {
             List<TargetSettingsEntity> targets = _targetSettingRepository.GetAll();
@@ -53,6 +59,32 @@ namespace backend.Services.Impl
 
             return null;
 
+        }
+
+        public PerformanceIndicatorModel GetProjectInBudgetReport()
+        {
+            TargetSettingsEntity targetSettings = _targetSettingRepository.GetByTitle("ProjectBudget");
+            if(targetSettings != null)
+            {
+                return new PerformanceIndicatorModel
+                {
+                    firstQuarterActual = targetSettings.q1_actual,
+                    firstQuarterTarget = targetSettings.q1_target,
+                    fourthQuarterActual = targetSettings.q4_actual,
+                    fourthQuarterTarget = targetSettings.q4_target,
+                    overallTarget = targetSettings.overallTarget,
+                    secondQuarterActual = targetSettings.q2_actual,
+                    secondQuarterTarget = targetSettings.q2_target,
+                    thirdQuarterActual = targetSettings.q3_actual,
+                    thirdQuarterTarget = targetSettings.q3_target,
+                    title = targetSettings.title
+                };
+            }
+            else
+            {
+                throw new McpCustomException("Could not find project budget report");
+            }
+            
         }
 
         public MctsKpiSummaryTile GetSummaryTileInfo()
@@ -98,5 +130,8 @@ namespace backend.Services.Impl
                 pInvoiceValueAdded = 31.68
             };
         }
+
+
+
     }
 }
