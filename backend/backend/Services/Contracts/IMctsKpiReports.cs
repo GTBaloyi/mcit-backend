@@ -10,5 +10,7 @@ namespace backend.Services.Contracts
     {
         public MctsKpiSummaryTile GetSummaryTileInfo();
         public MctsKpiAllSummaryInfo GetAllSummaryInfo();
+        PerformanceIndicatorModel GetProjectInBudgetReport();
+        bool GenerateMctsKpiTarget(TargetSettingModel targets);
     }
 }

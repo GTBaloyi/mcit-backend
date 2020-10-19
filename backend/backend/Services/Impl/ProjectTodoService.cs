@@ -217,21 +217,24 @@ namespace backend.Services.Impl
 
         public bool updateProjectTodo(ProjectTodosRequestModel projectTODO)
         {
-            if (updateProjectStatus(projectTODO.projectNumber))
+            string employeesResponsible = string.Join(",", projectTODO.responsibleEmployees);
+            if (_todoRepository.GetById(projectTODO.id) != null)
             {
-                string employeesResponsible = string.Join(",", projectTODO.responsibleEmployees);
-                if (_todoRepository.GetById(projectTODO.id) != null)
-                {
-                    ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status, projectTODO.dateStarted, projectTODO.dateEnded, employeesResponsible);
-                    return _todoRepository.Update(todo);
-                }
+                ProjectTODO todo = _entityBuilder.buildProjectTODOEntity(projectTODO.id, projectTODO.projectNumber, projectTODO.sequenceNumber, projectTODO.isSequential, projectTODO.focusArea, projectTODO.item, projectTODO.status, projectTODO.dateStarted, projectTODO.dateEnded, employeesResponsible);
 
-                throw new McpCustomException("Project Todo with id " + projectTODO.id + " does not exist");
+                if (_todoRepository.Update(todo))
+                {
+                    return updateProjectStatus(projectTODO.projectNumber);
+                }
+                else
+                {
+                    throw new McpCustomException("Could not Update the project todo");
+                }
             }
-            else
-            {
-                throw new McpCustomException("Could not Update the project progress");
-            }
+
+            throw new McpCustomException("Project Todo with id " + projectTODO.id + " does not exist");
+
+           
             
         }
 
