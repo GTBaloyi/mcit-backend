@@ -403,14 +403,17 @@ namespace backend.Services.Impl
         {
             List<ProjectSummaryModel> projects = new List<ProjectSummaryModel>();
             List<ProjectEntity> projectEntities = _projectRepository.GetAll();
+            
 
             if (projectEntities != null)
             {
+
                 for (int i = 0; i < projectEntities.Count; i++)
                 {
+                    List<ProjectTODO> todos = _projectTodoRepository.GetByProjectNumber(projectEntities[i].project_number);
 
                     EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities[i].project_leader);
-                    if(projectLeader == projectEntities[i].project_leader)
+                    if(projectLeader == projectEntities[i].project_leader || existsInTodos(projectEntities[i].project_number, projectLeader))
                     {
                         ProjectProgress projectProgress = _projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number);
                         projects.Add(new ProjectSummaryModel
@@ -433,6 +436,24 @@ namespace backend.Services.Impl
 
 
             return projects;
+        }
+
+        private bool existsInTodos(string projectNumber, string employeeNumber)
+        {
+            List<ProjectTODO> todos = _projectTodoRepository.GetByProjectNumber(projectNumber);
+            for(int i =0; i < todos.Count; i++)
+            {
+                string[] employees = todos[i].responsible_employees.Split(',');
+                foreach(string emp in employees)
+                {
+                    if(emp == employeeNumber)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }
