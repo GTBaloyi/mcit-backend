@@ -210,11 +210,19 @@ namespace backend.Services
                         user.user_status_fk = status;
                     }
                     _userRepo.UpdateUser(user);
-                    string name = _companyRepRepo.GetByEmail(user.username).name;
-                    string template = _emailTemplate.GetByType("ResetPassword").code;
-                    string mail = BuildResetPasswordEmail(template, name, newPassword);
-                    commonServices.SendEmail("Password Reset Successfully", mail, user.username);
+                    try
+                    {
+                        string name = _companyRepRepo.GetByEmail(user.username).name;
+                        string template = _emailTemplate.GetByType("ResetPassword").code;
+                        string mail = BuildResetPasswordEmail(template, name, newPassword);
+                        commonServices.SendEmail("Password Reset Successfully", mail, user.username);
+                    }
+                    catch(Exception)
+                    {
+
+                    }
                     return true;
+
                 } else
                 {
                     throw new McpCustomException("Incorrect Password");
