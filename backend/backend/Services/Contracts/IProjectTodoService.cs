@@ -14,6 +14,8 @@ namespace backend.Services.Contracts
         bool updateProjectTodo(ProjectTodosRequestModel projectTODO);
         List<ProjectTodoResponseModel> getAllProjectTodos();
         List<ProjectTodoResponseModel> getProjectTodoByFocusArea(string focusArea);
+        List<ProjectTodoResponseModel> getProjectTodoByEmployee(string employee);
+        List<ProjectTodoResponseModel> getProjectTodoByEmployeeProject(string employee, string projectNumber);
         List<ProjectTodoResponseModel> getProjectTodoByItem(string item);
         List<ProjectTodoResponseModel> getProjectTodoByDateRange(DateTime startDate, DateTime endDate);
         List<ProjectTodoResponseModel> getProjectTodoByProjectNumber(string projectNumber);

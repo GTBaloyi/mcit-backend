@@ -268,5 +268,71 @@ namespace backend.Services.Impl
             }
             throw new McpCustomException("Could not Update the project progress");
         }
+
+        public List<ProjectTodoResponseModel> getProjectTodoByEmployee(string employee)
+        {
+            List<ProjectTODO> todos = _todoRepository.GetAll();
+            List<ProjectTodoResponseModel> results = new List<ProjectTodoResponseModel>();
+
+            foreach (ProjectTODO todo in todos)
+            {
+                string[] employeees = todo.responsible_employees.Split(',');
+                foreach (string emp in employeees)
+                {
+                    if (todo.responsible_employees == emp)
+                    {
+                        results.Add(new ProjectTodoResponseModel
+                        {
+                            id = todo.id,
+                            projectNumber = todo.project_number,
+                            sequenceNumber = todo.sequence,
+                            isSequential = todo.isSequential,
+                            focusArea = todo.focus_area,
+                            item = todo.item,
+                            status = todo.status,
+                            dateStarted = todo.date_started,
+                            dateEnded = todo.date_ended,
+                            responsibleEmployees = GetResponsibleEmployees(employeees)
+                        });
+                    }
+                }
+                
+            }
+
+            return results;
+        }
+
+        public List<ProjectTodoResponseModel> getProjectTodoByEmployeeProject(string employee, string projectNumber)
+        {
+            List<ProjectTODO> todos = _todoRepository.GetAll();
+            List<ProjectTodoResponseModel> results = new List<ProjectTodoResponseModel>();
+
+            foreach (ProjectTODO todo in todos)
+            {
+                string[] employeees = todo.responsible_employees.Split(',');
+                foreach (string emp in employeees)
+                {
+                    if (todo.responsible_employees == emp && todo.project_number == projectNumber)
+                    {
+                        results.Add(new ProjectTodoResponseModel
+                        {
+                            id = todo.id,
+                            projectNumber = todo.project_number,
+                            sequenceNumber = todo.sequence,
+                            isSequential = todo.isSequential,
+                            focusArea = todo.focus_area,
+                            item = todo.item,
+                            status = todo.status,
+                            dateStarted = todo.date_started,
+                            dateEnded = todo.date_ended,
+                            responsibleEmployees = GetResponsibleEmployees(employeees)
+                        });
+                    }
+                }
+
+            }
+
+            return results;
+        }
     }
 }

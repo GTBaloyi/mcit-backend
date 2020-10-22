@@ -19,6 +19,7 @@ namespace backend.DataAccess.Database.Repositories
             _context = context;
         }
 
+
         public bool Delete(ProjectEntity project)
         {
             try
@@ -140,5 +141,7 @@ namespace backend.DataAccess.Database.Repositories
                 return false;
             }
         }
+
+        
     }
 }

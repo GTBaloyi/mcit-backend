@@ -34,6 +34,7 @@ namespace backend.DataAccess.Repositories
         public DbSet<QuarterEntity> quarter { get; set; }
         public DbSet<PaymentEntity> payments { get; set; }
         public DbSet<TargetSettingsEntity> targetSettings { get; set; }
+        public DbSet<SPGetAllProjectEntity> sPGetAllProjects { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
@@ -43,6 +44,9 @@ namespace backend.DataAccess.Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<SPGetAllProjectEntity>()
+                .HasNoKey();
+
             modelBuilder.Entity<ProjectEntity>()
                 .HasIndex(p => p.invoice_reference)
                 .IsUnique();

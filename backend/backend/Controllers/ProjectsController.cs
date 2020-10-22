@@ -50,6 +50,33 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("summary/{projectLeaderId}")]
+        public ActionResult<List<ProjectInformationResponseModel>> GetProjectSummaryByLeader(string projectLeaderId)
+        {
+            try
+            {
+                return Ok(_projectService.getAllProjectSummaryByLeader(projectLeaderId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+
+        [HttpGet("summary")]
+        public ActionResult<List<ProjectInformationResponseModel>> GetProjectSummary()
+        {
+            try
+            {
+                return Ok(_projectService.getAllProjectSummary());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
         [HttpGet("by-company/{companyRegistration}")]
         public ActionResult<List<ProjectInformationResponseModel>> GetByCompany(string companyRegistration)
         {

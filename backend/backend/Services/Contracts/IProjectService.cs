@@ -13,6 +13,8 @@ namespace backend.Services.Contracts
         bool createProject(ProjectInformationRequestModel project);
         bool updateProject(ProjectInformationRequestModel project);
         List<ProjectInformationResponseModel> getAllProjects();
+        List<ProjectSummaryModel> getAllProjectSummary();
+        List<ProjectSummaryModel> getAllProjectSummaryByLeader(String projectLeader);
         List<ProjectInformationResponseModel> getProjects(string companyRegistrationNumber);
         List<ProjectInformationResponseModel> getProjectsByAssignedEmployees(string employeeIDs);
         ProjectInformationResponseModel getProjectByInvoice(string invoiceId);
