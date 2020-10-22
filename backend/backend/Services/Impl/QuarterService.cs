@@ -99,7 +99,7 @@ namespace backend.Services.Impl
         {
             if (_quarterRepository.GetById(quarter.id) != null)
             {
-                QuarterEntity quarterEntity = _entityBuilder.buildQuarterEntity(0, quarter.quarter, quarter.startDate, quarter.endDate);
+                QuarterEntity quarterEntity = _entityBuilder.buildQuarterEntity(quarter.id, quarter.quarter, quarter.startDate, quarter.endDate);
                 return _quarterRepository.Update(quarterEntity);
             }
 
