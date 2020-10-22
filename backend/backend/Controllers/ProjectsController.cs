@@ -51,7 +51,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("summary/{projectLeaderId}")]
-        public ActionResult<List<ProjectInformationResponseModel>> GetProjectSummaryByLeader(string projectLeaderId)
+        public ActionResult<List<ProjectSummaryModel>> GetProjectSummaryByLeader(string projectLeaderId)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace backend.Controllers
 
 
         [HttpGet("summary")]
-        public ActionResult<List<ProjectInformationResponseModel>> GetProjectSummary()
+        public ActionResult<List<ProjectSummaryModel>> GetProjectSummary()
         {
             try
             {
