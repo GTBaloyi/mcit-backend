@@ -101,6 +101,7 @@ namespace backend.Services.Impl
 
         public List<ProjectInformationResponseModel> getAllProjects()
         {
+
             List<ProjectInformationResponseModel> projects = new List<ProjectInformationResponseModel>();
             List<ProjectEntity> projectEntities = _projectRepository.GetAll();
 
@@ -227,46 +228,37 @@ namespace backend.Services.Impl
 
         public List<ProjectInformationResponseModel> getProjectsByAssignedEmployees(string employeeIDs)
         {
-            /*List<ProjectInformationResponseModel> projects = new List<ProjectInformationResponseModel>();
-            List<ProjectEntity> projectEntities = _projectRepository.GetAll();
-
-            
-            if (projectEntities != null)
+            List<ProjectInformationResponseModel> results = new List<ProjectInformationResponseModel>();
+            List<ProjectEntity> projects = _projectRepository.GetAll();
+            List<ProjectTODO> todos = _projectTodoRepository.GetAll();
+            if(projects.Count > 0)
             {
-
-                for (int i = 0; i < projectEntities.Count; i++)
+                foreach(ProjectEntity project in projects)
                 {
-                    EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities[i].project_leader);
-                    for (int k = 0; k < employees.Length; k++)
+                    if(project.project_leader == employeeIDs)
                     {
-                        if (employees[k] == employeeIDs)
-                        {
-                            projects.Add(new ProjectInformationResponseModel
-                            {
-                                id = projectEntities[i].id,
-                                projectNumber = projectEntities[i].project_number,
-                                projectName = projectEntities[i].project_name,
-                                projectDescription = projectEntities[i].project_description,
-                                invoiceReferenceNumber = projectEntities[i].invoice_reference,
-                                companyRegistrationNumber = projectEntities[i].company_registration,
-                                projectSatisfaction = projectEntities[i].project_satisfaction,
-                                projectExpenditure = this.buildProjectExpenditure(_projectExpenditureRepository.GetByProjectNumber(projectEntities[i].project_number)),
-                                projectProgress = this.buildProjectProgress(_projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number)),
-                                projectTodo = this.buildProjectProjectTodo(_projectTodoRepository.GetByProjectNumber(projectEntities[i].project_number)),
-                                createdOn = projectEntities[i].createdOn,
-                                projectLeaderId = projectEntities[i].project_leader,
-                                projectLeaderNames = employee.name + " "+ employee.surname
-                               
-                            });
-                        }
+                        results.Add(getProjectByProjectNumber(project.project_number));
                     }
-                    
                 }
             }
 
+            if(todos.Count > 0)
+            {
+                foreach(ProjectTODO todo in todos)
+                {
+                    String []employees = todo.responsible_employees.Split(',');
+                    foreach(String employee in employees)
+                    {
+                        if (employee == employeeIDs)
+                        {
+                            results.Add(getProjectByProjectNumber(todo.project_number));
+                        }
 
-            return projects;*/
-            return null;
+                    }
+                }
+            }
+
+            return results;
         }
 
         public bool updateProject(ProjectInformationRequestModel project)
@@ -373,6 +365,74 @@ namespace backend.Services.Impl
                 return null;
             }
             
+        }
+
+        public List<ProjectSummaryModel> getAllProjectSummary()
+        {
+            List<ProjectSummaryModel> projects = new List<ProjectSummaryModel>();
+            List<ProjectEntity> projectEntities = _projectRepository.GetAll();
+
+            if (projectEntities != null)
+            {
+                for (int i = 0; i < projectEntities.Count; i++)
+                {
+
+                    EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities[i].project_leader);
+                    ProjectProgress projectProgress = _projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number);
+                    projects.Add(new ProjectSummaryModel
+                    {
+                        
+                        id = projectEntities[i].id,
+                        projectNumber = projectEntities[i].project_number,
+                        projectName = projectEntities[i].project_name,
+                        projectDescription = projectEntities[i].project_description,
+                        companyRegistrationNumber = projectEntities[i].company_registration,
+                        projectStatus = projectProgress.project_status,
+                        projectProgress = projectProgress.project_status_percentage,
+                        createdOn = projectEntities[i].createdOn,
+                        
+                    });
+                }
+            }
+
+
+            return projects;
+        }
+
+        public List<ProjectSummaryModel> getAllProjectSummaryByLeader(string projectLeader)
+        {
+            List<ProjectSummaryModel> projects = new List<ProjectSummaryModel>();
+            List<ProjectEntity> projectEntities = _projectRepository.GetAll();
+
+            if (projectEntities != null)
+            {
+                for (int i = 0; i < projectEntities.Count; i++)
+                {
+
+                    EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities[i].project_leader);
+                    if(projectLeader == projectEntities[i].project_leader)
+                    {
+                        ProjectProgress projectProgress = _projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number);
+                        projects.Add(new ProjectSummaryModel
+                        {
+
+                            id = projectEntities[i].id,
+                            projectNumber = projectEntities[i].project_number,
+                            projectName = projectEntities[i].project_name,
+                            projectDescription = projectEntities[i].project_description,
+                            companyRegistrationNumber = projectEntities[i].company_registration,
+                            projectStatus = projectProgress.project_status,
+                            projectProgress = projectProgress.project_status_percentage,
+                            createdOn = projectEntities[i].createdOn,
+
+                        });
+                    }
+                    
+                }
+            }
+
+
+            return projects;
         }
     }
 }

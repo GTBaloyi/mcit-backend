@@ -65,6 +65,34 @@ namespace backend.Controllers
         }
 
         // GET api/<ProjectTodos>/5
+        [HttpGet("todos/{employee}")]
+        public ActionResult<ProjectTodoResponseModel> GetProjectTodoByEmployee(string employee)
+        {
+            try
+            {
+                return Ok(_projectTodoService.getProjectTodoByEmployee(employee));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        // GET api/<ProjectTodos>/5
+        [HttpGet("todos/{employee}/{projectNumber}")]
+        public ActionResult<ProjectTodoResponseModel> GetProjectTodoByEmployeeProject(string employee, string projectNumber)
+        {
+            try
+            {
+                return Ok(_projectTodoService.getProjectTodoByEmployeeProject(employee, projectNumber));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        // GET api/<ProjectTodos>/5
         [HttpGet("item/{item}")]
         public ActionResult<ProjectTodoResponseModel> GetByItem(string item)
         {
