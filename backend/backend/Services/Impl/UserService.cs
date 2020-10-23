@@ -158,7 +158,6 @@ namespace backend.Services
 
                             throw new McpCustomException("Could not save company representative");
                         }
-                        // _companyRepo.GetCompany()
                     }
                     else
                     {

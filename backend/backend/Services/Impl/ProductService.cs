@@ -178,6 +178,24 @@ namespace backend.Services.Impl
             }
         }
 
+        public bool updateFocusArea(FocusAreaModel focusArea)
+        {
+            FocusAreaEntity focus = new FocusAreaEntity
+            {
+                id = focusArea.id,
+                name = focusArea.name
+            };
+
+            if (_productRepo.GetById(focus.id) != null)
+            {
+                return _focusAreaRepo.Update(focus);
+            }
+            else
+            {
+                throw new McpCustomException("This focus area doesn't exist");
+            }
+        }
+
         public bool updateProduct(ProductRequestModel product)
         {
             if (_productRepo.GetById(product.id) != null)
