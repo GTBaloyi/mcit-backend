@@ -167,6 +167,31 @@ namespace backend.Controllers
             }
         }
 
+        [HttpPut("focus-area")]
+        public ActionResult UpdateFocusArea([FromBody] FocusAreaModel focusArea)
+        {
+            try
+            {
+                if (_productService.updateFocusArea(focusArea))
+                {
+                    return StatusCode(StatusCodes.Status200OK);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, "Could not update product");
+                }
+
+            }
+            catch (McpCustomException ex)
+            {
+                return StatusCode(404, ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "External Server Error");
+            }
+        }
+
         [HttpDelete("products")]
         public ActionResult DeleteProduct([FromBody] ProductRequestModel product)
         {
