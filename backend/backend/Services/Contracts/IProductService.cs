@@ -18,6 +18,7 @@ namespace backend.Services.Contracts
         bool createProduct(ProductRequestModel product);
         bool createFocusArea(string focusArea);
         bool updateProduct(ProductRequestModel product);
+        bool updateFocusArea(FocusAreaModel focusArea);
         bool deleteProduct(ProductRequestModel product);
         bool deleteFocusArea(string name);
     }

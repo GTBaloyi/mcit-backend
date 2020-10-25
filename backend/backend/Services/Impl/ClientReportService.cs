@@ -27,7 +27,9 @@ namespace backend.Services.Impl
             ClientInvoiceSummary clientInvoiceSummary = new ClientInvoiceSummary();
             foreach(InvoiceEntity i in invoice)
             {
-                if(i.grand_total >= i.amount_payed && i.amount_due == 0)
+                clientInvoiceSummary.paidInvoiceAmount += i.amount_payed;
+
+                if (i.grand_total >= i.amount_payed && i.amount_due == 0)
                 {
                     clientInvoiceSummary.paidInvoices++;
                 }
@@ -35,11 +37,13 @@ namespace backend.Services.Impl
                 if(i.amount_due > 0 && i.date_due <= DateTime.Now)
                 {
                     clientInvoiceSummary.unpaidInvoices++;
+                    clientInvoiceSummary.unpaidInvoiceAmount += i.amount_due;
                 }
 
                 if (i.amount_due > 0 && i.date_due > DateTime.Now)
                 {
                     clientInvoiceSummary.overdueInvoices++;
+                    clientInvoiceSummary.overdueInvoiceAmount += i.amount_due;
                 }
             }
 
@@ -53,19 +57,25 @@ namespace backend.Services.Impl
             ClientInvoiceSummary clientInvoiceSummary = new ClientInvoiceSummary();
             foreach(InvoiceEntity i in invoice)
             {
+                clientInvoiceSummary.paidInvoiceAmount += i.amount_payed;
+                
                 if(i.grand_total >= i.amount_payed && i.amount_due == 0)
                 {
                     clientInvoiceSummary.paidInvoices++;
+
                 }
 
                 if(i.amount_due > 0 && i.date_due <= DateTime.Now)
                 {
                     clientInvoiceSummary.unpaidInvoices++;
+                    clientInvoiceSummary.unpaidInvoiceAmount += i.amount_due;
+
                 }
 
                 if (i.amount_due > 0 && i.date_due > DateTime.Now)
                 {
                     clientInvoiceSummary.overdueInvoices++;
+                    clientInvoiceSummary.overdueInvoiceAmount += i.amount_due;
                 }
             }
 
