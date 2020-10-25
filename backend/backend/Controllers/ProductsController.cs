@@ -192,12 +192,12 @@ namespace backend.Controllers
             }
         }
 
-        [HttpDelete("products")]
-        public ActionResult DeleteProduct([FromBody] ProductRequestModel product)
+        [HttpDelete("products/{productID}")]
+        public ActionResult DeleteProduct(int productID)
         {
             try
             {
-                if (_productService.deleteProduct(product))
+                if (_productService.deleteProduct(productID))
                 {
                     return StatusCode(StatusCodes.Status200OK);
                 }

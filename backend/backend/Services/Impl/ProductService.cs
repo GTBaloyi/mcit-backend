@@ -51,12 +51,12 @@ namespace backend.Services.Impl
             }
         }
 
-        public bool deleteProduct(ProductRequestModel product)
+        public bool deleteProduct(int productId)
         {
-            if(_productRepo.GetById(product.id)!= null)
+            ProductsEntity productsEntity = _productRepo.GetById(productId);
+            if (productsEntity != null)
             {
-                ProductsEntity p = _entityBuilder.buildProductEntity(product.id, product.name, product.timeStudyPerTest, product.ratePerHour, product.focusArea);
-                return _productRepo.Delete(p);
+                return _productRepo.Delete(productsEntity);
             } 
             else
             {
