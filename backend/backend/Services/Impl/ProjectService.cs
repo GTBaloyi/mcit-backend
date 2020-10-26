@@ -391,9 +391,9 @@ namespace backend.Services.Impl
                         projectStatus = projectProgress.project_status,
                         projectProgress = projectProgress.project_status_percentage,
                         createdOn = projectEntities[i].createdOn,
-                        projectLeaderId = employee.employee_number,
-                        projectLeaderName = employee.name,
-                        projectLeaderSurname = employee.surname
+                        employeeNumber = employee.employee_number,
+                        name = employee.name,
+                        surname = employee.surname
                     });
                 }
             }
@@ -430,9 +430,9 @@ namespace backend.Services.Impl
                             projectStatus = projectProgress.project_status,
                             projectProgress = projectProgress.project_status_percentage,
                             createdOn = projectEntities[i].createdOn,
-                            projectLeaderId = employee.employee_number,
-                            projectLeaderName = employee.name,
-                            projectLeaderSurname = employee.surname
+                            employeeNumber = employee.employee_number,
+                            name = employee.name,
+                            surname = employee.surname
                         });
                     }
                     

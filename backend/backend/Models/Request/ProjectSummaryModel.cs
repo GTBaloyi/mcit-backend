@@ -14,9 +14,9 @@ namespace backend.Models.Request
         public string companyRegistrationNumber { get; set; }
         public string projectStatus { get; set; }
         public double projectProgress { get; set; }
-        public string projectLeaderId { get; set; }
-        public string projectLeaderName { get; set; }
-        public string projectLeaderSurname { get; set; }
+        public string employeeNumber { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
         public DateTime createdOn { get; set; }
     }
 }
