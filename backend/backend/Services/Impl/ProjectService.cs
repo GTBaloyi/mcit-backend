@@ -378,6 +378,7 @@ namespace backend.Services.Impl
                 {
 
                     EmployeesEntity employee = _employeesRepository.GetByEmployeeNumber(projectEntities[i].project_leader);
+
                     ProjectProgress projectProgress = _projectProgressRepository.GetByProjectNumber(projectEntities[i].project_number);
                     projects.Add(new ProjectSummaryModel
                     {
@@ -390,7 +391,9 @@ namespace backend.Services.Impl
                         projectStatus = projectProgress.project_status,
                         projectProgress = projectProgress.project_status_percentage,
                         createdOn = projectEntities[i].createdOn,
-                        
+                        projectLeaderId = employee.employee_number,
+                        projectLeaderName = employee.name,
+                        projectLeaderSurname = employee.surname
                     });
                 }
             }
@@ -427,7 +430,9 @@ namespace backend.Services.Impl
                             projectStatus = projectProgress.project_status,
                             projectProgress = projectProgress.project_status_percentage,
                             createdOn = projectEntities[i].createdOn,
-
+                            projectLeaderId = employee.employee_number,
+                            projectLeaderName = employee.name,
+                            projectLeaderSurname = employee.surname
                         });
                     }
                     

@@ -49,7 +49,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("by-projectNumber/{projectNumber}")]
-        public ActionResult<List<ProjectProgressResponseModel>> GetProjectProgressByProjectNumber(string projectNumber)
+        public ActionResult<ProjectProgressResponseModel> GetProjectProgressByProjectNumber(string projectNumber)
         {
             try
             {
