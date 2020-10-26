@@ -12,6 +12,7 @@ namespace backend.Models.Request
         public string projectName { get; set; }
         public string projectDescription { get; set; }
         public string companyRegistrationNumber { get; set; }
+        public string invoiceReference { get; set; }
         public string projectStatus { get; set; }
         public double projectProgress { get; set; }
         public string employeeNumber { get; set; }

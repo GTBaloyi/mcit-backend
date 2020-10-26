@@ -393,7 +393,8 @@ namespace backend.Services.Impl
                         createdOn = projectEntities[i].createdOn,
                         employeeNumber = employee.employee_number,
                         name = employee.name,
-                        surname = employee.surname
+                        surname = employee.surname, 
+                        invoiceReference = projectEntities[i].invoice_reference
                     });
                 }
             }
@@ -432,7 +433,8 @@ namespace backend.Services.Impl
                             createdOn = projectEntities[i].createdOn,
                             employeeNumber = employee.employee_number,
                             name = employee.name,
-                            surname = employee.surname
+                            surname = employee.surname,
+                            invoiceReference = projectEntities[i].invoice_reference
                         });
                     }
                     
