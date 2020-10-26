@@ -103,6 +103,8 @@ namespace backend
             services.AddScoped<IClientsReportsService, ClientReportService>();
             services.AddScoped<IMctsKpiReports, MctsKpiReports>();
             services.AddScoped<ITargetSettingRepository, TargetSettingRepository>();
+            services.AddScoped<ITargetSettingService, TargetSettingService>();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

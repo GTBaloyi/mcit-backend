@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace backend.Services.Contracts
 {
-    interface ITargetSettingService
+    public interface ITargetSettingService
     {
         public bool CreateTargetSetting(TargetSettingModel targetSetting);
         public bool UpdateTargetSetting(TargetSettingModel targetSetting);
         public bool DeleteTargetSetting(int id);
         public List<TargetSettingModel> GetAll();
         public TargetSettingModel GetTargetSetting(string title);
+        public TargetSettingModel GetTargetSetting(int id);
     }
 }
