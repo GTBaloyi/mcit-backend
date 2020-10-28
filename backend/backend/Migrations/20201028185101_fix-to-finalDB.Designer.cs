@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.DataAccess.Repositories;
 
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201028185101_fix-to-finalDB")]
+    partial class fixtofinalDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5273,9 +5275,6 @@ namespace backend.Migrations
 
                     b.Property<double>("actualOverallTarget")
                         .HasColumnType("double");
-
-                    b.Property<string>("category")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<double>("overallTarget")
                         .HasColumnType("double");

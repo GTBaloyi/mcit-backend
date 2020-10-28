@@ -38,12 +38,29 @@ namespace backend.Controllers
         {
             try
             {
-                return StatusCode(StatusCodes.Status200OK, _mctsKpiReports.GetProjectInBudgetReport());
+                return StatusCode(StatusCodes.Status200OK, _mctsKpiReports.GetProjectsDeliveredInTime());
             }
             catch(McpCustomException e)
             {
                 return StatusCode(StatusCodes.Status404NotFound, e.Message);
             } 
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
+
+        [HttpGet("delivered-inTime-report")]
+        public ActionResult<PerformanceIndicatorModel> DeliveredInTimeReport()
+        {
+            try
+            {
+                return StatusCode(StatusCodes.Status200OK, _mctsKpiReports.GetProjectsDeliveredInTime());
+            }
+            catch (McpCustomException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");

@@ -61,30 +61,76 @@ namespace backend.Services.Impl
 
         }
 
-        public PerformanceIndicatorModel GetProjectInBudgetReport()
+        public PerformanceIndicatorModel GetProjectsDeliveredInTime()
         {
-            TargetSettingsEntity targetSettings = _targetSettingRepository.GetByTitle("ProjectBudget");
-            if(targetSettings != null)
+            TargetSettingsEntity targetSettings = _targetSettingRepository.GetByTitle("Projects Delivered in time");
+            List<ProjectProgress> allProjectProgress = _projectProgressRepo.GetAll();
+            List<QuarterEntity> allQuarters = _quarterRepo.GetAll();
+            PerformanceIndicatorModel indicatorModel = new PerformanceIndicatorModel();
+            int total = 0;
+            int endInTime = 0;
+            if (targetSettings != null)
             {
-                return new PerformanceIndicatorModel
+                foreach (QuarterEntity quarters in allQuarters)
                 {
-                    firstQuarterActual = targetSettings.q1_actual,
-                    firstQuarterTarget = targetSettings.q1_target,
-                    fourthQuarterActual = targetSettings.q4_actual,
-                    fourthQuarterTarget = targetSettings.q4_target,
-                    overallTarget = targetSettings.overallTarget,
-                    secondQuarterActual = targetSettings.q2_actual,
-                    secondQuarterTarget = targetSettings.q2_target,
-                    thirdQuarterActual = targetSettings.q3_actual,
-                    thirdQuarterTarget = targetSettings.q3_target,
-                    title = targetSettings.title
-                };
+                    foreach (ProjectProgress projectProgress in allProjectProgress)
+                    {
+                        if (projectProgress.target_end_quarter == quarters.quarter)
+                        {
+                            total++;
+                            string endQuarter = _quarterRepo.GetByDate(projectProgress.actual_end_date).quarter;
+                            if (projectProgress.target_end_quarter == endQuarter)
+                            {
+                                endInTime++;
+                            }
+                        }
+                    }
+
+                    if (quarters.quarter == "Q1")
+                    {
+                        indicatorModel.firstQuarterActual = (endInTime * 100) / total;
+                    }
+
+                    if (quarters.quarter == "Q2")
+                    {
+                        indicatorModel.secondQuarterActual = (endInTime * 100) / total;
+                    }
+
+                    if (quarters.quarter == "Q3")
+                    {
+                        indicatorModel.thirdQuarterActual = (endInTime * 100) / total;
+                    }
+
+                    if (quarters.quarter == "Q4")
+                    {
+                        indicatorModel.thirdQuarterActual = (endInTime * 100) / total;
+                    }
+                }
+
+
+                TargetSettingsEntity target = _targetSettingRepository.GetByTitle("Projects Delivered In Time");
+                if (target != null)
+                {
+                    indicatorModel.overallTarget = target.overallTarget;
+                    indicatorModel.category = target.category;
+                    indicatorModel.actualOverallTarget = (indicatorModel.firstQuarterActual + indicatorModel.secondQuarterActual + indicatorModel.thirdQuarterActual + indicatorModel.fourthQuarterActual) / 4;
+                    indicatorModel.title = target.title;
+                    indicatorModel.firstQuarterTarget = target.q1_target;
+                    indicatorModel.secondQuarterTarget = target.q2_target;
+                    indicatorModel.thirdQuarterTarget = target.q3_target;
+                    indicatorModel.fourthQuarterTarget = target.q4_target;
+                    return indicatorModel;
+                }
+                else
+                {
+                    throw new McpCustomException("Could not find target setting 'Projects Delivered in time'. Please create target setting with that that title");
+                }
             }
             else
             {
-                throw new McpCustomException("Could not find project budget report");
+                throw new McpCustomException("Could not find target setting 'Projects Delivered in time'. Please create target setting with that that title");
+
             }
-            
         }
 
         public MctsKpiSummaryTile GetSummaryTileInfo()

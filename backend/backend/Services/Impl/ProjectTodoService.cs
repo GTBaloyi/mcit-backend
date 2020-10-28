@@ -259,6 +259,7 @@ namespace backend.Services.Impl
                 project.project_status_percentage = (completed * 100) / total;
                 if(project.project_status_percentage >= 100)
                 {
+                    project.actual_end_date = DateTime.Now;
                     project.project_status = "Completed";
                 }else
                 {

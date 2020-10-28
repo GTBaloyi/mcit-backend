@@ -11,7 +11,9 @@ namespace backend.DataAccess.Database.Entities
     {
         public int id { get; set; }
         public string title { get; set; }
+        public string category { get; set; }
         public double overallTarget { get; set; }
+        public double actualOverallTarget { get; set; }
         public double q1_target { get; set; }
         public double q2_target { get; set; }
         public double q3_target { get; set; }

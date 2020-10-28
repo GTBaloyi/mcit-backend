@@ -36,11 +36,15 @@ namespace backend.Services.Impl
 
         public bool CreateTargetSetting(TargetSettingModel targetSetting)
         {
+            double over = (targetSetting.q1_target + targetSetting.q2_target + targetSetting.q3_target + targetSetting.q4_target) / 4;
+
             TargetSettingsEntity target = new TargetSettingsEntity
             {
                 id = 0,
                 title = targetSetting.title,
-                overallTarget = targetSetting.overallTarget,
+                category = targetSetting.category,
+                actualOverallTarget=targetSetting.actualOverallTarget,
+                overallTarget = over,
                 q1_actual = targetSetting.q1_actual,
                 q1_target = targetSetting.q1_target,
                 q2_actual = targetSetting.q2_actual,
@@ -78,6 +82,8 @@ namespace backend.Services.Impl
                     {
                         id = target.id,
                         title = target.title,
+                        category = target.category,
+                        actualOverallTarget = target.actualOverallTarget,
                         overallTarget = target.overallTarget,
                         q1_actual = target.q1_actual,
                         q1_target = target.q1_target,
@@ -104,6 +110,8 @@ namespace backend.Services.Impl
                 {
                     id = target.id,
                     title = target.title,
+                    category = target.category,
+                    actualOverallTarget = target.actualOverallTarget,
                     overallTarget = target.overallTarget,
                     q1_actual = target.q1_actual,
                     q1_target = target.q1_target,
@@ -128,6 +136,8 @@ namespace backend.Services.Impl
                 {
                     id = target.id,
                     title = target.title,
+                    category = target.category,
+                    actualOverallTarget = target.actualOverallTarget,
                     overallTarget = target.overallTarget,
                     q1_actual = target.q1_actual,
                     q1_target = target.q1_target,
@@ -148,10 +158,21 @@ namespace backend.Services.Impl
             TargetSettingsEntity target = _targetSettingRepo.GetById(targetSetting.id);
             if (target != null)
             {
+
+                target.overallTarget = (targetSetting.q1_target + targetSetting.q2_target + targetSetting.q3_target + targetSetting.q4_target) / 4;
+                target.category = targetSetting.category;
+                target.q1_target = targetSetting.q1_target;
+                target.q2_target = targetSetting.q2_target;
+                target.q3_target = targetSetting.q3_target;
+                target.q4_target = targetSetting.q4_target;
+                
                 return _targetSettingRepo.Update(target);
             }
+            else
+            {
+                throw new McpCustomException("Target setting with id " + targetSetting.id + " was not found");
+            }
 
-            throw new McpCustomException("Target setting with id " + target.id + " was not found");
         }
     }
 }
