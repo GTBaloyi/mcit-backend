@@ -11,6 +11,7 @@ namespace backend.DataAccess.Database.Repositories.Contracts
         public List<TargetSettingsEntity> GetAll();
         public TargetSettingsEntity GetById(int id);
         public TargetSettingsEntity GetByTitle(string title);
+        public TargetSettingsEntity GetByCategory(string category);
         public bool Save(TargetSettingsEntity targetSettings);
         public bool Update(TargetSettingsEntity targetSettings);
         public bool Delete(TargetSettingsEntity targetSettings);

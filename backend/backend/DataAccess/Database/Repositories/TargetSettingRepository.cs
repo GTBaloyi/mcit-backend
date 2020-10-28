@@ -82,6 +82,19 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
+        public TargetSettingsEntity GetByCategory(string category)
+        {
+            try
+            {
+                return _context.targetSettings.Where(x => x.category == category).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                logger.Info(e);
+                return null;
+            }
+        }
+
         public bool Save(TargetSettingsEntity targetSettings)
         {
             try

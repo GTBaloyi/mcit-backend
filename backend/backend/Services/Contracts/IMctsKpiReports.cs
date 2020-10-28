@@ -12,5 +12,6 @@ namespace backend.Services.Contracts
         public MctsKpiAllSummaryInfo GetAllSummaryInfo();
         PerformanceIndicatorModel GetProjectsDeliveredInTime();
         bool GenerateMctsKpiTarget(TargetSettingModel targets);
+
     }
 }

@@ -101,6 +101,32 @@ namespace backend.Services.Impl
             return result;
         }
 
+        public TargetSettingModel GetCategory(string category)
+        {
+            TargetSettingsEntity target = _targetSettingRepo.GetByCategory(category);
+            if (target != null)
+            {
+                return new TargetSettingModel
+                {
+                    id = target.id,
+                    title = target.title,
+                    category = target.category,
+                    actualOverallTarget = target.actualOverallTarget,
+                    overallTarget = target.overallTarget,
+                    q1_actual = target.q1_actual,
+                    q1_target = target.q1_target,
+                    q2_actual = target.q2_actual,
+                    q2_target = target.q2_target,
+                    q3_actual = target.q3_actual,
+                    q3_target = target.q3_target,
+                    q4_actual = target.q4_actual,
+                    q4_target = target.q4_target
+                };
+            }
+
+            throw new McpCustomException("Target setting with category " + category + " was not found");
+        }
+
         public TargetSettingModel GetTargetSetting(string title)
         {
             TargetSettingsEntity target = _targetSettingRepo.GetByTitle(title);
