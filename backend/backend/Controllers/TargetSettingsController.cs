@@ -68,6 +68,23 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("by-category/{category}")]
+        public ActionResult<TargetSettingModel> GetByCategory(string category)
+        {
+            try
+            {
+                return StatusCode(StatusCodes.Status200OK, _targetSettingService.GetCategory(category));
+            }
+            catch (McpCustomException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
+
         [HttpPost("create")]
         public ActionResult<TargetSettingModel> Create([FromBody] TargetSettingModel targetSetting)
         {
