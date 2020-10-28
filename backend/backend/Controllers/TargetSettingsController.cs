@@ -92,7 +92,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost("update")]
+        [HttpPut("update")]
         public ActionResult<TargetSettingModel> Update([FromBody] TargetSettingModel targetSetting)
         {
             try
@@ -110,13 +110,13 @@ namespace backend.Controllers
             {
                 return StatusCode(StatusCodes.Status404NotFound, e.Message);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
             }
         }
 
-        [HttpGet("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public ActionResult<TargetSettingModel> Delete(int id)
         {
             try

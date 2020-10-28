@@ -9,6 +9,8 @@ namespace backend.Models.Reports
     {
         public string title { get; set; }
         public double overallTarget { get; set; }
+        public string category { get; set; }
+        public double actualOverallTarget { get; set; }
         public double firstQuarterTarget { get; set; }
         public double firstQuarterActual { get; set; }
         public double secondQuarterTarget { get; set; }
