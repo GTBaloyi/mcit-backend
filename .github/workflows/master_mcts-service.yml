@@ -31,7 +31,7 @@ jobs:
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'mcts-service'
+        app-name: 'mcts-backend'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_dbfc43d5184d4c91b0dd37ff026e45b0 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_eecc0c3feb2246fbaa7d5a94a8f23b1e }}
         package: ${{env.DOTNET_ROOT}}/myapp 
