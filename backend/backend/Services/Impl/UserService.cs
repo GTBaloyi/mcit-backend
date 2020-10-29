@@ -118,8 +118,7 @@ namespace backend.Services
         {
             try
             {
-                if (commonServices.companyExist(data.companyRegistrationNumber) && _companyRepRepo.GetByEmail(data.contactEmail) == null && _companyRepo.GetByRegistrationNumber(data.companyRegistrationNumber) == null && _userRepo.GetUser(data.contactEmail) == null)
-                {
+               
                     CompanyEntity companyEntity = _entityBuilder.buildCompanyEntity(0, data.companyName, data.companyRegistrationNumber, data.companyProfile, data.isCompanyPresent, "");
                     if (_companyRepo.Insert(companyEntity))
                     {
@@ -165,11 +164,7 @@ namespace backend.Services
                     }
 
 
-                }
-                else
-                {
-                    throw new McpCustomException("Company registration / Email already exist in the system");
-                }
+                
             }
             catch(McpCustomException e)
             {
