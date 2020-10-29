@@ -66,5 +66,22 @@ namespace backend.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
             }
         }
+
+        [HttpGet("customer-satisfaction")]
+        public ActionResult<PerformanceIndicatorModel> CustomerSatisfactionReport()
+        {
+            try
+            {
+                return StatusCode(StatusCodes.Status200OK, _mctsKpiReports.GetCustomerSatisfaction());
+            }
+            catch (McpCustomException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
     }
 }

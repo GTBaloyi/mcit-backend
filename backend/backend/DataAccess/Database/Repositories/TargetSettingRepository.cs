@@ -82,11 +82,11 @@ namespace backend.DataAccess.Database.Repositories
             }
         }
 
-        public TargetSettingsEntity GetByCategory(string category)
+        public List<TargetSettingsEntity> GetByCategory(string category)
         {
             try
             {
-                return _context.targetSettings.Where(x => x.category == category).FirstOrDefault();
+                return _context.targetSettings.Where(x => x.category == category).ToList();
             }
             catch (Exception e)
             {
