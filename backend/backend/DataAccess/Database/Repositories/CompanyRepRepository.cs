@@ -108,7 +108,8 @@ namespace backend.DataAccess.Repositories
         {
             try
             {
-               return _context.businessRepresentatives.Where(x => x.email == email).FirstOrDefault();
+               CompanyRepresentativeEntity rep = _context.businessRepresentatives.Where(x => x.email == email).FirstOrDefault();
+                return rep;
             }
             catch (Exception ex)
             {
