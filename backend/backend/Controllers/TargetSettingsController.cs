@@ -69,15 +69,11 @@ namespace backend.Controllers
         }
 
         [HttpGet("by-category/{category}")]
-        public ActionResult<TargetSettingModel> GetByCategory(string category)
+        public ActionResult<List<TargetSettingModel>> GetByCategory(string category)
         {
             try
             {
                 return StatusCode(StatusCodes.Status200OK, _targetSettingService.GetCategory(category));
-            }
-            catch (McpCustomException e)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, e.Message);
             }
             catch (Exception)
             {

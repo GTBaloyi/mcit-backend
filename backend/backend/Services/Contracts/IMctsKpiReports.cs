@@ -1,4 +1,5 @@
-﻿using backend.Models.Reports;
+﻿using backend.Models.General;
+using backend.Models.Reports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace backend.Services.Contracts
         public MctsKpiSummaryTile GetSummaryTileInfo();
         public MctsKpiAllSummaryInfo GetAllSummaryInfo();
         PerformanceIndicatorModel GetProjectsDeliveredInTime();
+        PerformanceIndicatorModel GetCustomerSatisfaction();
+        ProjectsEntryModel GetAllFocusAreaProjects();
         bool GenerateMctsKpiTarget(TargetSettingModel targets);
 
     }
