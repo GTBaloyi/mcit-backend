@@ -36,7 +36,7 @@ namespace backend.Controllers
 
 
         [HttpGet("delivered-inTime-report")]
-        public ActionResult<PerformanceIndicatorModel> DeliveredInTimeReport()
+        public ActionResult<List<PerformanceIndicatorModel>> DeliveredInTimeReport()
         {
             try
             {
@@ -54,7 +54,7 @@ namespace backend.Controllers
         
 
         [HttpGet("customer-satisfaction")]
-        public ActionResult<PerformanceIndicatorModel> CustomerSatisfactionReport()
+        public ActionResult<List<PerformanceIndicatorModel>> CustomerSatisfactionReport()
         {
             try
             {
@@ -78,6 +78,32 @@ namespace backend.Controllers
                 return StatusCode(StatusCodes.Status200OK, _mctsKpiReports.GetFocusAreaFinancials());
             }
             catch (Exception )
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
+
+        [HttpGet("general-quotation")]
+        public ActionResult<GeneralQuotationReport> GeneralQuotationReport()
+        {
+            try
+            {
+                return StatusCode(StatusCodes.Status200OK, _mctsKpiReports.GetGeneralQuotationReport());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
+
+        [HttpGet("general-projects")]
+        public ActionResult<GeneralProjectReportsModel> GeneralProjectsReport()
+        {
+            try
+            {
+                return StatusCode(StatusCodes.Status200OK, _mctsKpiReports.GeneralProjectReports());
+            }
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
             }

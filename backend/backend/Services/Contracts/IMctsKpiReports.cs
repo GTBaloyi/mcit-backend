@@ -14,7 +14,9 @@ namespace backend.Services.Contracts
         List<PerformanceIndicatorModel> GetProjectsDeliveredInTime();
         List<PerformanceIndicatorModel> GetCustomerSatisfaction();
         List<ProjectsEntryModel> GetFocusAreaFinancials();
+        GeneralQuotationReport GetGeneralQuotationReport();
         ProjectsEntryModel GetAllFocusAreaProjects();
+        GeneralProjectReportsModel GeneralProjectReports();
         bool GenerateMctsKpiTarget(TargetSettingModel targets);
 
     }
