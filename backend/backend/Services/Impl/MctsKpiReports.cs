@@ -45,6 +45,18 @@ namespace backend.Services.Impl
             this._quotationItemsRepo = quotationItemsRepo;
         }
 
+        public GeneralProjectReportsModel GeneralProjectReports()
+        {
+            List<ProjectProgress> projects = _projectProgressRepo.GetAll();
+            return new GeneralProjectReportsModel
+            {
+                completedProjects = projects.Where(x => x.project_status == "Completed").ToList().Count,
+                notStartedProjects = projects.Where(x => x.project_status == "Not Started").ToList().Count,
+                ongoingProjects = projects.Where(x => x.project_status == "Ongoing").ToList().Count,
+                pausedProjects = projects.Where(x => x.project_status == "pause").ToList().Count
+            };
+        }
+
         public bool GenerateMctsKpiTarget(TargetSettingModel targets)
         {
             return false;
@@ -262,6 +274,18 @@ namespace backend.Services.Impl
             finalResults.Add(finalist);
 
             return finalResults;
+        }
+
+        public GeneralQuotationReport GetGeneralQuotationReport()
+        {
+            List<QuotationEntity> quotations = _quotationRepo.GetAll();
+            GeneralQuotationReport results = new GeneralQuotationReport();
+            results.accepted = quotations.Where(x => x.status == "Accepted").ToList().Count;
+            results.rejected = quotations.Where(x => x.status == "Rejected").ToList().Count;
+            results.pendingAttendance = quotations.Where(x => x.status == "Pending").ToList().Count;
+            results.pendingClientApproval = quotations.Where(x => x.status == "Pending Client Approval").ToList().Count;
+            results.pendingManagerApproval = quotations.Where(x => x.status == "Pending Manager Approval").ToList().Count;
+            return results;
         }
 
         public List<PerformanceIndicatorModel> GetProjectsDeliveredInTime()
