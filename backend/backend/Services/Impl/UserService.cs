@@ -118,7 +118,9 @@ namespace backend.Services
         {
             try
             {
-               
+                if (commonServices.companyExist(data.companyRegistrationNumber) && _companyRepRepo.GetByEmail(data.contactEmail) == null && _companyRepo.GetByRegistrationNumber(data.companyRegistrationNumber) == null && _userRepo.GetUser(data.contactEmail) == null)
+
+                {
                     CompanyEntity companyEntity = _entityBuilder.buildCompanyEntity(0, data.companyName, data.companyRegistrationNumber, data.companyProfile, data.isCompanyPresent, "");
                     if (_companyRepo.Insert(companyEntity))
                     {
@@ -129,8 +131,8 @@ namespace backend.Services
                         {
                             int companyRepId = _companyRepRepo.GetByEmail(data.contactEmail).id;
                             string otp = commonMethods.generateCode(4);
-                            string defaultPassword =commonMethods.passwordEncyption(commonMethods.generateCode(8));
-                            UsersEntity user = _entityBuilder.buildUserEntity(data.contactEmail, defaultPassword, 0,2, 1, companyRepId, DateTime.Now, otp, null);
+                            string defaultPassword = commonMethods.passwordEncyption(commonMethods.generateCode(8));
+                            UsersEntity user = _entityBuilder.buildUserEntity(data.contactEmail, defaultPassword, 0, 2, 1, companyRepId, DateTime.Now, otp, null);
                             if (_userRepo.SaveUser(user))
                             {
                                 //TODO: Send email
@@ -163,8 +165,12 @@ namespace backend.Services
                         throw new McpCustomException("Company not saved");
                     }
 
+                }
+                else
+                {
+                    throw new McpCustomException("Company registration / Email already exist in the system");
+                }
 
-                
             }
             catch(McpCustomException e)
             {
