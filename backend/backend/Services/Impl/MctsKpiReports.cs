@@ -27,7 +27,8 @@ namespace backend.Services.Impl
         private readonly IProjectTodoRepository _projectTodoRepo;
         private readonly IProductRepository _productRepository;
         private readonly IFocusAreaRepository _focusArea;
-        public MctsKpiReports(IFocusAreaRepository focusArea, IProductRepository productRepository, IProjectTodoRepository projectTodoRepo, ITargetSettingRepository targetSettingRepository, IQuotationRepository quotationRepo, IQuarterRepository quarterRepo, IProjectExpenditureRepository projectexpenseRepo, IEntityBuilder entityBuilder,IProjectRepository projectRepo, IInvoiceRepository invoiceRepo, IProjectProgressRepository projectProgressRepo, IPaymentRepository paymentRepo)
+        private readonly IQuotationItemsRepository _quotationItemsRepo;
+        public MctsKpiReports(IQuotationItemsRepository quotationItemsRepo, IFocusAreaRepository focusArea, IProductRepository productRepository, IProjectTodoRepository projectTodoRepo, ITargetSettingRepository targetSettingRepository, IQuotationRepository quotationRepo, IQuarterRepository quarterRepo, IProjectExpenditureRepository projectexpenseRepo, IEntityBuilder entityBuilder,IProjectRepository projectRepo, IInvoiceRepository invoiceRepo, IProjectProgressRepository projectProgressRepo, IPaymentRepository paymentRepo)
         {
             this._projectRepo = projectRepo;
             this._invoiceRepo = invoiceRepo;
@@ -41,6 +42,7 @@ namespace backend.Services.Impl
             this._targetSettingRepository = targetSettingRepository;
             this._productRepository = productRepository;
             this._focusArea = focusArea;
+            this._quotationItemsRepo = quotationItemsRepo;
         }
 
         public bool GenerateMctsKpiTarget(TargetSettingModel targets)
@@ -50,54 +52,6 @@ namespace backend.Services.Impl
 
         public ProjectsEntryModel GetAllFocusAreaProjects()
         {
-            List<ProjectEntity> projects = _projectRepo.GetAll();
-            List<FocusAreaEntity> focusAreas = _focusArea.GetAll();
-            int q1 = 0;
-            int q2 = 0;
-            int q3 = 0;
-            int q4 = 0;
-
-            foreach (ProjectEntity project in projects)
-            {
-                string startQuarter = _quarterRepo.GetByDate(_projectProgressRepo.GetByProjectNumber(project.project_number).actual_start_date).quarter;
-                foreach(FocusAreaEntity focusArea in focusAreas)
-                {
-                    ProjectsEntryModel record = new ProjectsEntryModel();
-                    
-                    List<ProjectTODO> todos = _projectTodoRepo.GetByProjectNumber(project.project_number);
-                    foreach (ProjectTODO todo in todos)
-                    {
-                        if ( _focusArea.GetByName(todo.focus_area).name == focusArea.name)
-                        {
-                                    
-                            if(startQuarter == "Q1")
-                            {
-
-                                q1++;
-                                //rec
-                            }
-
-                            if (startQuarter == "Q2")
-                            {
-                                //record.firstQuarter++;
-                            }
-
-                            if (startQuarter == "Q3")
-                            {
-                               // record.firstQuarter++;
-                            }
-
-                            if (startQuarter == "Q4")
-                            {
-                                //record.firstQuarter++;
-                            }
-                        }
-                     
-                    }
-
-                }
-                
-            }
             return null;
 
         }
@@ -121,17 +75,19 @@ namespace backend.Services.Impl
 
         }
 
-        public PerformanceIndicatorModel GetCustomerSatisfaction()
+        public List<PerformanceIndicatorModel> GetCustomerSatisfaction()
         {
-            TargetSettingsEntity targetSettings = _targetSettingRepository.GetByTitle("Percentage Customer Satisfaction");
+            List<TargetSettingsEntity> targetSettings = _targetSettingRepository.GetByTitle("Percentage Customer Satisfaction");
             List<ProjectProgress> allProjectProgress = _projectProgressRepo.GetAll();
             List<ProjectEntity> allProjects = _projectRepo.GetAll();
             List<QuarterEntity> allQuarters = _quarterRepo.GetAll();
-            PerformanceIndicatorModel indicatorModel = new PerformanceIndicatorModel();
+            List<PerformanceIndicatorModel> result = new List<PerformanceIndicatorModel>();
+
             int total = 0;
             double satisfactions = 0;
-            if (targetSettings != null)
+            foreach (TargetSettingsEntity target in targetSettings)
             {
+                PerformanceIndicatorModel indicatorModel = new PerformanceIndicatorModel();
                 foreach (QuarterEntity quarters in allQuarters)
                 {
                     foreach (ProjectProgress projectProgress in allProjectProgress)
@@ -168,43 +124,158 @@ namespace backend.Services.Impl
                         indicatorModel.thirdQuarterActual = satisfactions / total;
                     }
                 }
-
-
-                TargetSettingsEntity target = _targetSettingRepository.GetByTitle("Projects Delivered In Time");
-                if (target != null)
-                {
-                    indicatorModel.overallTarget = target.overallTarget;
-                    indicatorModel.category = target.category;
-                    indicatorModel.actualOverallTarget = (indicatorModel.firstQuarterActual + indicatorModel.secondQuarterActual + indicatorModel.thirdQuarterActual + indicatorModel.fourthQuarterActual) / 4;
-                    indicatorModel.title = target.title;
-                    indicatorModel.firstQuarterTarget = target.q1_target;
-                    indicatorModel.secondQuarterTarget = target.q2_target;
-                    indicatorModel.thirdQuarterTarget = target.q3_target;
-                    indicatorModel.fourthQuarterTarget = target.q4_target;
-                    return indicatorModel;
-                }
-                else
-                {
-                    throw new McpCustomException("Could not find target setting 'Percentage Customer Satisfaction'. Please create target setting with that that title");
-                }
-            }
-            else
-            {
-                throw new McpCustomException("Could not find target setting 'Percentage Customer Satisfaction'. Please create target setting with that that title");
+                indicatorModel.overallTarget = target.overallTarget;
+                indicatorModel.category = target.category;
+                indicatorModel.actualOverallTarget = (indicatorModel.firstQuarterActual + indicatorModel.secondQuarterActual + indicatorModel.thirdQuarterActual + indicatorModel.fourthQuarterActual) / 4;
+                indicatorModel.title = target.title;
+                indicatorModel.firstQuarterTarget = target.q1_target;
+                indicatorModel.secondQuarterTarget = target.q2_target;
+                indicatorModel.thirdQuarterTarget = target.q3_target;
+                indicatorModel.fourthQuarterTarget = target.q4_target;
+                result.Add(indicatorModel);
 
             }
+
+            return result;
         }
 
-        public PerformanceIndicatorModel GetProjectsDeliveredInTime()
+        public List<ProjectsEntryModel> GetFocusAreaFinancials()
         {
-            TargetSettingsEntity targetSettings = _targetSettingRepository.GetByTitle("Projects Delivered in time");
+            List<ProjectEntity> projects = _projectRepo.GetAll();
+            List<FocusAreaEntity> focusAreas = _focusArea.GetAll();
+            List<ProjectsEntryModel> results = new List<ProjectsEntryModel>();
+
+            foreach (ProjectEntity project in projects)
+            {
+                string quotationReference = _invoiceRepo.GetByReference(project.invoice_reference).quotation_reference;
+                List<QuotationItemEntity> quoteItems = _quotationItemsRepo.GetByQuote(quotationReference);
+                ProjectsEntryModel record = new ProjectsEntryModel();
+
+                record.quarter = _quarterRepo.GetByDate(_projectProgressRepo.GetByProjectNumber(project.project_number).actual_start_date).quarter;
+                foreach (QuotationItemEntity quoteItem in quoteItems)
+                {
+                    
+                    if(quoteItem.FocusArea == "Physical Metallurgy")
+                    {
+                            
+                        record.physicalMetallurgyProjects += quoteItem.Total;
+                            
+                    }
+                    else
+                    {
+                        if (quoteItem.FocusArea == "Moulding Tech")
+                        {
+                               
+                            record.mouldingTechProjects += quoteItem.Total;
+                                
+                            
+                        } 
+                        else
+                        {
+                            if (quoteItem.FocusArea == "Foundry Tech")
+                            {
+                               
+                                   
+                                record.foundryTechProjects += quoteItem.Total;
+                                    
+                                
+                            }
+                            else
+                            {
+                                if (quoteItem.FocusArea == "SupportEquipment")
+                                {
+                                    record.supportTechProjects += quoteItem.Total;
+                                }
+                                else
+                                {
+                                    record.otherProjects += quoteItem.Total;
+                                }
+                            }
+                        }
+                    }
+                    record.total = record.supportTechProjects + record.physicalMetallurgyProjects + record.mouldingTechProjects + record.foundryTechProjects + record.otherProjects;
+                    results.Add(record);
+                }
+
+
+            }
+
+            List<ProjectsEntryModel> finalResults = new List<ProjectsEntryModel>();
+            ProjectsEntryModel finalist = new ProjectsEntryModel();
+            finalist.quarter = "Q1";
+            foreach(ProjectsEntryModel result in results)
+            {
+                if(result.quarter == "Q1")
+                {
+                    finalist.mouldingTechProjects += result.mouldingTechProjects;
+                    finalist.otherProjects += result.otherProjects;
+                    finalist.physicalMetallurgyProjects += result.physicalMetallurgyProjects;
+                    finalist.supportTechProjects += result.supportTechProjects;
+                    finalist.total += result.total;
+                }
+            }
+            finalResults.Add(finalist);
+
+            finalist = new ProjectsEntryModel();
+            finalist.quarter = "Q2";
+            foreach (ProjectsEntryModel result in results)
+            {
+                if (result.quarter == "Q2")
+                {
+                    finalist.mouldingTechProjects += result.mouldingTechProjects;
+                    finalist.otherProjects += result.otherProjects;
+                    finalist.physicalMetallurgyProjects += result.physicalMetallurgyProjects;
+                    finalist.supportTechProjects += result.supportTechProjects;
+                    finalist.total += result.total;
+                }
+            }
+            finalResults.Add(finalist);
+
+            finalist = new ProjectsEntryModel();
+            finalist.quarter = "Q3";
+            foreach (ProjectsEntryModel result in results)
+            {
+                if (result.quarter == "Q3")
+                {
+                    finalist.mouldingTechProjects += result.mouldingTechProjects;
+                    finalist.otherProjects += result.otherProjects;
+                    finalist.physicalMetallurgyProjects += result.physicalMetallurgyProjects;
+                    finalist.supportTechProjects += result.supportTechProjects;
+                    finalist.total += result.total;
+                }
+            }
+            finalResults.Add(finalist);
+
+            finalist = new ProjectsEntryModel();
+            finalist.quarter = "Q4";
+            foreach (ProjectsEntryModel result in results)
+            {
+                if (result.quarter == "Q4")
+                {
+                    finalist.mouldingTechProjects += result.mouldingTechProjects;
+                    finalist.otherProjects += result.otherProjects;
+                    finalist.physicalMetallurgyProjects += result.physicalMetallurgyProjects;
+                    finalist.supportTechProjects += result.supportTechProjects;
+                    finalist.total += result.total;
+                }
+            }
+            finalResults.Add(finalist);
+
+            return finalResults;
+        }
+
+        public List<PerformanceIndicatorModel> GetProjectsDeliveredInTime()
+        {
+            List<TargetSettingsEntity> targetSettings = _targetSettingRepository.GetByTitle("Projects Delivered in time");
             List<ProjectProgress> allProjectProgress = _projectProgressRepo.GetAll();
             List<QuarterEntity> allQuarters = _quarterRepo.GetAll();
-            PerformanceIndicatorModel indicatorModel = new PerformanceIndicatorModel();
+            List<PerformanceIndicatorModel> results = new List<PerformanceIndicatorModel>();
             int total = 0;
             int endInTime = 0;
-            if (targetSettings != null)
+            foreach (TargetSettingsEntity targetSetting in targetSettings)
             {
+                PerformanceIndicatorModel indicatorModel = new PerformanceIndicatorModel();
+
                 foreach (QuarterEntity quarters in allQuarters)
                 {
                     foreach (ProjectProgress projectProgress in allProjectProgress)
@@ -244,32 +315,21 @@ namespace backend.Services.Impl
                     {
                         indicatorModel.thirdQuarterActual = (endInTime * 100) / total;
                     }
-                }
 
 
-                TargetSettingsEntity target = _targetSettingRepository.GetByTitle("Projects Delivered In Time");
-                if (target != null)
-                {
-                    indicatorModel.overallTarget = target.overallTarget;
-                    indicatorModel.category = target.category;
-                    indicatorModel.actualOverallTarget = (indicatorModel.firstQuarterActual + indicatorModel.secondQuarterActual + indicatorModel.thirdQuarterActual + indicatorModel.fourthQuarterActual) / 4;
-                    indicatorModel.title = target.title;
-                    indicatorModel.firstQuarterTarget = target.q1_target;
-                    indicatorModel.secondQuarterTarget = target.q2_target;
-                    indicatorModel.thirdQuarterTarget = target.q3_target;
-                    indicatorModel.fourthQuarterTarget = target.q4_target;
-                    return indicatorModel;
                 }
-                else
-                {
-                    throw new McpCustomException("Could not find target setting 'Projects Delivered in time'. Please create target setting with that that title");
-                }
+
+                indicatorModel.overallTarget = targetSetting.overallTarget;
+                indicatorModel.category = targetSetting.category;
+                indicatorModel.actualOverallTarget = (indicatorModel.firstQuarterActual + indicatorModel.secondQuarterActual + indicatorModel.thirdQuarterActual + indicatorModel.fourthQuarterActual) / 4;
+                indicatorModel.title = targetSetting.title;
+                indicatorModel.firstQuarterTarget = targetSetting.q1_target;
+                indicatorModel.secondQuarterTarget = targetSetting.q2_target;
+                indicatorModel.thirdQuarterTarget = targetSetting.q3_target;
+                indicatorModel.fourthQuarterTarget = targetSetting.q4_target;
+                results.Add(indicatorModel);
             }
-            else
-            {
-                throw new McpCustomException("Could not find target setting 'Projects Delivered in time'. Please create target setting with that that title");
-
-            }
+            return results;
         }
 
         public MctsKpiSummaryTile GetSummaryTileInfo()

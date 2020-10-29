@@ -128,12 +128,14 @@ namespace backend.Services.Impl
             return results;
         }
 
-        public TargetSettingModel GetTargetSetting(string title)
+        public List<TargetSettingModel> GetTargetSetting(string title)
         {
-            TargetSettingsEntity target = _targetSettingRepo.GetByTitle(title);
-            if(target != null)
+            List<TargetSettingsEntity> targets = _targetSettingRepo.GetByTitle(title);
+            List<TargetSettingModel> results = new List<TargetSettingModel>();
+
+            foreach (TargetSettingsEntity target in targets)
             {
-                return new TargetSettingModel
+                results.Add(new TargetSettingModel
                 {
                     id = target.id,
                     title = target.title,
@@ -148,10 +150,10 @@ namespace backend.Services.Impl
                     q3_target = target.q3_target,
                     q4_actual = target.q4_actual,
                     q4_target = target.q4_target
-                };
+                });
             }
 
-            throw new McpCustomException("Target setting with title " + title + " was not found");
+            return results;
         }
 
         public TargetSettingModel GetTargetSetting(int id)

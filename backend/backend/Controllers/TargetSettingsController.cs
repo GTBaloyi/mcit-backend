@@ -52,15 +52,11 @@ namespace backend.Controllers
         }
 
         [HttpGet("by-title/{title}")]
-        public ActionResult<TargetSettingModel> GetByTitle(string title)
+        public ActionResult<List<TargetSettingModel>> GetByTitle(string title)
         {
             try
             {
                 return StatusCode(StatusCodes.Status200OK, _targetSettingService.GetTargetSetting(title));
-            }
-            catch(McpCustomException e)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, e.Message);
             }
             catch (Exception)
             {

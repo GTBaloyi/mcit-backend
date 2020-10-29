@@ -8,11 +8,12 @@ namespace backend.Models.General
     public class ProjectsEntryModel
     {
         public string quarter { get; set; }
-        public int mouldingTechProjects { get; set; }
-        public int physicalMetallurgyProjects { get; set; }
-        public int foundryTechProjects { get; set; }
-        public int supportTechProjects { get; set; }
-        public int otherProjects { get; set; }
-        public int total { get; set; }
+        public double mouldingTechProjects { get; set; }
+        public double physicalMetallurgyProjects { get; set; }
+        public double foundryTechProjects { get; set; }
+        public double supportTechProjects { get; set; }
+        public double otherProjects { get; set; }
+        public double total { get; set; }
     }
+
 }
