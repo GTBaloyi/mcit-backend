@@ -12,7 +12,7 @@ namespace backend.Services.Contracts
         public bool UpdateTargetSetting(TargetSettingModel targetSetting);
         public bool DeleteTargetSetting(int id);
         public List<TargetSettingModel> GetAll();
-        public TargetSettingModel GetTargetSetting(string title);
+        public List<TargetSettingModel> GetTargetSetting(string title);
         public List<TargetSettingModel> GetCategory(string title);
         public TargetSettingModel GetTargetSetting(int id);
     }

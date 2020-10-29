@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backend.Exceptions;
+using backend.Models.General;
 using backend.Models.Reports;
 using backend.Services.Contracts;
 using Microsoft.AspNetCore.Http;
@@ -33,22 +34,6 @@ namespace backend.Controllers
             }
         }
 
-        [HttpGet("mcts-kpi-project-inBudget")]
-        public ActionResult<MctsKpiSummaryTile> mctsKpiProjectInBudget()
-        {
-            try
-            {
-                return StatusCode(StatusCodes.Status200OK, _mctsKpiReports.GetProjectsDeliveredInTime());
-            }
-            catch(McpCustomException e)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, e.Message);
-            } 
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
-            }
-        }
 
         [HttpGet("delivered-inTime-report")]
         public ActionResult<PerformanceIndicatorModel> DeliveredInTimeReport()
@@ -66,6 +51,7 @@ namespace backend.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
             }
         }
+        
 
         [HttpGet("customer-satisfaction")]
         public ActionResult<PerformanceIndicatorModel> CustomerSatisfactionReport()
@@ -79,6 +65,19 @@ namespace backend.Controllers
                 return StatusCode(StatusCodes.Status404NotFound, e.Message);
             }
             catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
+
+        [HttpGet("FocusArea-Final-Projects")]
+        public ActionResult<List<ProjectsEntryModel>> GetFocusAreaFinancials()
+        {
+            try
+            {
+                return StatusCode(StatusCodes.Status200OK, _mctsKpiReports.GetFocusAreaFinancials());
+            }
+            catch (Exception )
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
             }

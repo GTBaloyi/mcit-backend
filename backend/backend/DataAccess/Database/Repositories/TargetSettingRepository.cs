@@ -69,11 +69,11 @@ namespace backend.DataAccess.Database.Repositories
         }
     
 
-        public TargetSettingsEntity GetByTitle(string title)
+        public List<TargetSettingsEntity> GetByTitle(string title)
         {
              try
             {
-                return _context.targetSettings.Where(x => x.title == title).FirstOrDefault();
+                return _context.targetSettings.Where(x => x.title == title).ToList();
             }
             catch (Exception e)
             {
