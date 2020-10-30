@@ -136,10 +136,19 @@ namespace backend.Services
                             if (_userRepo.SaveUser(user))
                             {
                                 //TODO: Send email
-                                string template = _emailTemplate.GetByType("Registration").code;
-                                string mail = BuildRegistrationEmail(template, data.contactName, user.username, commonMethods.passwordDecryption(user.password));
-                                commonServices.SendEmail("MCIT Registration successful", mail, user.username);
-                                return new ClientRegistrationResponseModel(200, "Company, Company Representative and user details registered successfully");
+                                try
+                                {
+                                    string template = _emailTemplate.GetByType("Registration").code;
+                                    string mail = BuildRegistrationEmail(template, data.contactName, user.username, commonMethods.passwordDecryption(user.password));
+                                    commonServices.SendEmail("MCIT Registration successful", mail, user.username);
+                                }
+                                catch(Exception e)
+                                {
+
+                                }
+                               return new ClientRegistrationResponseModel(200, "Company, Company Representative and user details registered successfully");
+                                
+
                             }
                             else
                             {
