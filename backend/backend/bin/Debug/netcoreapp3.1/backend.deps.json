@@ -24,7 +24,9 @@
     ".NETCoreApp,Version=v3.1": {
       "backend/1.0.0": {
         "dependencies": {
+          "AWSSDK.Core": "3.5.1.32",
           "AWSSDK.S3": "3.5.1.7",
+          "AWSSDK.SimpleEmail": "3.5.0.34",
           "EntityFramework": "6.4.4",
           "FluentNHibernate": "2.1.2",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.1.8",
@@ -331,11 +333,11 @@
           "lib/netstandard1.1/Antlr3.Runtime.dll": {}
         }
       },
-      "AWSSDK.Core/3.5.1.16": {
+      "AWSSDK.Core/3.5.1.32": {
         "runtime": {
           "lib/netcoreapp3.1/AWSSDK.Core.dll": {
             "assemblyVersion": "3.3.0.0",
-            "fileVersion": "3.5.1.16"
+            "fileVersion": "3.5.1.32"
           }
         },
         "compile": {
@@ -344,7 +346,7 @@
       },
       "AWSSDK.S3/3.5.1.7": {
         "dependencies": {
-          "AWSSDK.Core": "3.5.1.16"
+          "AWSSDK.Core": "3.5.1.32"
         },
         "runtime": {
           "lib/netcoreapp3.1/AWSSDK.S3.dll": {
@@ -354,6 +356,20 @@
         },
         "compile": {
           "lib/netcoreapp3.1/AWSSDK.S3.dll": {}
+        }
+      },
+      "AWSSDK.SimpleEmail/3.5.0.34": {
+        "dependencies": {
+          "AWSSDK.Core": "3.5.1.32"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/AWSSDK.SimpleEmail.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.5.0.34"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/AWSSDK.SimpleEmail.dll": {}
         }
       },
       "BouncyCastle.NetCore/1.8.3": {
@@ -4379,12 +4395,12 @@
       "path": "antlr3.runtime/3.5.1",
       "hashPath": "antlr3.runtime.3.5.1.nupkg.sha512"
     },
-    "AWSSDK.Core/3.5.1.16": {
+    "AWSSDK.Core/3.5.1.32": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-5MHGHRLssZz+2cQ9bkhkTXp8W/UHMmz/vaNmkuGcPvyIkqCUFlOpXV89qAXVti6/Q57Wc7BEaVvFP5lclZgsBw==",
-      "path": "awssdk.core/3.5.1.16",
-      "hashPath": "awssdk.core.3.5.1.16.nupkg.sha512"
+      "sha512": "sha512-rNxli5HjbQdFmibqHQhXgOtIS35A8Gt6k8XWyJAse/QoChfbsTqXjzKnws24DMUVK3dzf3knpD1mgpXS9XJ1zA==",
+      "path": "awssdk.core/3.5.1.32",
+      "hashPath": "awssdk.core.3.5.1.32.nupkg.sha512"
     },
     "AWSSDK.S3/3.5.1.7": {
       "type": "package",
@@ -4392,6 +4408,13 @@
       "sha512": "sha512-ecaEnhyjOpHYBwOolY/RUmFaV+IJev1KlHMEjpX5d22dyZFBF5bBTXxFbHvlyfPazDnQdjlRKbYEPzCHHiV7ag==",
       "path": "awssdk.s3/3.5.1.7",
       "hashPath": "awssdk.s3.3.5.1.7.nupkg.sha512"
+    },
+    "AWSSDK.SimpleEmail/3.5.0.34": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3syntVWBTpZlXYX17tNakMbvJ1f4t3n0NUsXRfpwqh7puqyfqdHjuzEERISH2sOv5kEKDDggyltm3ysoZPFHhA==",
+      "path": "awssdk.simpleemail/3.5.0.34",
+      "hashPath": "awssdk.simpleemail.3.5.0.34.nupkg.sha512"
     },
     "BouncyCastle.NetCore/1.8.3": {
       "type": "package",

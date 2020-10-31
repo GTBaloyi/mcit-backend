@@ -79,7 +79,7 @@ namespace backend.Services
                 var result = _userRepo.GetUser(username);
                 if(result !=null)
                 {
-                    if (password == commonMethods.passwordDecryption(result.password))
+                    if (password.ToLower() == commonMethods.passwordDecryption(result.password).ToLower())
                     {
                         if(result.access_fk != 1)
                         {
@@ -95,7 +95,7 @@ namespace backend.Services
                     {
                        
                         UsersModel user = new UsersModel(result.username, result.password, result.retry, result.user_status_fk, result.access_fk);
-                        saveRetry(user);
+                        //saveRetry(user);
                         throw new McpCustomException("Incorrect password");
                     }
                 } else
