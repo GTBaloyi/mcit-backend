@@ -14,7 +14,7 @@
           "lib/netstandard1.1/Antlr3.Runtime.dll": {}
         }
       },
-      "AWSSDK.Core/3.5.1.16": {
+      "AWSSDK.Core/3.5.1.32": {
         "type": "package",
         "compile": {
           "lib/netcoreapp3.1/AWSSDK.Core.dll": {}
@@ -33,6 +33,18 @@
         },
         "runtime": {
           "lib/netcoreapp3.1/AWSSDK.S3.dll": {}
+        }
+      },
+      "AWSSDK.SimpleEmail/3.5.0.34": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[3.5.1.32, 3.6.0)"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/AWSSDK.SimpleEmail.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/AWSSDK.SimpleEmail.dll": {}
         }
       },
       "BouncyCastle.NetCore/1.8.3": {
@@ -1608,10 +1620,11 @@
           }
         }
       },
-      "SendGrid/9.15.1": {
+      "SendGrid/9.21.0": {
         "type": "package",
         "dependencies": {
-          "Newtonsoft.Json": "9.0.1"
+          "Newtonsoft.Json": "9.0.1",
+          "starkbank-ecdsa": "[1.2.0, 2.0.0)"
         },
         "compile": {
           "lib/netstandard2.0/SendGrid.dll": {}
@@ -1664,6 +1677,15 @@
         },
         "runtime": {
           "lib/netstandard1.3/SshNet.Security.Cryptography.dll": {}
+        }
+      },
+      "starkbank-ecdsa/1.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/StarkbankEcdsa.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/StarkbankEcdsa.dll": {}
         }
       },
       "Swashbuckle.AspNetCore/5.0.0-rc4": {
@@ -3283,15 +3305,15 @@
         "lib/portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/Antlr3.Runtime.xml"
       ]
     },
-    "AWSSDK.Core/3.5.1.16": {
-      "sha512": "5MHGHRLssZz+2cQ9bkhkTXp8W/UHMmz/vaNmkuGcPvyIkqCUFlOpXV89qAXVti6/Q57Wc7BEaVvFP5lclZgsBw==",
+    "AWSSDK.Core/3.5.1.32": {
+      "sha512": "rNxli5HjbQdFmibqHQhXgOtIS35A8Gt6k8XWyJAse/QoChfbsTqXjzKnws24DMUVK3dzf3knpD1mgpXS9XJ1zA==",
       "type": "package",
-      "path": "awssdk.core/3.5.1.16",
+      "path": "awssdk.core/3.5.1.32",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "awssdk.core.3.5.1.16.nupkg.sha512",
+        "awssdk.core.3.5.1.32.nupkg.sha512",
         "awssdk.core.nuspec",
         "lib/net35/AWSSDK.Core.dll",
         "lib/net35/AWSSDK.Core.pdb",
@@ -3337,6 +3359,36 @@
         "lib/netstandard2.0/AWSSDK.S3.dll",
         "lib/netstandard2.0/AWSSDK.S3.pdb",
         "lib/netstandard2.0/AWSSDK.S3.xml",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "AWSSDK.SimpleEmail/3.5.0.34": {
+      "sha512": "3syntVWBTpZlXYX17tNakMbvJ1f4t3n0NUsXRfpwqh7puqyfqdHjuzEERISH2sOv5kEKDDggyltm3ysoZPFHhA==",
+      "type": "package",
+      "path": "awssdk.simpleemail/3.5.0.34",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.SimpleEmail.CodeAnalysis.dll",
+        "awssdk.simpleemail.3.5.0.34.nupkg.sha512",
+        "awssdk.simpleemail.nuspec",
+        "lib/net35/AWSSDK.SimpleEmail.dll",
+        "lib/net35/AWSSDK.SimpleEmail.pdb",
+        "lib/net35/AWSSDK.SimpleEmail.xml",
+        "lib/net45/AWSSDK.SimpleEmail.dll",
+        "lib/net45/AWSSDK.SimpleEmail.pdb",
+        "lib/net45/AWSSDK.SimpleEmail.xml",
+        "lib/netcoreapp3.1/AWSSDK.SimpleEmail.dll",
+        "lib/netcoreapp3.1/AWSSDK.SimpleEmail.pdb",
+        "lib/netcoreapp3.1/AWSSDK.SimpleEmail.xml",
+        "lib/netstandard1.3/AWSSDK.SimpleEmail.dll",
+        "lib/netstandard1.3/AWSSDK.SimpleEmail.pdb",
+        "lib/netstandard1.3/AWSSDK.SimpleEmail.xml",
+        "lib/netstandard2.0/AWSSDK.SimpleEmail.dll",
+        "lib/netstandard2.0/AWSSDK.SimpleEmail.pdb",
+        "lib/netstandard2.0/AWSSDK.SimpleEmail.xml",
         "tools/install.ps1",
         "tools/uninstall.ps1"
       ]
@@ -5673,13 +5725,16 @@
         "version.txt"
       ]
     },
-    "SendGrid/9.15.1": {
-      "sha512": "w5zilPGYpo+QG+Mk2XRD/pBd7LgaRHU6KKE67yFOWkAoNTyTijUs4QUooDWOSENRsL0PaMIPQyz4rV2tBrPirA==",
+    "SendGrid/9.21.0": {
+      "sha512": "GY7NZcS0K4WjepDZhs5XxORqZDC1FmTz6iT/j9crCSCMBG4Y/9I/ia9b6ws8209Yv1uVjnDcNr0gf54ibIxIsw==",
       "type": "package",
-      "path": "sendgrid/9.15.1",
+      "path": "sendgrid/9.21.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "lib/net40/SendGrid.dll",
+        "lib/net40/SendGrid.pdb",
+        "lib/net40/SendGrid.xml",
         "lib/net452/SendGrid.dll",
         "lib/net452/SendGrid.pdb",
         "lib/net452/SendGrid.xml",
@@ -5689,7 +5744,7 @@
         "lib/netstandard2.0/SendGrid.dll",
         "lib/netstandard2.0/SendGrid.pdb",
         "lib/netstandard2.0/SendGrid.xml",
-        "sendgrid.9.15.1.nupkg.sha512",
+        "sendgrid.9.21.0.nupkg.sha512",
         "sendgrid.nuspec"
       ]
     },
@@ -5751,6 +5806,22 @@
         "lib/wp8/SshNet.Security.Cryptography.xml",
         "sshnet.security.cryptography.1.2.0.nupkg.sha512",
         "sshnet.security.cryptography.nuspec"
+      ]
+    },
+    "starkbank-ecdsa/1.2.0": {
+      "sha512": "hP53QPYOOEIR44EK9phz+DYliM6DEieDZxpb8GZzE+++qyrWqUscKcyHCC6L9yu/ehllYtqxtT4qrjWDsuQlUQ==",
+      "type": "package",
+      "path": "starkbank-ecdsa/1.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/StarkbankEcdsa.dll",
+        "lib/net452/StarkbankEcdsa.dll",
+        "lib/netstandard1.3/StarkbankEcdsa.dll",
+        "lib/netstandard2.0/StarkbankEcdsa.dll",
+        "lib/netstandard2.1/StarkbankEcdsa.dll",
+        "starkbank-ecdsa.1.2.0.nupkg.sha512",
+        "starkbank-ecdsa.nuspec"
       ]
     },
     "Swashbuckle.AspNetCore/5.0.0-rc4": {
@@ -10092,7 +10163,9 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "AWSSDK.Core >= 3.5.1.32",
       "AWSSDK.S3 >= 3.5.1.7",
+      "AWSSDK.SimpleEmail >= 3.5.0.34",
       "EntityFramework >= 6.4.4",
       "FluentNHibernate >= 2.1.2",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 3.1.8",
@@ -10104,7 +10177,7 @@
       "NEST >= 7.6.1",
       "NLog >= 4.7.0-rc1",
       "Pomelo.EntityFrameworkCore.MySql >= 3.1.1",
-      "SendGrid >= 9.15.1",
+      "SendGrid >= 9.21.0",
       "Swashbuckle.AspNetCore >= 5.0.0-rc4"
     ]
   },
@@ -10152,9 +10225,17 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "AWSSDK.Core": {
+            "target": "Package",
+            "version": "[3.5.1.32, )"
+          },
           "AWSSDK.S3": {
             "target": "Package",
             "version": "[3.5.1.7, )"
+          },
+          "AWSSDK.SimpleEmail": {
+            "target": "Package",
+            "version": "[3.5.0.34, )"
           },
           "EntityFramework": {
             "target": "Package",
@@ -10204,7 +10285,7 @@
           },
           "SendGrid": {
             "target": "Package",
-            "version": "[9.15.1, )"
+            "version": "[9.21.0, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

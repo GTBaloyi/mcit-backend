@@ -3,9 +3,15 @@
     "comment" : "This file is used to help set default values when using the dotnet CLI extension Amazon.ElasticBeanstalk.Tools. For more information run \"dotnet eb --help\" from the project root.",
     "profile" : "default",
     "region"  : "us-east-2",
-    "application" : "Mcp-Backend",
-    "environment" : "McpBackend-env",
+    "application" : "mcts-service",
+    "environment" : "MctsService-env",
     "iis-website" : "Default Web Site",
     "app-path"    : "/",
-    "enable-xray" : false
+    "enable-xray" : true,
+    "configuration" : "Debug",
+    "framework"     : "netcoreapp3.1",
+    "self-contained" : false,
+    "enhanced-health-type" : "enhanced",
+    "additional-options"   : "",
+    "proxy-server"         : "nginx"
 }

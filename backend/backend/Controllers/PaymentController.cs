@@ -78,7 +78,7 @@ namespace backend.Controllers
         {
             try
             {
-                return StatusCode(StatusCodes.Status200OK, _paymentService.CreatePayment(payment));
+                return StatusCode(StatusCodes.Status200OK, _paymentService.CreatePaymentAsync(payment));
             }
             catch (Exception)
             {

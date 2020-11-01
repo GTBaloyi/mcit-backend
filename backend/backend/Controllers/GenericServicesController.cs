@@ -22,38 +22,26 @@ namespace backend.Controllers
         }
 
         [HttpPost("email-attachment")]
-        public async Task<ActionResult> EmailWithAttachment([FromQuery] string reciepentAddress, [FromQuery] string subject, [FromQuery] string body, [FromForm] FileModel file)
+        public async Task<ActionResult> EmailWithAttachment([FromQuery] string reciepentAddress, [FromQuery] string subject, [FromQuery] string body)
         {
 
             try
             {
-                if(reciepentAddress != null && subject !=null && body !=null && file.FileName !=null && file.FormFile!=null )
+                if(reciepentAddress != null && subject !=null && body !=null )
                 {
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/pdf", file.FileName);
-                    using (Stream stream = new FileStream(path, FileMode.Create))
-                    {
-                        file.FormFile.CopyTo(stream);
-                    }
-
                     try
                     {
-                        commonService.SendEmailWithAttachment(subject, this.emailTemplate.GetByType("GenericEmail").code.Replace("{body}", body), reciepentAddress, path);
+                        commonService.SendEmailWithAttachmentAsync(subject, this.emailTemplate.GetByType("GenericEmail").code.Replace("{body}", body), reciepentAddress, "");
 
                     }
-                    catch(Exception)
+                    catch(Exception e)
                     {
-                        if (System.IO.File.Exists(path))
-                        {
-                            System.IO.File.Delete(path);
-                        }
-                        return StatusCode(StatusCodes.Status403Forbidden, "There was a problem sending an email. Please make sure you submit a valid email.");
+                       
+                        return StatusCode(StatusCodes.Status403Forbidden, e.Message);
                        
                     }
 
-                    if (System.IO.File.Exists(path))
-                    {
-                        System.IO.File.Delete(path);
-                    }
+                    
                     return StatusCode(StatusCodes.Status201Created);
                 }
                 else
@@ -62,10 +50,10 @@ namespace backend.Controllers
                 }
                 
             }
-            catch ( Exception)
+            catch ( Exception e)
             {
                 
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
     }
