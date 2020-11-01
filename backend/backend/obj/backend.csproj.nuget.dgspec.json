@@ -103,7 +103,7 @@
             },
             "SendGrid": {
               "target": "Package",
-              "version": "[9.15.1, )"
+              "version": "[9.21.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

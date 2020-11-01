@@ -49,7 +49,7 @@ namespace backend.Services.Impl
                 code = code.Replace("{empNum}", employeeNumber);
                 code = code.Replace("{pwd}", commonMethods.passwordDecryption(user.password));
 
-                commonServices.SendEmail("MCIT online system new employee", code, employee.email);
+                commonServices.SendEmailAsync("MCIT online system new employee", code, employee.email);
 
                 return true;
             }

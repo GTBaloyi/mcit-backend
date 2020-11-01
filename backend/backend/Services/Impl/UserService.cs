@@ -55,7 +55,7 @@ namespace backend.Services
                 _userRepo.UpdateUser(user);
                 string template = _emailTemplate.GetByType("ForgotPassword").code;
                 string mail = BuildEmail(template,name,password);
-                commonServices.SendEmail("Password Reset Successful", mail, emailAddress);
+                commonServices.SendEmailAsync("Password Reset Successful", mail, emailAddress);
                 return true;
             }
             else
@@ -140,7 +140,7 @@ namespace backend.Services
                                 {
                                     string template = _emailTemplate.GetByType("Registration").code;
                                     string mail = BuildRegistrationEmail(template, data.contactName, user.username, commonMethods.passwordDecryption(user.password));
-                                    commonServices.SendEmail("MCIT Registration successful", mail, user.username);
+                                    commonServices.SendEmailAsync("MCIT Registration successful", mail, user.username);
                                 }
                                 catch(Exception e)
                                 {
@@ -224,7 +224,7 @@ namespace backend.Services
                         string name = _companyRepRepo.GetByEmail(user.username).name;
                         string template = _emailTemplate.GetByType("ResetPassword").code;
                         string mail = BuildResetPasswordEmail(template, name, newPassword);
-                        commonServices.SendEmail("Password Reset Successfully", mail, user.username);
+                        commonServices.SendEmailAsync("Password Reset Successfully", mail, user.username);
                     }
                     catch(Exception)
                     {

@@ -1620,10 +1620,11 @@
           }
         }
       },
-      "SendGrid/9.15.1": {
+      "SendGrid/9.21.0": {
         "type": "package",
         "dependencies": {
-          "Newtonsoft.Json": "9.0.1"
+          "Newtonsoft.Json": "9.0.1",
+          "starkbank-ecdsa": "[1.2.0, 2.0.0)"
         },
         "compile": {
           "lib/netstandard2.0/SendGrid.dll": {}
@@ -1676,6 +1677,15 @@
         },
         "runtime": {
           "lib/netstandard1.3/SshNet.Security.Cryptography.dll": {}
+        }
+      },
+      "starkbank-ecdsa/1.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/StarkbankEcdsa.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/StarkbankEcdsa.dll": {}
         }
       },
       "Swashbuckle.AspNetCore/5.0.0-rc4": {
@@ -5715,13 +5725,16 @@
         "version.txt"
       ]
     },
-    "SendGrid/9.15.1": {
-      "sha512": "w5zilPGYpo+QG+Mk2XRD/pBd7LgaRHU6KKE67yFOWkAoNTyTijUs4QUooDWOSENRsL0PaMIPQyz4rV2tBrPirA==",
+    "SendGrid/9.21.0": {
+      "sha512": "GY7NZcS0K4WjepDZhs5XxORqZDC1FmTz6iT/j9crCSCMBG4Y/9I/ia9b6ws8209Yv1uVjnDcNr0gf54ibIxIsw==",
       "type": "package",
-      "path": "sendgrid/9.15.1",
+      "path": "sendgrid/9.21.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "lib/net40/SendGrid.dll",
+        "lib/net40/SendGrid.pdb",
+        "lib/net40/SendGrid.xml",
         "lib/net452/SendGrid.dll",
         "lib/net452/SendGrid.pdb",
         "lib/net452/SendGrid.xml",
@@ -5731,7 +5744,7 @@
         "lib/netstandard2.0/SendGrid.dll",
         "lib/netstandard2.0/SendGrid.pdb",
         "lib/netstandard2.0/SendGrid.xml",
-        "sendgrid.9.15.1.nupkg.sha512",
+        "sendgrid.9.21.0.nupkg.sha512",
         "sendgrid.nuspec"
       ]
     },
@@ -5793,6 +5806,22 @@
         "lib/wp8/SshNet.Security.Cryptography.xml",
         "sshnet.security.cryptography.1.2.0.nupkg.sha512",
         "sshnet.security.cryptography.nuspec"
+      ]
+    },
+    "starkbank-ecdsa/1.2.0": {
+      "sha512": "hP53QPYOOEIR44EK9phz+DYliM6DEieDZxpb8GZzE+++qyrWqUscKcyHCC6L9yu/ehllYtqxtT4qrjWDsuQlUQ==",
+      "type": "package",
+      "path": "starkbank-ecdsa/1.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/StarkbankEcdsa.dll",
+        "lib/net452/StarkbankEcdsa.dll",
+        "lib/netstandard1.3/StarkbankEcdsa.dll",
+        "lib/netstandard2.0/StarkbankEcdsa.dll",
+        "lib/netstandard2.1/StarkbankEcdsa.dll",
+        "starkbank-ecdsa.1.2.0.nupkg.sha512",
+        "starkbank-ecdsa.nuspec"
       ]
     },
     "Swashbuckle.AspNetCore/5.0.0-rc4": {
@@ -10148,7 +10177,7 @@
       "NEST >= 7.6.1",
       "NLog >= 4.7.0-rc1",
       "Pomelo.EntityFrameworkCore.MySql >= 3.1.1",
-      "SendGrid >= 9.15.1",
+      "SendGrid >= 9.21.0",
       "Swashbuckle.AspNetCore >= 5.0.0-rc4"
     ]
   },
@@ -10256,7 +10285,7 @@
           },
           "SendGrid": {
             "target": "Package",
-            "version": "[9.15.1, )"
+            "version": "[9.21.0, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

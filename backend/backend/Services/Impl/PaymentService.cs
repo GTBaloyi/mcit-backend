@@ -42,7 +42,7 @@ namespace backend.Services.Impl
             _invoiceRepository = invoiceRepository;
         }
 
-        public bool CreatePayment(PaymentRequestModel payment)
+        public async Task<bool> CreatePaymentAsync(PaymentRequestModel payment)
         {
             PaymentEntity paymentEntity = _entityBuilder.buildPaymentEntity(0, payment.invoiceReference, payment.dateOfPayment, payment.proofOfPaymentURL, payment.paymentType, payment.companyRegistration, payment.amount, payment.status, payment.approvedBy);
             CompanyEntity company = _companyRepository.GetByRegistrationNumber(payment.companyRegistration);
@@ -54,15 +54,8 @@ namespace backend.Services.Impl
                 {
                     string emailBody = _emailTemplateRepository.GetByType("PaymentConfirmation").code.Replace("{company_name}", company.name);
                     emailBody = emailBody.Replace("{invoiceReference}", payment.invoiceReference);
-
-                    if (commonServices.SendEmail("Payment Confirmation For Invoice #" + payment.invoiceReference, emailBody, companyEmail))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        throw new McpCustomException("Payment saved but could not email the client");
-                    }
+                    await commonServices.SendEmailAsync("Payment Confirmation For Invoice #" + payment.invoiceReference, emailBody, companyEmail);
+                    return true;
                 }
                 else
                 {
@@ -74,14 +67,8 @@ namespace backend.Services.Impl
                 string emailBody = _emailTemplateRepository.GetByType("PaymentConfirmation").code.Replace("{company_name}", company.name);
                 emailBody = emailBody.Replace("{invoiceReference}", payment.invoiceReference);
 
-                if (commonServices.SendEmail("Payment Confirmation For Invoice #" + payment.invoiceReference, emailBody, companyEmail))
-                {
-                    return true;
-                }
-                else
-                {
-                    throw new McpCustomException("Payment saved but could not email the client");
-                }
+                await commonServices.SendEmailAsync("Payment Confirmation For Invoice #" + payment.invoiceReference, emailBody, companyEmail);
+                return true;
             }
             
             

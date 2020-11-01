@@ -31,7 +31,7 @@ namespace backend.Controllers
                 {
                     try
                     {
-                        commonService.SendEmailWithAttachment(subject, this.emailTemplate.GetByType("GenericEmail").code.Replace("{body}", body), reciepentAddress, "");
+                        commonService.SendEmailWithAttachmentAsync(subject, this.emailTemplate.GetByType("GenericEmail").code.Replace("{body}", body), reciepentAddress, "");
 
                     }
                     catch(Exception e)

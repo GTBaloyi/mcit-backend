@@ -209,7 +209,7 @@ namespace backend.Services.Impl
                 emailMessage = emailMessage.Replace("{company_name}", response.Company_name);
                 emailMessage = emailMessage.Replace("{quotationi_status}", "Quotation Rejected");
             }
-            commonServices.SendEmail("MCTS: Quotation Status Update", emailMessage, response.Email);
+            commonServices.SendEmailAsync("MCTS: Quotation Status Update", emailMessage, response.Email);
         }
 
         public string NewQuotation(QuotationModel model)

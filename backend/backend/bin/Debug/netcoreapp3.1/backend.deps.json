@@ -38,7 +38,7 @@
           "NEST": "7.6.1",
           "NLog": "4.7.0-rc1",
           "Pomelo.EntityFrameworkCore.MySql": "3.1.1",
-          "SendGrid": "9.15.1",
+          "SendGrid": "9.21.0",
           "Swashbuckle.AspNetCore": "5.0.0-rc4",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions.Reference": "3.1.0.0",
@@ -1664,14 +1664,15 @@
           }
         }
       },
-      "SendGrid/9.15.1": {
+      "SendGrid/9.21.0": {
         "dependencies": {
-          "Newtonsoft.Json": "12.0.2"
+          "Newtonsoft.Json": "12.0.2",
+          "starkbank-ecdsa": "1.2.0"
         },
         "runtime": {
           "lib/netstandard2.0/SendGrid.dll": {
-            "assemblyVersion": "9.15.1.0",
-            "fileVersion": "9.15.1.0"
+            "assemblyVersion": "9.21.0.0",
+            "fileVersion": "9.21.0.0"
           }
         },
         "compile": {
@@ -1726,6 +1727,17 @@
         },
         "compile": {
           "lib/netstandard1.3/SshNet.Security.Cryptography.dll": {}
+        }
+      },
+      "starkbank-ecdsa/1.2.0": {
+        "runtime": {
+          "lib/netstandard2.1/StarkbankEcdsa.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.1/StarkbankEcdsa.dll": {}
         }
       },
       "Swashbuckle.AspNetCore/5.0.0-rc4": {
@@ -5179,12 +5191,12 @@
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
     },
-    "SendGrid/9.15.1": {
+    "SendGrid/9.21.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-w5zilPGYpo+QG+Mk2XRD/pBd7LgaRHU6KKE67yFOWkAoNTyTijUs4QUooDWOSENRsL0PaMIPQyz4rV2tBrPirA==",
-      "path": "sendgrid/9.15.1",
-      "hashPath": "sendgrid.9.15.1.nupkg.sha512"
+      "sha512": "sha512-GY7NZcS0K4WjepDZhs5XxORqZDC1FmTz6iT/j9crCSCMBG4Y/9I/ia9b6ws8209Yv1uVjnDcNr0gf54ibIxIsw==",
+      "path": "sendgrid/9.21.0",
+      "hashPath": "sendgrid.9.21.0.nupkg.sha512"
     },
     "SSH.NET/2016.1.0": {
       "type": "package",
@@ -5199,6 +5211,13 @@
       "sha512": "sha512-EeFsirrrkIK+cdlYsxukNjBN98cbU7eHfTYZEwxsbOa3dvgR/OhOD06C0sTxvNPhe4UQ6yM0p1sKcT69jqgjTw==",
       "path": "sshnet.security.cryptography/1.2.0",
       "hashPath": "sshnet.security.cryptography.1.2.0.nupkg.sha512"
+    },
+    "starkbank-ecdsa/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hP53QPYOOEIR44EK9phz+DYliM6DEieDZxpb8GZzE+++qyrWqUscKcyHCC6L9yu/ehllYtqxtT4qrjWDsuQlUQ==",
+      "path": "starkbank-ecdsa/1.2.0",
+      "hashPath": "starkbank-ecdsa.1.2.0.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/5.0.0-rc4": {
       "type": "package",
